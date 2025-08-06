@@ -1,6 +1,13 @@
 body *{
   font-family: 'Roboto', sans-serif;
 }
+.admin-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #E6F6FF;
+}
 .jb-logo{
     width: 160px;
     height: 40px;
@@ -88,7 +95,6 @@ body *{
   gap: 20px;
 }
 
-/* Expansion Tank Sections */
 .expansion-tank-container {
   display: flex;
   gap: 24px;

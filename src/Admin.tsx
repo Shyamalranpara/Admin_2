@@ -8,6 +8,9 @@ import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme, Row, Col } from 'antd';
 import ProfileDropdown from './ProfileDropdown';
 import TableComponent from './TableComponent';
+import ShiftCard from './ShiftCard';
+import PopupModel from './PopupModel';
+
 const { Header, Content, Sider } = Layout;
 
 
@@ -49,33 +52,43 @@ const items: MenuItem[] = [
 
 ];
 
-const ShiftCard = ({ title }: { title: string }) => (
-    <div className="shift-card">
-        <div className="shift-card-title">
-            {title}
-        </div>
-        <div className="shift-card-value">
-            00
-        </div>
-
-        <div className="shift-card-add">
-            Add
-        </div>
-    </div>
-);
 
 
 
 const Admin: React.FC = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalTitle, setModalTitle] = useState('');
+    const [modalLabel, setModalLabel] = useState('');
+    const [currentSetter, setCurrentSetter] = useState<(value: string) => void>(() => () => { });
+    const [chipsProduction, setChipsProduction] = useState('00');
+    const [coalConsumption, setCoalConsumption] = useState('00');
+
+    const openModal = (title: string, label: string, setter: (value: string) => void) => {
+        setModalTitle(title);
+        setModalLabel(label);
+        setCurrentSetter(() => setter); 
+        setIsModalOpen(true);
+    };
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleSubmit = (value: string) => {
+        currentSetter(value); 
+        closeModal();
+    };
+
     const {
         token: { colorBgContainer, },
     } = theme.useToken();
 
     return (
-        <div>
+        <div className='admin-container'>
+
             <Layout style={{ minHeight: '100vh' }}>
                 <Sider
-                    style={{ backgroundColor: "#E6F6FF" }}
+                    style={{ backgroundColor: "#E6F6FF", height: "265vh", }}
                     width={280}
                 >
                     <div className="demo-logo-vertical" />
@@ -140,10 +153,10 @@ const Admin: React.FC = () => {
                                     </p>
                                     <div className='shift-cards-row'>
                                         <div className='shift-card-col'>
-                                            <ShiftCard  title={<span style={{fontSize:"14px",lineHeight:"22px"}}>SHIFT 1</span>} />
+                                            <ShiftCard title={<span style={{ fontSize: "14px", lineHeight: "22px" }}>SHIFT 1</span>} />
                                         </div>
                                         <div className='shift-card-col'>
-                                            <ShiftCard title={<span style={{fontSize:"14px",lineHeight:"22px"}}>SHIFT 2</span>} />
+                                            <ShiftCard title={<span style={{ fontSize: "14px", lineHeight: "22px" }}>SHIFT 2</span>} />
                                         </div>
                                     </div>
                                 </div>
@@ -154,12 +167,11 @@ const Admin: React.FC = () => {
                                     </p>
                                     <div className='shift-cards-row'>
                                         <div className='shift-card-col'>
-                                            <ShiftCard title={<span style={{fontSize:"14px",lineHeight:"22px"}}>SHIFT 1</span>} />
+                                            <ShiftCard title={<span style={{ fontSize: "14px", lineHeight: "22px" }}>SHIFT 1</span>} />
 
                                         </div>
                                         <div className='shift-card-col'>
-                                            <ShiftCard title={<span style={{fontSize:"14px",lineHeight:"22px"}}>SHIFT 2</span>} />
-
+                                            <ShiftCard title={<span style={{ fontSize: "14px", lineHeight: "22px" }}>SHIFT 2</span>} />
                                         </div>
                                     </div>
                                 </div>
@@ -167,28 +179,54 @@ const Admin: React.FC = () => {
                             </div>
 
 
+
                             <div className='cards-container'>
 
                                 <Row gutter={[12, 12]} justify="start">
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
-                                        <Cards title={<span style={{fontSize:"14px",lineHeight:"22px",fontWeight:"bold"}}>Chips Production <br /> (MT)</span>} value="00" bottomText="Add" isLink />
+                                        <Cards
+                                            title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>Chips Production <br /> (MT)</span>}
+                                            value={chipsProduction}
+                                            bottomText="Add"
+                                            isLink={true}
+                                            onClick={() =>
+                                                openModal('Add Chips Production In Metric Ton (MT)', 'Chips Production', setChipsProduction)
+                                            }
+                                        />
+
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
-                                        <Cards title={<span style={{fontSize:"14px",lineHeight:"22px",fontWeight:"bold"}}>COAL CONSUMPTION <br /> (MT)</span>} value="00" bottomText="Add" isLink />
+                                        <Cards
+                                            title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>Coal Consumption <br /> (MT)</span>}
+                                            value={coalConsumption}
+                                            bottomText="Add"
+                                            isLink={true}
+                                            onClick={() =>
+                                                openModal('Add Total Coal Consumption In Metric Ton (MT)', 'Total Coal Consumption', setCoalConsumption)
+                                            }
+                                        />
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
-                                        <Cards title={<span style={{fontSize:"14px",lineHeight:"22px",fontWeight:"bold"}}>Coal Consumption <br /> Per Ton (kG)</span>} value="00" bottomText="Total Coal / Chip Prod." />
+                                        <Cards title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>Coal Consumption <br /> Per Ton (kG)</span>} value="00" bottomText="Total Coal / Chip Prod." />
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
-                                        <Cards title={<span style={{fontSize:"14px",lineHeight:"22px",fontWeight:"bold"}}>Total Load <br /> (KCAL)</span>} value="18.17L" bottomText="Auto count" />
+                                        <Cards title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>Total Load <br /> (KCAL)</span>} value="18.17L" bottomText="Auto count" />
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
-                                        <Cards title={<span style={{fontSize:"14px",lineHeight:"22px",fontWeight:"bold"}}>Average TFH Load  <br /> (KCAL)</span>} value="75,694" bottomText="Total Load / Total Hours" />
+                                        <Cards title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>Average TFH Load  <br /> (KCAL)</span>} value="75,694" bottomText="Total Load / Total Hours" />
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
-                                        <Cards title={<span style={{fontSize:"14px",lineHeight:"22px",fontWeight:"bold"}}>TFH LOAD PER TON   <br /> (KCAL)</span>} value="1513.88" bottomText="Average Load / Chip Prod." />
+                                        <Cards title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>TFH LOAD PER TON   <br /> (KCAL)</span>} value="1513.88" bottomText="Average Load / Chip Prod." />
                                     </Col>
                                 </Row>
+
+                                <PopupModel
+                                    open={isModalOpen}
+                                    onClose={closeModal}
+                                    onSubmit={handleSubmit}
+                                    title={modalTitle}
+                                    label={modalLabel}
+                                />
                             </div>
                         </div>
 

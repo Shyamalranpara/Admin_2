@@ -24,3 +24,6 @@ body *{
     line-height: 32px;
     margin-bottom: 40px;
 }
+.input-border{
+    border-radius: 0px;
+}

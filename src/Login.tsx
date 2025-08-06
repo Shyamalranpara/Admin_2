@@ -55,7 +55,7 @@ const Login: React.FC = () => {
                         rules={[{ required: true, message: 'Email' }]}
                     >
                         <label htmlFor="Email">Email</label>
-                        <Input placeholder="Email" name='email' value={formData.email}
+                        <Input className='input-border' placeholder="Email" name='email' value={formData.email}
                             onChange={handleChange} />
                     </Form.Item>
 
@@ -64,7 +64,7 @@ const Login: React.FC = () => {
                         name="password"
                         rules={[{ required: true, message: 'Password' }]}
                     >
-                        <Input type="password" placeholder="Password" name='password' value={formData.password}
+                        <Input className='input-border' type="password" placeholder="Password" name='password' value={formData.password}
                             onChange={handleChange} />
                     </Form.Item>
 
@@ -77,11 +77,12 @@ const Login: React.FC = () => {
 
                     <Form.Item>
                         <Button
+                        className='input-border'
                             block
                             htmlType="submit"
                             style={{ backgroundColor: '#408634', color: 'white', border: 'none' }}
                         >
-                            Submit
+                            Login
                         </Button>
 
 
