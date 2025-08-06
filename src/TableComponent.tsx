@@ -1,7 +1,6 @@
 import React from 'react';
 import { Table, Input, Checkbox, type CheckboxProps, Divider } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import './Tablefiled.css';
 
 interface TableDataType {
   key: string;
@@ -113,8 +112,8 @@ const TableComponent: React.FC = () => {
 
   return (
 
-    <div className="main-table">
-        <div className='checkboxes'>
+    <div className="rounded-[12px] p-[10px]">
+        <div className="w-full h-[50px] flex justify-evenly items-center bg-white" >
                             <Checkbox onChange={onChange}>Wph Out Let Temp</Checkbox>
                             <Checkbox onChange={onChange}>Esp Out Let Temp</Checkbox>
                             <Checkbox onChange={onChange}>Id Fan Frequency(Hz)</Checkbox>
@@ -131,9 +130,13 @@ const TableComponent: React.FC = () => {
         pagination={false}
       />
        <Divider />
-      <div className='button-container'>
-        <button className="btn-save">Save</button>
-      </div>
+
+       <div className='flex justify-end'>
+     <button className="w-[62px] h-[32px] text-[14px] leading-[22px] text-white bg-[#408634] border border-[#408634] px-[15px] py-[4px] ">
+  Save
+</button>
+       </div>
+
     </div>
   );
 };

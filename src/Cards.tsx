@@ -20,32 +20,21 @@ const Cards: React.FC<CardsProps> = ({
   onClick,
 }) => {
   return (
-    <Card
-      style={{
-        borderRadius: 12,
-        width: '100%',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-        minHeight: 180,
-      }}
-    >
-      <p style={{ fontSize: 12, color: '#555' }}>{title}</p>
-      <p style={{ fontSize: '30px', fontWeight: '500', margin: '6px 0', lineHeight: '40px' }}>
+    <Card className='rounded-[12px] w-full shadow-[0_2px_8px_rgba(0,0,0,0.05)] min-h-[180px]' >
+      <p className='text-[12px] text-[#555]'>{title}</p>
+      <p className='text-[30px] font-medium m-[6px 0] leading-[40px]' >
         {value}
-        {unit && <span style={{ fontSize: '30px', lineHeight: '40px' }}>{unit}</span>}
+        {unit && <span className='text-[30px] leading-[40px]'>{unit}</span>}
       </p>
-      <hr style={{ border: 'none', borderTop: '1px solid #eee', margin: '4px 0' }} />
+      <hr className=' mt-4 border-t border-[#eee] my-[4px]' />
       {bottomText && (
-        <p
-          style={{
-            fontSize: '14px',
-            fontWeight: '500',
-            textDecoration: isLink ? 'underline' : 'none',
-            color: isLink ? 'green' : '#408634',
-            cursor: isLink ? 'pointer' : 'default',
-            margin: 0,
-          }}
+       <p
+  className={`text-[14px] font-medium m-0 ${
+    isLink ? 'underline text-green-600 cursor-pointer' : 'text-[#408634] cursor-default'
+  }`}
           onClick={onClick} 
-        >
+>
+        
           {bottomText}
         </p>
       )}

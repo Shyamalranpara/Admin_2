@@ -119,27 +119,28 @@ const Admin: React.FC = () => {
     } = theme.useToken();
 
     return (
-        <div className='admin-container'>
+        <div className='w-[100%] h-[auto] flex flex-col bg-[#E6F6FF]'>
 
             <Layout style={{ minHeight: '100vh' }}>
                 <Sider
+
                     style={{ backgroundColor: "#E6F6FF", height: "265vh", }}
                     width={280}
                 >
                     <div className="demo-logo-vertical" />
-                    <div className='logo-container'>
-                        <img className='jb-logo' src={JBLOGO} alt="logo" />
+                    <div className='flex items-center justify-center'>
+                        <img className='w-[160px] h-[40px] mt-[20px]' src={JBLOGO} alt="logo" />
                     </div>
-                    <Menu className='menu' style={{ backgroundColor: "#E6F6FF" }} defaultSelectedKeys={['1']} mode="inline" items={items} />
+                    <Menu className='w-[100%] h-[100%] mt-[25px]' style={{ backgroundColor: "#E6F6FF" }} defaultSelectedKeys={['1']} mode="inline" items={items} />
                 </Sider>
                 <Layout>
 
                     <Header style={{ background: colorBgContainer, height: "18vh", lineHeight: "1.1" }}>
-                        <div className='header-container'>
+                        <div className='flex items-center justify-between p-[24px] '>
                             <div>
-                                <h3 className='header-title'>JB rPET Industries Private Limited</h3>
+                                <h3 className='text-[18px] font-bold m-0 p-0 ' >JB rPET Industries Private Limited</h3>
                             </div>
-                            <div className='profile-dropdown-container'>
+                            <div className='flex items-center'>
                                 <ProfileDropdown />
                             </div>
 
@@ -147,7 +148,7 @@ const Admin: React.FC = () => {
 
                         <Divider />
 
-                        <div>
+                        <div className='mt-4'>
                             <p>Report / Thermopack Report</p>
                         </div>
 
@@ -156,7 +157,7 @@ const Admin: React.FC = () => {
 
 
                     <Content style={{ margin: '0 16px' }}>
-                        <div className='breadcrumb-container'>
+                        <div className='breadcrumb-container flex items-center justify-between m-0 p-0'>
                             <div>
                                 <Breadcrumb style={{ margin: '16px 0', fontSize: "20px" }} items={[{ title: 'Thermopack Report' }]} />
                             </div>
@@ -164,8 +165,8 @@ const Admin: React.FC = () => {
                             <div className='date-picker-container'>
                                 <DatePicker />
                                 <div>
-                                    <button className='btn-tfh'>TFH 1</button>
-                                    <button className='btn-tfh-2'>TFH 2</button>
+                                    <button className='btn-tfh py-[5px] px-[16px] border border-2 border-[#408634] text-[#408634] text-[14px] rounded-[4px] cursor-pointer'>TFH 1</button>
+                                    <button className='btn-tfh-2 py-[5px] px-[16px] border border-2 border-[#d9d9d9e6] bg-transparent rounded-[4px] text-[14px] cursor-pointer'>TFH 2</button>
                                 </div>
                             </div>
 
@@ -180,14 +181,14 @@ const Admin: React.FC = () => {
                             }}
                         >
 
-                            <div className="expansion-tank-container">
+                            <div className=" flex gap-[24px] mb-[24px] flex-wrap">
       {/* Section 1 - Temperature */}
-      <div className="content-container-main">
-        <p className="section-title">EXPANSION TANK TEMPERATURE (IN °C)</p>
-        <div className="shift-cards-row">
-          <div className="shift-card-col">
+      <div className=" content-container-main flex-1 min-w-[300px] bg-white rounded-[12px] p-5 shadow-custom-soft border border-[#f0f0f0]">
+        <p className="text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK TEMPERATURE (IN °C)</p>
+        <div className="shift-cards-row flex gap-[16px] justify-between">
+          <div className="flex-1">
             <ShiftCard
-              title={<span style={{ fontSize: '14px', lineHeight: '22px' }}>SHIFT 1</span>}
+              title={<span className='font-normal linehigh text-base leading-[22px]' >SHIFT 1</span>}
               value={shift1}
               onAddClick={() =>
                 openModaltwo(
@@ -198,9 +199,9 @@ const Admin: React.FC = () => {
               }
             />
           </div>
-          <div className="shift-card-col">
+          <div className="flex-1">
             <ShiftCard
-              title={<span style={{ fontSize: '14px', lineHeight: '22px' }}>SHIFT 2</span>}
+              title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
               value={shift2}
               onAddClick={() =>
                 openModaltwo(
@@ -215,12 +216,12 @@ const Admin: React.FC = () => {
       </div>
 
       {/* Section 2 - Level */}
-      <div className="content-container-main-1">
-        <p className="section-title">EXPANSION TANK LEVEL (IN MM)</p>
-        <div className="shift-cards-row">
-          <div className="shift-card-col">
+      <div className=" content-container-main flex-1 min-w-[300px] bg-white rounded-[12px] p-5 shadow-custom-soft border border-[#f0f0f0]">
+        <p className="text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK LEVEL (IN MM)</p>
+        <div className="shift-cards-row flex gap-[16px] justify-between">
+          <div className="flex-1">
             <ShiftCard
-              title={<span style={{ fontSize: '14px', lineHeight: '22px' }}>SHIFT 1</span>}
+              title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 1</span>}
               value={levelShift1}
               onAddClick={() =>
                 openModaltwo(
@@ -231,9 +232,9 @@ const Admin: React.FC = () => {
               }
             />
           </div>
-          <div className="shift-card-col">
+          <div className="flex-1">
             <ShiftCard
-              title={<span style={{ fontSize: '14px', lineHeight: '22px' }}>SHIFT 2</span>}
+              title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
               value={levelShift2}
               onAddClick={() =>
                 openModaltwo(
@@ -264,7 +265,7 @@ const Admin: React.FC = () => {
                                 <Row gutter={[12, 12]} justify="start">
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
                                         <Cards
-                                            title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>Chips Production <br /> (MT)</span>}
+                                            title={<span className='text-base font-bold leading[22px]' >Chips Production <br /> (MT)</span>}
                                             value={chipsProduction}
                                             bottomText="Add"
                                             isLink={true}
@@ -276,7 +277,7 @@ const Admin: React.FC = () => {
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
                                         <Cards
-                                            title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>Coal Consumption <br /> (MT)</span>}
+                                            title={<span className='text-base font-bold leading[22px]'>Coal Consumption <br /> (MT)</span>}
                                             value={coalConsumption}
                                             bottomText="Add"
                                             isLink={true}
@@ -286,16 +287,16 @@ const Admin: React.FC = () => {
                                         />
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
-                                        <Cards title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>Coal Consumption <br /> Per Ton (kG)</span>} value="00" bottomText="Total Coal / Chip Prod." />
+                                        <Cards title={<span className='text-base font-bold leading[22px]'>Coal Consumption <br /> Per Ton (kG)</span>} value="00" bottomText="Total Coal / Chip Prod." />
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
-                                        <Cards title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>Total Load <br /> (KCAL)</span>} value="18.17L" bottomText="Auto count" />
+                                        <Cards title={<span className='text-base font-bold leading[22px]'>Total Load <br /> (KCAL)</span>} value="18.17L" bottomText="Auto count" />
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
-                                        <Cards title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>Average TFH Load  <br /> (KCAL)</span>} value="75,694" bottomText="Total Load / Total Hours" />
+                                        <Cards title={<span className='text-base font-bold leading[22px]'>Average TFH Load  <br /> (KCAL)</span>} value="75,694" bottomText="Total Load / Total Hours" />
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
-                                        <Cards title={<span style={{ fontSize: "14px", lineHeight: "22px", fontWeight: "bold" }}>TFH LOAD PER TON   <br /> (KCAL)</span>} value="1513.88" bottomText="Average Load / Chip Prod." />
+                                        <Cards title={<span className='text-base font-bold leading[22px]'>TFH LOAD PER TON   <br /> (KCAL)</span>} value="1513.88" bottomText="Average Load / Chip Prod." />
                                     </Col>
                                 </Row>
 

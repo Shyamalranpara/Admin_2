@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { DatePicker, Modal } from 'antd';
-import './PopupModel.css';
 
 interface PopupModelProps {
   open: boolean;
@@ -28,9 +27,9 @@ const PopupModel: React.FC<PopupModelProps> = ({
 
   return (
     <Modal
-      className="Modal-popup"
+      className="w-[500px] h-[230px]"
       title={
-        <span style={{ fontSize: '20px', fontWeight: '500', lineHeight: '28px' }}>
+        <span className='text-[20px font-normal leading-[28px]' >
           {title}
         </span>
       }
@@ -40,25 +39,20 @@ const PopupModel: React.FC<PopupModelProps> = ({
       onCancel={onClose}
       cancelButtonProps={{ style: { display: 'none' } }}
     >
-      <div className="popup-model">
+      <div className=" flex justify-end items-center">
         <h1>
           <DatePicker />
         </h1>
       </div>
 
-      <div className="popup-model-2">
+      <div className=" leading-[40px]">
         <label>
-          <span style={{ fontSize: '18px', lineHeight: '22px', fontWeight: '400' }}>
+          <span className='text-[18px] leading-[22px] font-normal' >
             {label}
           </span>
           <br />
           <input
-            style={{
-              width: '100%',
-              border: '1px solid #D9D9D9',
-              padding: '12px 5px',
-              borderRadius: '6px',
-            }}
+          className="w-full border border-[#D9D9D9] px-[5px] py-[2px] rounded-[6px]"
             type="text"
             placeholder={placeholder}
             value={inputValue}

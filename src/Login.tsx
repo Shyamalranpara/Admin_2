@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import JBLOGO from './assets/LOGO.png'
 import './Login.css'
+
 import { Button, Form, Input, Flex } from 'antd';
 // const { Title, Text } = Typography;
 const Login: React.FC = () => {
@@ -31,24 +32,24 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className='main'>
+        <div className='w-[100%] h-[98vh] flex justify-center items-center gap-[100px] bg-[#e6f6ff]'>
             <div>
-                <img className="logo" src={JBLOGO} alt="JB rPET logo" />
+                <img className="w-[177px] h-[40px]" src={JBLOGO} alt="JB rPET logo" />
             </div>
 
             <div>
                 <Form
                     onFinish={handleSubmit}
-                    className='form'
+                    className='w-[382px] h-[376px]'
                     name="login"
                     initialValues={{ remember: true }}
                     style={{ maxWidth: 360 }}
                 // onFinish={onFinish}
                 >
 
-                    <div className='form-header'>
+                    <div className='text-center mb-[60px] line-height-[32px] '>
                         <h1 style={{ fontSize: "2.2rem", fontWeight: "600", lineHeight: "32px" }}>LOGIN</h1>
-                        <p style={{ fontWeight: "500", fontSize: "1rem" }}>Welcome back! Login to your account.</p>
+                        <p className='mt-5' style={{ fontWeight: "500", fontSize: "1rem" }}>Welcome back! Login to your account.</p>
                     </div>
 
                     <Form.Item
@@ -71,13 +72,13 @@ const Login: React.FC = () => {
                     <Form.Item>
                         <Flex justify="end" align="center" style={{ marginBottom: '2rem' }}>
 
-                            <a style={{ color: "#00000073" , position:"absolute"}} href="">Forgot password?</a>
+                            <a className='text-[#00000073] absolute'  href="">Forgot password?</a>
                         </Flex>
                     </Form.Item>
 
                     <Form.Item>
                         <Button
-                        className='input-border'
+                        className='input-border '
                             block
                             htmlType="submit"
                             style={{ backgroundColor: '#408634', color: 'white', border: 'none' }}

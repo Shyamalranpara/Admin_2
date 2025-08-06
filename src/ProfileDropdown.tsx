@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Dropdown, Avatar} from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import './ProfileDropdown.css';
 
 const items: MenuProps['items'] = [
   {
@@ -29,18 +28,19 @@ const ProfileDropdown: React.FC = () => {
       open={open}
       onOpenChange={setOpen}
     >
-      <div className="profile-dropdown" onClick={() => setOpen(!open)}>
+      <div className="flex items-center gap-2 cursor-pointer px-2 py-1 rounded-[6px] transition duration-300 ease-in-out hover:bg-gray-100" onClick={() => setOpen(!open)}>
         <Avatar
           src="https://randomuser.me/api/portraits/men/32.jpg"
           size={40}
         />
-        <div className="profile-info">
-          <div className="profile-name">Rohan Patel</div>
-          <div className="profile-role">Employee</div>
+        <div className="flex flex-col leading-[1.2] items-start">
+          <div className="font-semibold text-[14px]">Rohan Patel</div>
+          <div className="text-[12px] text-[#888]">Employee</div>
         </div>
         <DownOutlined
-          className={`dropdown-arrow ${open ? 'rotated' : ''}`}
-        />
+  className={`ml-5 transition-transform duration-300 ease-in-out ${open ? 'rotate-180' : ''}`}
+/>
+
       </div>
     </Dropdown>
   );
