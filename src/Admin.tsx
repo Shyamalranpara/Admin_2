@@ -10,6 +10,7 @@ import ProfileDropdown from './ProfileDropdown';
 import TableComponent from './TableComponent';
 import ShiftCard from './ShiftCard';
 import PopupModel from './PopupModel';
+import PopupModelShiftCard from './PopupModelShiftCard';
 
 const { Header, Content, Sider } = Layout;
 
@@ -79,6 +80,40 @@ const Admin: React.FC = () => {
         closeModal();
     };
 
+
+    // shiftcard 
+
+//    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitletwo, setModalTitletwo] = useState('');
+  const [modalLabeltwo, setModalLabeltwo] = useState('');
+  const [modalSetter, setModalSetter] = useState<(value: string) => void>(() => () => {});
+
+  const [shift1, setShift1] = useState('');
+  const [shift2, setShift2] = useState('');
+  const [levelShift1, setLevelShift1] = useState('');
+  const [levelShift2, setLevelShift2] = useState('');
+
+ const openModaltwo = (
+    title: string,
+    label: string,
+    setter: (value: string) => void
+  ) => {
+    setModalTitle(title);
+    setModalLabel(label);
+    setModalSetter(() => setter);
+    setIsModalOpen(true);
+  };
+ const closeModaltwo = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmittwo = (value: string) => {
+    modalSetter(value);
+    closeModal();
+  };
+
+
+//   shiftcard 
     const {
         token: { colorBgContainer, },
     } = theme.useToken();
@@ -145,38 +180,82 @@ const Admin: React.FC = () => {
                             }}
                         >
 
-                            <div className='expansion-tank-container'>
+                            <div className="expansion-tank-container">
+      {/* Section 1 - Temperature */}
+      <div className="content-container-main">
+        <p className="section-title">EXPANSION TANK TEMPERATURE (IN °C)</p>
+        <div className="shift-cards-row">
+          <div className="shift-card-col">
+            <ShiftCard
+              title={<span style={{ fontSize: '14px', lineHeight: '22px' }}>SHIFT 1</span>}
+              value={shift1}
+              onAddClick={() =>
+                openModaltwo(
+                  'Add Expansion Tank Temperature (IN °C)',
+                  'SHIFT 1',
+                  setShift1
+                )
+              }
+            />
+          </div>
+          <div className="shift-card-col">
+            <ShiftCard
+              title={<span style={{ fontSize: '14px', lineHeight: '22px' }}>SHIFT 2</span>}
+              value={shift2}
+              onAddClick={() =>
+                openModaltwo(
+                  'Add Expansion Tank Temperature (IN °C)',
+                  'SHIFT 2',
+                  setShift2
+                )
+              }
+            />
+          </div>
+        </div>
+      </div>
 
-                                <div className='content-container-main'>
-                                    <p className='section-title'>
-                                        EXPANSION TANK TEMPERATURE (IN °C)
-                                    </p>
-                                    <div className='shift-cards-row'>
-                                        <div className='shift-card-col'>
-                                            <ShiftCard title={<span style={{ fontSize: "14px", lineHeight: "22px" }}>SHIFT 1</span>} />
-                                        </div>
-                                        <div className='shift-card-col'>
-                                            <ShiftCard title={<span style={{ fontSize: "14px", lineHeight: "22px" }}>SHIFT 2</span>} />
-                                        </div>
-                                    </div>
-                                </div>
+      {/* Section 2 - Level */}
+      <div className="content-container-main-1">
+        <p className="section-title">EXPANSION TANK LEVEL (IN MM)</p>
+        <div className="shift-cards-row">
+          <div className="shift-card-col">
+            <ShiftCard
+              title={<span style={{ fontSize: '14px', lineHeight: '22px' }}>SHIFT 1</span>}
+              value={levelShift1}
+              onAddClick={() =>
+                openModaltwo(
+                  'Add Expansion Tank Level (IN MM)',
+                  'SHIFT 1',
+                  setLevelShift1
+                )
+              }
+            />
+          </div>
+          <div className="shift-card-col">
+            <ShiftCard
+              title={<span style={{ fontSize: '14px', lineHeight: '22px' }}>SHIFT 2</span>}
+              value={levelShift2}
+              onAddClick={() =>
+                openModaltwo(
+                  'Add Expansion Tank Level (IN MM)',
+                  'SHIFT 2',
+                  setLevelShift2
+                )
+              }
+            />
+          </div>
+        </div>
+      </div>
 
-                                <div className='content-container-main-1'>
-                                    <p className='section-title'>
-                                        EXPANSION TANK LEVEL (IN MM)
-                                    </p>
-                                    <div className='shift-cards-row'>
-                                        <div className='shift-card-col'>
-                                            <ShiftCard title={<span style={{ fontSize: "14px", lineHeight: "22px" }}>SHIFT 1</span>} />
-
-                                        </div>
-                                        <div className='shift-card-col'>
-                                            <ShiftCard title={<span style={{ fontSize: "14px", lineHeight: "22px" }}>SHIFT 2</span>} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
+      {/* Global Modal */}
+      <PopupModelShiftCard
+        open={isModalOpen}
+        onClose={closeModaltwo}
+        onSubmit={handleSubmittwo}
+        title={modalTitletwo}
+        label={modalLabeltwo}
+      />
+    </div>
 
 
 
