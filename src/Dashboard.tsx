@@ -7,7 +7,13 @@ import { Link } from 'react-router-dom';
 import {Line} from 'react-chartjs-2'
 import firstChart from './data/firstChartdata.json'
 import OilOutlateChart from './OilOutlateChart';
-import OilIntelChart from './OilIntelCart';
+import OilIntelChart from './OilIntelChart';
+import BedTemperatureChart from './BedTemperatureChart';
+import FdFanChart from './FdFanChart';
+import FuleGasChart from './FuleGasChart';
+import WphChart from './WphChart';
+import EspOutChart from './EspOutChart';
+import LoadCart from './LoadCart';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -235,15 +241,27 @@ const Dashboard = () => {
             <div className='w-[730px] h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
                <OilOutlateChart />
             </div>
-            <div className='w-[730px] h-[350px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
+            <div className='w-[730px] h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
               <OilIntelChart />
             </div>
-            <div className='w-[730px] h-[350px] rounded-[8px] shadow-md bg-[#FFFFFF]'></div>
-            <div className='w-[730px] h-[350px] rounded-[8px] shadow-md bg-[#FFFFFF]'></div>
-            <div className='w-[730px] h-[350px] rounded-[8px] shadow-md bg-[#FFFFFF]'></div>
-            <div className='w-[730px] h-[350px] rounded-[8px] shadow-md bg-[#FFFFFF]'></div>
-            <div className='w-[730px] h-[350px] rounded-[8px] shadow-md bg-[#FFFFFF]'></div>
-            <div className='w-[730px] h-[350px] rounded-[8px] shadow-md bg-[#FFFFFF]'></div>
+            <div className='w-[730px] h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
+              <BedTemperatureChart/>
+            </div>
+            <div className='w-[730px] h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
+              <FdFanChart/>
+            </div>
+            <div className='w-[730px] h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
+              <FuleGasChart/>
+            </div>
+            <div className='w-[730px] h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
+              <WphChart/>
+            </div>
+            <div className='w-[730px] h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
+              <EspOutChart/>
+            </div>
+            <div className='w-[730px] h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
+              <LoadCart/>
+            </div>
             </div>
           </Content>
 
