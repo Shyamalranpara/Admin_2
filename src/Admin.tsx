@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import './Admin.css'
 import JBLOGO from './assets/LOGO.png'
-import { Divider } from 'antd';
 import { DatePicker } from 'antd';
 import Cards from './Cards'
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme, Row, Col } from 'antd';
-import ProfileDropdown from './ProfileDropdown';
 import TableComponent from './TableComponent';
 import ShiftCard from './ShiftCard';
 import PopupModel from './PopupModel';
 import PopupModelShiftCard from './PopupModelShiftCard';
-
-const { Header, Content, Sider } = Layout;
+import { Link } from 'react-router-dom';
+import HeaderLayout from './HeaderLayout';
+const { Content, Sider } = Layout;
 
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -34,11 +33,11 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-    getItem('Dashboard', '2', <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5.39578 0H1.0208C0.4579 0 0 0.4579 0 1.0208V3.64579C0 4.20879 0.4579 4.66669 1.0208 4.66669H5.39578C5.95879 4.66669 6.41669 4.20879 6.41669 3.64579V1.0208C6.41669 0.4579 5.95879 0 5.39578 0Z" fill="black" />
-        <path d="M5.39578 5.83332H1.0208C0.4579 5.83332 0 6.29122 0 6.85422V12.9792C0 13.5421 0.4579 14 1.0208 14H5.39578C5.95879 14 6.41669 13.5421 6.41669 12.9792V6.85422C6.41669 6.29122 5.95879 5.83332 5.39578 5.83332Z" fill="black" />
-        <path d="M12.9792 9.33331H8.60421C8.04121 9.33331 7.58331 9.79121 7.58331 10.3542V12.9792C7.58331 13.5421 8.04121 14 8.60421 14H12.9792C13.5421 14 14 13.5421 14 12.9792V10.3542C14 9.79121 13.5421 9.33331 12.9792 9.33331Z" fill="black" />
-        <path d="M12.9792 0H8.60421C8.04121 0 7.58331 0.4579 7.58331 1.0208V7.14578C7.58331 7.70878 8.04121 8.16668 8.60421 8.16668H12.9792C13.5421 8.16668 14 7.70878 14 7.14578V1.0208C14 0.4579 13.5421 0 12.9792 0Z" fill="black" />
+    getItem(<Link to="/Dashboard"><span className='text-[#408634]' >Dashboard</span></Link>, '1' , <svg  width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.39578 0H1.0208C0.4579 0 0 0.4579 0 1.0208V3.64579C0 4.20879 0.4579 4.66669 1.0208 4.66669H5.39578C5.95879 4.66669 6.41669 4.20879 6.41669 3.64579V1.0208C6.41669 0.4579 5.95879 0 5.39578 0Z" fill="#408634" />
+        <path d="M5.39578 5.83332H1.0208C0.4579 5.83332 0 6.29122 0 6.85422V12.9792C0 13.5421 0.4579 14 1.0208 14H5.39578C5.95879 14 6.41669 13.5421 6.41669 12.9792V6.85422C6.41669 6.29122 5.95879 5.83332 5.39578 5.83332Z" fill="#408634" />
+        <path d="M12.9792 9.33331H8.60421C8.04121 9.33331 7.58331 9.79121 7.58331 10.3542V12.9792C7.58331 13.5421 8.04121 14 8.60421 14H12.9792C13.5421 14 14 13.5421 14 12.9792V10.3542C14 9.79121 13.5421 9.33331 12.9792 9.33331Z" fill="#408634" />
+        <path d="M12.9792 0H8.60421C8.04121 0 7.58331 0.4579 7.58331 1.0208V7.14578C7.58331 7.70878 8.04121 8.16668 8.60421 8.16668H12.9792C13.5421 8.16668 14 7.70878 14 7.14578V1.0208C14 0.4579 13.5421 0 12.9792 0Z" fill="#408634" />
     </svg>
     ),
     getItem(<span style={{ color: '#408634' }}>Report</span>, 'sub1', <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,11 +112,6 @@ const Admin: React.FC = () => {
   };
 
 
-//   shiftcard 
-    const {
-        token: { colorBgContainer, },
-    } = theme.useToken();
-
     return (
         <div className='w-[100%] h-[auto] flex flex-col bg-[#E6F6FF]'>
 
@@ -133,28 +127,11 @@ const Admin: React.FC = () => {
                     </div>
                     <Menu className='w-[100%] h-[100%] mt-[25px]' style={{ backgroundColor: "#E6F6FF" }} defaultSelectedKeys={['1']} mode="inline" items={items} />
                 </Sider>
+
                 <Layout>
 
-                    <Header style={{ background: colorBgContainer, height: "18vh", lineHeight: "1.1" }}>
-                        <div className='flex items-center justify-between p-[24px] '>
-                            <div>
-                                <h3 className='text-[18px] font-bold m-0 p-0 ' >JB rPET Industries Private Limited</h3>
-                            </div>
-                            <div className='flex items-center'>
-                                <ProfileDropdown />
-                            </div>
-
-                        </div>
-
-                        <Divider />
-
-                        <div className='mt-4'>
-                            <p>Report / Thermopack Report</p>
-                        </div>
-
-
-                    </Header>
-
+                   
+                    <HeaderLayout />
 
                     <Content style={{ margin: '0 16px' }}>
                         <div className='breadcrumb-container flex items-center justify-between m-0 p-0'>
