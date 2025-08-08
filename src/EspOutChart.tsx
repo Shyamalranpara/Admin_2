@@ -95,8 +95,17 @@ const maxValue = Math.max(...EspOutData.map((item) => item.Outlate));
     responsive: true,
     plugins: {
       legend: {
-        display: true,
-      },
+           Legend:{
+             display:false
+           },
+           labels: {
+             font: {
+               size: 20, 
+               weight: 'bold' 
+             },
+              textAlign: 'start', 
+           }
+         },
       tooltip: {
         enabled: true,
       },
@@ -117,15 +126,24 @@ const maxValue = Math.max(...EspOutData.map((item) => item.Outlate));
         min: 0,
         max: 200,
         ticks: {
+          font: {
+          size: 15
+        },
           stepSize: 50,
         },
         title: {
+          font: {
+          size: 15
+        },
           display: true,
           text: 'ESP Out',
         },
       },
       x: {
         ticks: {
+          font: {
+          size: 15
+        },
           autoSkip: false,
           maxRotation: 45,
           minRotation: 45,

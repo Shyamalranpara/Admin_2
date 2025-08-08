@@ -95,9 +95,18 @@ const FdFanChart: React.FC = () => {
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        display: true,
-      },
+       legend: {
+            Legend:{
+              display:false
+            },
+            labels: {
+              font: {
+                size: 20, 
+                weight: 'bold' 
+              },
+               textAlign: 'start', 
+            }
+          },
       tooltip: {
         enabled: true,
       },
@@ -118,15 +127,23 @@ const FdFanChart: React.FC = () => {
         min: 0,
         max: 200,
         ticks: {
-          stepSize: 50,
+          font: {
+          size: 15
+        },
         },
         title: {
+          font: {
+          size: 15
+        },
           display: true,
           text: 'FD Fan',
         },
       },
       x: {
         ticks: {
+          font: {
+          size: 15
+        },
           autoSkip: false,
           maxRotation: 45,
           minRotation: 45,

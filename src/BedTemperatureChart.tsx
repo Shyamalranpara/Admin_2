@@ -43,6 +43,8 @@ const BedTemperatureChart: React.FC = () => {
 
   const maxValue = Math.max(...bedTempData.map((item) => item.Outlate));
   const maxIndex = bedTempData.findIndex(item => item.Outlate === maxValue);
+  const minValue = Math.min(...bedTempData.map((item) => item.Outlate));
+  const minIndex = bedTempData.findIndex(item => item.Outlate === minValue);
 
   const data = {
     labels: bedTempData.map((item) => item.time),
@@ -75,6 +77,15 @@ const BedTemperatureChart: React.FC = () => {
       ctx.textBaseline = 'bottom';
       ctx.fillText(maxValue.toString(), point.x, point.y - 10);
       ctx.restore();
+
+       const minPoint = meta.data[minIndex];
+      ctx.save();
+      ctx.font = 'bold 14px Arial';
+      ctx.fillStyle = 'red';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(minValue.toString(), minPoint.x, minPoint.y + 15);
+      ctx.restore();
     }
   };
 
@@ -82,8 +93,17 @@ const BedTemperatureChart: React.FC = () => {
     responsive: true,
     plugins: {
       legend: {
-        display: true,
-      },
+           Legend:{
+             display:false
+           },
+           labels: {
+             font: {
+               size: 20, 
+               weight: 'bold' 
+             },
+              textAlign: 'start', 
+           }
+         },
       tooltip: {
         enabled: true,
       },
@@ -104,15 +124,24 @@ const BedTemperatureChart: React.FC = () => {
         min: 0,
         max: 800,
         ticks: {
+          font: {
+          size: 15
+        },
           stepSize: 200,
         },
         title: {
+          font: {
+          size: 15
+        },
           display: true,
           text: 'Bed Temperature',
         },
       },
       x: {
         ticks: {
+          font: {
+          size: 15
+        },
           autoSkip: false,
           maxRotation: 45,
           minRotation: 45,

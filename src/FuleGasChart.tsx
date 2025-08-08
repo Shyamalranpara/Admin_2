@@ -93,9 +93,18 @@ const FuleGasChart: React.FC = () => {
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        display: true,
-      },
+       legend: {
+            Legend:{
+              display:false
+            },
+            labels: {
+              font: {
+                size: 20, 
+                weight: 'bold' 
+              },
+               textAlign: 'start', 
+            }
+          },
       tooltip: {
         enabled: true,
       },
@@ -116,15 +125,24 @@ const FuleGasChart: React.FC = () => {
         min: -1.0,
         max: 1.0,
         ticks: {
+          font: {
+          size: 15
+        },
           stepSize: 0.5,
         },
         title: {
+          font: {
+          size: 15
+        },
           display: true,
           text: 'Fule Gas',
         },
       },
       x: {
         ticks: {
+          font: {
+          size: 15
+        },
           autoSkip: false,
           maxRotation: 45,
           minRotation: 45,

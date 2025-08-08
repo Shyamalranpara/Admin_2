@@ -92,9 +92,18 @@ const WphChart: React.FC = () => {
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        display: true,
-      },
+       legend: {
+            Legend:{
+              display:false
+            },
+            labels: {
+              font: {
+                size: 20, 
+                weight: 'bold' 
+              },
+               textAlign: 'start', 
+            }
+          },
       tooltip: {
         enabled: true,
       },
@@ -115,15 +124,24 @@ const WphChart: React.FC = () => {
         min: 0,
         max: 250,
         ticks: {
+          font: {
+          size: 15
+        },
           stepSize: 50,
         },
         title: {
+          font: {
+          size: 15
+        },
           display: true,
           text: 'WPH',
         },
       },
       x: {
         ticks: {
+          font: {
+          size: 15
+        },
           autoSkip: false,
           maxRotation: 45,
           minRotation: 45,

@@ -63,19 +63,19 @@ const Admin: React.FC = () => {
     const [currentSetter, setCurrentSetter] = useState<(value: string) => void>(() => () => { });
     const [chipsProduction, setChipsProduction] = useState('00');
     const [coalConsumption, setCoalConsumption] = useState('00');
-const [modalValue, setModalValue] = useState('');
-const openModal = (
-  title: string,
-  label: string,
-  setter: (value: string) => void,
-  value: string
-) => {
-  setModalTitle(title);
-  setModalLabel(label);
-  setCurrentSetter(() => setter);
-  setModalValue(value); 
-  setIsModalOpen(true);
-};
+    const [modalValue, setModalValue] = useState('');
+    const openModal = (
+        title: string,
+        label: string,
+        setter: (value: string) => void,
+        value: string
+    ) => {
+        setModalTitle(title);
+        setModalLabel(label);
+        setCurrentSetter(() => setter);
+        setModalValue(value);
+        setIsModalOpen(true);
+    };
     const closeModal = () => {
         setIsModalOpen(false);
     };
@@ -265,14 +265,14 @@ const openModal = (
                                             value={chipsProduction}
                                             bottomText={chipsProduction && chipsProduction !== "00" ? "Edit" : "Add"}
                                             isLink={true}
-                                           onClick={() =>
-    openModal(
-      'Add Chips Production In Metric Ton (MT)',
-      'Chips Production',
-      setChipsProduction,
-      chipsProduction // yaha current value bhej rahe
-    )
-  }
+                                            onClick={() =>
+                                                openModal(
+                                                    'Add Chips Production In Metric Ton (MT)',
+                                                    'Chips Production',
+                                                    setChipsProduction,
+                                                    chipsProduction // yaha current value bhej rahe
+                                                )
+                                            }
                                         />
 
                                     </Col>
@@ -307,12 +307,11 @@ const openModal = (
 
                                 <PopupModel
                                     open={isModalOpen}
-  onClose={closeModal}
-  onSubmit={handleSubmit}
-  title={modalTitle}
-  label={modalLabel}
-  defaultValue={modalValue}
-                                />
+                                    onClose={closeModal}
+                                    onSubmit={handleSubmit}
+                                    title={modalTitle}
+                                    label={modalLabel}
+                                    defaultValue={modalValue}/>
                             </div>
                         </div>
 

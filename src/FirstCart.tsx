@@ -91,48 +91,65 @@ const FirstCart: React.FC = () => {
     }
   };
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      Legend:{
+        display:false
+      },
+      labels: {
+        font: {
+          size: 20, 
+          weight: 'bold' 
+        },
+         textAlign: 'start', 
+      }
+    },
+    tooltip: {
+      enabled: true,
+    },
+    annotation: {
+      annotations: {
+        line1: {
+          type: 'line',
+          yMin: 19,
+          yMax: 19,
+          borderColor: '#A64D79',
+          borderWidth: 2,
+        },
+      },
+    },
+  },
+  scales: {
+    y: {
+      min: 0,
+      max: 40,
+      ticks: {
+        font: {
+          size: 15
+        },
+      },
+      title: {
+        font: {
+          size: 15
+        },
         display: true,
-      },
-      tooltip: {
-        enabled: true,
-      },
-      annotation: {
-        annotations: {
-          line1: {
-            type: 'line',
-            yMin: 19,
-            yMax: 19,
-            borderColor: '#A64D79',
-            borderWidth: 2,
-          },
-        },
+        text: 'Delta',
       },
     },
-    scales: {
-      y: {
-        min: 0,
-        max: 40,
-        ticks: {
-          stepSize: 10,
+    x: {
+      ticks: {
+        font: {
+          size: 15
         },
-        title: {
-          display: true,
-          text: 'Delta',
-        },
-      },
-      x: {
-        ticks: {
-          autoSkip: false,
-          maxRotation: 45,
-          minRotation: 45,
-        },
+        autoSkip: false,
+        maxRotation: 45,
+        minRotation: 45,
       },
     },
-  };
+  },
+};
 
   return (
     <div>
