@@ -8,17 +8,22 @@ interface PopupModelProps {
   title?: string;
   label?: string;
 placeholder?: string;
+ defaultValue?: string;
 }
 
 const PopupModel: React.FC<PopupModelProps> = ({
-  open,
+   open,
   onClose,
   onSubmit,
   title,
   label,
   placeholder = 'Enter',
+  defaultValue = ''
 }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(defaultValue);
+   React.useEffect(() => {
+    setInputValue(defaultValue);
+  }, [defaultValue, open]);
 
   const handleOk = () => {
     onSubmit(inputValue);

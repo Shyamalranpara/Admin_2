@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Input } from 'antd';
+import { Modal, Input, DatePicker } from 'antd';
 
 interface PopupModelShiftCardProps {
   open: boolean;
@@ -51,6 +51,11 @@ const PopupModelShiftCard: React.FC<PopupModelShiftCardProps> = ({
       cancelButtonProps={{ style: { display: 'none' } }}
     >
       <label>{label}</label>
+
+      <div className='ml-80 p-2'>
+          <DatePicker />
+      </div>
+
       <Input
         placeholder="Enter value"
         value={value} 

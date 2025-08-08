@@ -33,7 +33,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-    getItem(<Link to="/Admin"><span className='text-[#408634]' >Dashboard</span></Link>, '1' , <svg  width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    getItem(<Link to="/Admin"><span className='text-[#408634]' >Dashboard</span></Link>, '1', <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.39578 0H1.0208C0.4579 0 0 0.4579 0 1.0208V3.64579C0 4.20879 0.4579 4.66669 1.0208 4.66669H5.39578C5.95879 4.66669 6.41669 4.20879 6.41669 3.64579V1.0208C6.41669 0.4579 5.95879 0 5.39578 0Z" fill="#408634" />
         <path d="M5.39578 5.83332H1.0208C0.4579 5.83332 0 6.29122 0 6.85422V12.9792C0 13.5421 0.4579 14 1.0208 14H5.39578C5.95879 14 6.41669 13.5421 6.41669 12.9792V6.85422C6.41669 6.29122 5.95879 5.83332 5.39578 5.83332Z" fill="#408634" />
         <path d="M12.9792 9.33331H8.60421C8.04121 9.33331 7.58331 9.79121 7.58331 10.3542V12.9792C7.58331 13.5421 8.04121 14 8.60421 14H12.9792C13.5421 14 14 13.5421 14 12.9792V10.3542C14 9.79121 13.5421 9.33331 12.9792 9.33331Z" fill="#408634" />
@@ -63,57 +63,62 @@ const Admin: React.FC = () => {
     const [currentSetter, setCurrentSetter] = useState<(value: string) => void>(() => () => { });
     const [chipsProduction, setChipsProduction] = useState('00');
     const [coalConsumption, setCoalConsumption] = useState('00');
-    
-
-    const openModal = (title: string, label: string, setter: (value: string) => void) => {
-        setModalTitle(title);
-        setModalLabel(label);
-        setCurrentSetter(() => setter); 
-        setIsModalOpen(true);
-    };
+const [modalValue, setModalValue] = useState('');
+const openModal = (
+  title: string,
+  label: string,
+  setter: (value: string) => void,
+  value: string
+) => {
+  setModalTitle(title);
+  setModalLabel(label);
+  setCurrentSetter(() => setter);
+  setModalValue(value); 
+  setIsModalOpen(true);
+};
     const closeModal = () => {
         setIsModalOpen(false);
     };
 
     const handleSubmit = (value: string) => {
-        currentSetter(value); 
+        currentSetter(value);
         closeModal();
     };
 
 
     // shiftcard 
-const [isModalTwoOpen, setIsModalTwoOpen] = useState(false);
-const [modalTitleTwo, setModalTitleTwo] = useState('');
-const [modalLabelTwo, setModalLabelTwo] = useState('');
-const [modalSetterTwo, setModalSetterTwo] = useState<(value: string) => void>(() => () => {});
-const [modalInputValueTwo, setModalInputValueTwo] = useState('');
+    const [isModalTwoOpen, setIsModalTwoOpen] = useState(false);
+    const [modalTitleTwo, setModalTitleTwo] = useState('');
+    const [modalLabelTwo, setModalLabelTwo] = useState('');
+    const [modalSetterTwo, setModalSetterTwo] = useState<(value: string) => void>(() => () => { });
+    const [modalInputValueTwo, setModalInputValueTwo] = useState('');
 
-const [shift1, setShift1] = useState('');
-const [shift2, setShift2] = useState('');
-const [levelShift1, setLevelShift1] = useState('');
-const [levelShift2, setLevelShift2] = useState('');
+    const [shift1, setShift1] = useState('');
+    const [shift2, setShift2] = useState('');
+    const [levelShift1, setLevelShift1] = useState('');
+    const [levelShift2, setLevelShift2] = useState('');
 
-const openModalTwo = (
-  title: string,
-  label: string,
-  setter: (value: string) => void,
-   currentValue: string
-) => {
-  setModalTitleTwo(title);
-  setModalLabelTwo(label);
-  setModalSetterTwo(() => setter);
-  setIsModalTwoOpen(true);
-   setModalInputValueTwo(currentValue);
-};
+    const openModalTwo = (
+        title: string,
+        label: string,
+        setter: (value: string) => void,
+        currentValue: string
+    ) => {
+        setModalTitleTwo(title);
+        setModalLabelTwo(label);
+        setModalSetterTwo(() => setter);
+        setIsModalTwoOpen(true);
+        setModalInputValueTwo(currentValue);
+    };
 
-const closeModalTwo = () => {
-  setIsModalTwoOpen(false);
-};
+    const closeModalTwo = () => {
+        setIsModalTwoOpen(false);
+    };
 
-const handleSubmitTwo = (value: string) => {
-  modalSetterTwo(value);
-  closeModalTwo();
-};
+    const handleSubmitTwo = (value: string) => {
+        modalSetterTwo(value);
+        closeModalTwo();
+    };
 
 
 
@@ -135,7 +140,7 @@ const handleSubmitTwo = (value: string) => {
 
                 <Layout>
 
-                   
+
                     <HeaderLayout />
 
                     <Content style={{ margin: '0 16px' }}>
@@ -164,90 +169,90 @@ const handleSubmitTwo = (value: string) => {
                         >
 
                             <div className=" flex gap-[24px] mb-[24px] flex-wrap">
-      {/* Section 1 - Temperature */}
-      <div className=" content-container-main flex-1 min-w-[300px] bg-white rounded-[12px] p-5 shadow-custom-soft border border-[#f0f0f0]">
-        <p className="text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK TEMPERATURE (IN °C)</p>
-        <div className="shift-cards-row flex gap-[16px] justify-between">
-          <div className="flex-1">
-           <ShiftCard
-  title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 1</span>}
-  value={shift1}
-      onAddClick={() =>
-        openModalTwo(
-          'Add Expansion Tank Temperature (IN °C)',
-          'SHIFT 1',
-          setShift1,
-          shift1 
-        )
-      }
-  
-/>
-          </div>
-          <div className="flex-1">
-           <ShiftCard
-  title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
-  value={shift2}
-      onAddClick={() =>
-        openModalTwo(
-          'Add Expansion Tank Temperature (IN °C)',
-          'SHIFT 2',
-          setShift2,
-          shift2
-        )
-      }
-/>
-          </div>
-        </div>
-      </div>
+                                {/* Section 1 - Temperature */}
+                                <div className=" content-container-main flex-1 min-w-[300px] bg-white rounded-[12px] p-5 shadow-custom-soft border border-[#f0f0f0]">
+                                    <p className="text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK TEMPERATURE (IN °C)</p>
+                                    <div className="shift-cards-row flex gap-[16px] justify-between">
+                                        <div className="flex-1">
+                                            <ShiftCard
+                                                title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 1</span>}
+                                                value={shift1}
+                                                onAddClick={() =>
+                                                    openModalTwo(
+                                                        'Add Expansion Tank Temperature (IN °C)',
+                                                        'SHIFT 1',
+                                                        setShift1,
+                                                        shift1
+                                                    )
+                                                }
 
-      {/* Section 2 - Level */}
-      <div className=" content-container-main flex-1 min-w-[300px] bg-white rounded-[12px] p-5 shadow-custom-soft border border-[#f0f0f0]">
-        <p className="text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK LEVEL (IN MM)</p>
-        <div className="shift-cards-row flex gap-[16px] justify-between">
-          <div className="flex-1">
-           
-<ShiftCard
-  title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 1</span>}
- value={levelShift1}
-      onAddClick={() =>
-        openModalTwo(
-          'Add Expansion Tank Level (IN MM)',
-          'SHIFT 1',
-          setLevelShift1,
-          levelShift1
-        )
-      }
-/>
+                                            />
+                                        </div>
+                                        <div className="flex-1">
+                                            <ShiftCard
+                                                title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
+                                                value={shift2}
+                                                onAddClick={() =>
+                                                    openModalTwo(
+                                                        'Add Expansion Tank Temperature (IN °C)',
+                                                        'SHIFT 2',
+                                                        setShift2,
+                                                        shift2
+                                                    )
+                                                }
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
 
-          </div>
-          <div className="flex-1">
-           <ShiftCard
-  title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
-   value={levelShift2}
-      onAddClick={() =>
-        openModalTwo(
-          'Add Expansion Tank Level (IN MM)',
-          'SHIFT 2',
-          setLevelShift2,
-          levelShift2
-        )
-      }
-/>
-          </div>
-        </div>
-      </div>
+                                {/* Section 2 - Level */}
+                                <div className=" content-container-main flex-1 min-w-[300px] bg-white rounded-[12px] p-5 shadow-custom-soft border border-[#f0f0f0]">
+                                    <p className="text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK LEVEL (IN MM)</p>
+                                    <div className="shift-cards-row flex gap-[16px] justify-between">
+                                        <div className="flex-1">
 
-      {/* Global Modal */}
-      <PopupModelShiftCard
-   open={isModalTwoOpen}
-      onClose={closeModalTwo}
-      onSubmit={handleSubmitTwo}
-      title={modalTitleTwo}
-      label={modalLabelTwo}
-      value={modalInputValueTwo} // pass current value
-      onChange={(val) => setModalInputValueTwo(val)}
-  />
-    </div>
+                                            <ShiftCard
+                                                title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 1</span>}
+                                                value={levelShift1}
+                                                onAddClick={() =>
+                                                    openModalTwo(
+                                                        'Add Expansion Tank Level (IN MM)',
+                                                        'SHIFT 1',
+                                                        setLevelShift1,
+                                                        levelShift1
+                                                    )
+                                                }
+                                            />
+
+                                        </div>
+                                        <div className="flex-1">
+                                            <ShiftCard
+                                                title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
+                                                value={levelShift2}
+                                                onAddClick={() =>
+                                                    openModalTwo(
+                                                        'Add Expansion Tank Level (IN MM)',
+                                                        'SHIFT 2',
+                                                        setLevelShift2,
+                                                        levelShift2
+                                                    )
+                                                }
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Global Modal */}
+                                <PopupModelShiftCard
+                                    open={isModalTwoOpen}
+                                    onClose={closeModalTwo}
+                                    onSubmit={handleSubmitTwo}
+                                    title={modalTitleTwo}
+                                    label={modalLabelTwo}
+                                    value={modalInputValueTwo} // pass current value
+                                    onChange={(val) => setModalInputValueTwo(val)}
+                                />
+                            </div>
 
 
 
@@ -258,11 +263,16 @@ const handleSubmitTwo = (value: string) => {
                                         <Cards
                                             title={<span className='text-base font-bold leading[22px]' >Chips Production <br /> (MT)</span>}
                                             value={chipsProduction}
-                                            bottomText="Edit"
+                                            bottomText={chipsProduction && chipsProduction !== "00" ? "Edit" : "Add"}
                                             isLink={true}
-                                            onClick={() =>
-                                                openModal('Add Chips Production In Metric Ton (MT)', 'Chips Production', setChipsProduction)
-                                            }
+                                           onClick={() =>
+    openModal(
+      'Add Chips Production In Metric Ton (MT)',
+      'Chips Production',
+      setChipsProduction,
+      chipsProduction // yaha current value bhej rahe
+    )
+  }
                                         />
 
                                     </Col>
@@ -270,11 +280,15 @@ const handleSubmitTwo = (value: string) => {
                                         <Cards
                                             title={<span className='text-base font-bold leading[22px]'>Coal Consumption <br /> (MT)</span>}
                                             value={coalConsumption}
-                                            bottomText="Add"
+                                            bottomText={coalConsumption && coalConsumption !== "00" ? "Edit" : "Add"}
                                             isLink={true}
                                             onClick={() =>
-                                                openModal('Add Total Coal Consumption In Metric Ton (MT)', 'Total Coal Consumption', setCoalConsumption)
-                                            }
+                                                openModal(
+                                                    'Add Coal Consumption In Metric Ton (MT)',
+                                                    'Coal Consumption',
+                                                    setCoalConsumption,
+                                                    coalConsumption
+                                                )}
                                         />
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
@@ -293,10 +307,11 @@ const handleSubmitTwo = (value: string) => {
 
                                 <PopupModel
                                     open={isModalOpen}
-                                    onClose={closeModal}
-                                    onSubmit={handleSubmit}
-                                    title={modalTitle}
-                                    label={modalLabel}
+  onClose={closeModal}
+  onSubmit={handleSubmit}
+  title={modalTitle}
+  label={modalLabel}
+  defaultValue={modalValue}
                                 />
                             </div>
                         </div>
