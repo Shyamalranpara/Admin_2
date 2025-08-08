@@ -33,7 +33,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-    getItem(<Link to="/Dashboard"><span className='text-[#408634]' >Dashboard</span></Link>, '1' , <svg  width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    getItem(<Link to="/Admin"><span className='text-[#408634]' >Dashboard</span></Link>, '1' , <svg  width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.39578 0H1.0208C0.4579 0 0 0.4579 0 1.0208V3.64579C0 4.20879 0.4579 4.66669 1.0208 4.66669H5.39578C5.95879 4.66669 6.41669 4.20879 6.41669 3.64579V1.0208C6.41669 0.4579 5.95879 0 5.39578 0Z" fill="#408634" />
         <path d="M5.39578 5.83332H1.0208C0.4579 5.83332 0 6.29122 0 6.85422V12.9792C0 13.5421 0.4579 14 1.0208 14H5.39578C5.95879 14 6.41669 13.5421 6.41669 12.9792V6.85422C6.41669 6.29122 5.95879 5.83332 5.39578 5.83332Z" fill="#408634" />
         <path d="M12.9792 9.33331H8.60421C8.04121 9.33331 7.58331 9.79121 7.58331 10.3542V12.9792C7.58331 13.5421 8.04121 14 8.60421 14H12.9792C13.5421 14 14 13.5421 14 12.9792V10.3542C14 9.79121 13.5421 9.33331 12.9792 9.33331Z" fill="#408634" />
@@ -45,7 +45,7 @@ const items: MenuItem[] = [
         <path d="M10.5625 5.06259C10.5625 5.2891 10.7461 5.47274 10.9727 5.47274H14.0078C14.0081 7.35863 14.0078 15.0724 14.0078 15.1798C14.0078 15.6321 13.6398 16 13.1875 16.0001H4.82031C4.368 16.0001 4 15.6321 4 15.1798V2.8204C4.00013 2.3682 4.36808 2.00009 4.82031 2.00009C8.44221 2.00009 9.94101 1.99989 10.5625 2.00009V5.06259ZM5.63672 14.4298C5.50093 14.4298 5.39064 14.5401 5.39062 14.6759C5.39062 14.8117 5.50092 14.922 5.63672 14.922H12.5215C12.6571 14.9217 12.7666 14.8115 12.7666 14.6759C12.7666 14.5402 12.6571 14.43 12.5215 14.4298H5.63672ZM5.63672 12.8751C5.50101 12.8751 5.39077 12.9845 5.39062 13.1202C5.39062 13.256 5.50092 13.3663 5.63672 13.3663H12.5215C12.6571 13.3661 12.7666 13.2559 12.7666 13.1202C12.7665 12.9847 12.657 12.8753 12.5215 12.8751H5.63672Z" fill="#408634" />
     </svg>
         , [
-            getItem(<span style={{ color: '#408634' }}>Thermopack Report</span>, '3'),
+            getItem(<Link to="/Login"><span className='text-[#408634]' >Thermopack Report</span></Link>, '3'),
             // getItem('Bill', '4'),
             // getItem('Alex', '5'),
         ]),
@@ -63,6 +63,7 @@ const Admin: React.FC = () => {
     const [currentSetter, setCurrentSetter] = useState<(value: string) => void>(() => () => { });
     const [chipsProduction, setChipsProduction] = useState('00');
     const [coalConsumption, setCoalConsumption] = useState('00');
+    
 
     const openModal = (title: string, label: string, setter: (value: string) => void) => {
         setModalTitle(title);
@@ -81,35 +82,39 @@ const Admin: React.FC = () => {
 
 
     // shiftcard 
+const [isModalTwoOpen, setIsModalTwoOpen] = useState(false);
+const [modalTitleTwo, setModalTitleTwo] = useState('');
+const [modalLabelTwo, setModalLabelTwo] = useState('');
+const [modalSetterTwo, setModalSetterTwo] = useState<(value: string) => void>(() => () => {});
+const [modalInputValueTwo, setModalInputValueTwo] = useState('');
 
-//    const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitletwo, setModalTitletwo] = useState('');
-  const [modalLabeltwo, setModalLabeltwo] = useState('');
-  const [modalSetter, setModalSetter] = useState<(value: string) => void>(() => () => {});
+const [shift1, setShift1] = useState('');
+const [shift2, setShift2] = useState('');
+const [levelShift1, setLevelShift1] = useState('');
+const [levelShift2, setLevelShift2] = useState('');
 
-  const [shift1, setShift1] = useState('');
-  const [shift2, setShift2] = useState('');
-  const [levelShift1, setLevelShift1] = useState('');
-  const [levelShift2, setLevelShift2] = useState('');
+const openModalTwo = (
+  title: string,
+  label: string,
+  setter: (value: string) => void,
+   currentValue: string
+) => {
+  setModalTitleTwo(title);
+  setModalLabelTwo(label);
+  setModalSetterTwo(() => setter);
+  setIsModalTwoOpen(true);
+   setModalInputValueTwo(currentValue);
+};
 
- const openModaltwo = (
-    title: string,
-    label: string,
-    setter: (value: string) => void
-  ) => {
-    setModalTitle(title);
-    setModalLabel(label);
-    setModalSetter(() => setter);
-    setIsModalOpen(true);
-  };
- const closeModaltwo = () => {
-    setIsModalOpen(false);
-  };
+const closeModalTwo = () => {
+  setIsModalTwoOpen(false);
+};
 
-  const handleSubmittwo = (value: string) => {
-    modalSetter(value);
-    closeModal();
-  };
+const handleSubmitTwo = (value: string) => {
+  modalSetterTwo(value);
+  closeModalTwo();
+};
+
 
 
     return (
@@ -164,30 +169,33 @@ const Admin: React.FC = () => {
         <p className="text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK TEMPERATURE (IN °C)</p>
         <div className="shift-cards-row flex gap-[16px] justify-between">
           <div className="flex-1">
-            <ShiftCard
-              title={<span className='font-normal linehigh text-base leading-[22px]' >SHIFT 1</span>}
-              value={shift1}
-              onAddClick={() =>
-                openModaltwo(
-                  'Add Expansion Tank Temperature (IN °C)',
-                  'SHIFT 1',
-                  setShift1
-                )
-              }
-            />
+           <ShiftCard
+  title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 1</span>}
+  value={shift1}
+      onAddClick={() =>
+        openModalTwo(
+          'Add Expansion Tank Temperature (IN °C)',
+          'SHIFT 1',
+          setShift1,
+          shift1 
+        )
+      }
+  
+/>
           </div>
           <div className="flex-1">
-            <ShiftCard
-              title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
-              value={shift2}
-              onAddClick={() =>
-                openModaltwo(
-                  'Add Expansion Tank Temperature (IN °C)',
-                  'SHIFT 2',
-                  setShift2
-                )
-              }
-            />
+           <ShiftCard
+  title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
+  value={shift2}
+      onAddClick={() =>
+        openModalTwo(
+          'Add Expansion Tank Temperature (IN °C)',
+          'SHIFT 2',
+          setShift2,
+          shift2
+        )
+      }
+/>
           </div>
         </div>
       </div>
@@ -197,42 +205,48 @@ const Admin: React.FC = () => {
         <p className="text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK LEVEL (IN MM)</p>
         <div className="shift-cards-row flex gap-[16px] justify-between">
           <div className="flex-1">
-            <ShiftCard
-              title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 1</span>}
-              value={levelShift1}
-              onAddClick={() =>
-                openModaltwo(
-                  'Add Expansion Tank Level (IN MM)',
-                  'SHIFT 1',
-                  setLevelShift1
-                )
-              }
-            />
+           
+<ShiftCard
+  title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 1</span>}
+ value={levelShift1}
+      onAddClick={() =>
+        openModalTwo(
+          'Add Expansion Tank Level (IN MM)',
+          'SHIFT 1',
+          setLevelShift1,
+          levelShift1
+        )
+      }
+/>
+
           </div>
           <div className="flex-1">
-            <ShiftCard
-              title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
-              value={levelShift2}
-              onAddClick={() =>
-                openModaltwo(
-                  'Add Expansion Tank Level (IN MM)',
-                  'SHIFT 2',
-                  setLevelShift2
-                )
-              }
-            />
+           <ShiftCard
+  title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
+   value={levelShift2}
+      onAddClick={() =>
+        openModalTwo(
+          'Add Expansion Tank Level (IN MM)',
+          'SHIFT 2',
+          setLevelShift2,
+          levelShift2
+        )
+      }
+/>
           </div>
         </div>
       </div>
 
       {/* Global Modal */}
       <PopupModelShiftCard
-        open={isModalOpen}
-        onClose={closeModaltwo}
-        onSubmit={handleSubmittwo}
-        title={modalTitletwo}
-        label={modalLabeltwo}
-      />
+   open={isModalTwoOpen}
+      onClose={closeModalTwo}
+      onSubmit={handleSubmitTwo}
+      title={modalTitleTwo}
+      label={modalLabelTwo}
+      value={modalInputValueTwo} // pass current value
+      onChange={(val) => setModalInputValueTwo(val)}
+  />
     </div>
 
 
@@ -244,7 +258,7 @@ const Admin: React.FC = () => {
                                         <Cards
                                             title={<span className='text-base font-bold leading[22px]' >Chips Production <br /> (MT)</span>}
                                             value={chipsProduction}
-                                            bottomText="Add"
+                                            bottomText="Edit"
                                             isLink={true}
                                             onClick={() =>
                                                 openModal('Add Chips Production In Metric Ton (MT)', 'Chips Production', setChipsProduction)

@@ -30,7 +30,7 @@ const Cards: React.FC<CardsProps> = ({
       {bottomText && (
        <p
   className={`text-[14px] font-medium m-0 ${
-    isLink ? 'underline text-green-600 cursor-pointer' : 'text-[#408634] cursor-default'
+    isLink ? 'underline text-green-600 cursor-pointer' : 'text-slate-500 cursor-default '
   }`}
           onClick={onClick} 
 >

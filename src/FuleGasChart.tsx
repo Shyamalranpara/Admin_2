@@ -9,8 +9,9 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import annotationPlugin from 'chartjs-plugin-annotation';
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend,annotationPlugin);
 
 const FuleGasChart: React.FC = () => {
   const FuleGasData = [
@@ -40,20 +41,53 @@ const FuleGasChart: React.FC = () => {
     { time: '07:00', Outlate: 0 },
   ];
 
+  const maxValue = Math.max(...FuleGasData.map((item) => item.Outlate));
+  const minValue = Math.min(...FuleGasData.map((item) => item.Outlate));
+  const maxIndex = FuleGasData.findIndex(item => item.Outlate === maxValue);
+  const minIndex = FuleGasData.findIndex(item => item.Outlate === minValue);
+
   const data = {
     labels: FuleGasData .map((item) => item.time),
     datasets: [
       {
         label: 'Fule Gas',
         data: FuleGasData .map((item) => item.Outlate),
-        backgroundColor: '#405189',
-        borderColor: '#405189',
+        backgroundColor: '#683AF3',
+        borderColor: '#683AF3',
         fill: false,
         tension: 0.4,
         pointRadius: 4,
         pointHoverRadius: 6,
       },
     ],
+  };
+
+  const maxMinValuePlugin = {
+    id: 'maxMinValuePlugin',
+    afterDatasetsDraw(chart: any) {
+      const { ctx } = chart;
+      const meta = chart.getDatasetMeta(0);
+
+      // Max value label
+      const maxPoint = meta.data[maxIndex];
+      ctx.save();
+      ctx.font = 'bold 14px Arial';
+      ctx.fillStyle = 'green';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(maxValue.toString(), maxPoint.x, maxPoint.y - 10);
+      ctx.restore();
+
+      // Min value label
+      const minPoint = meta.data[minIndex];
+      ctx.save();
+      ctx.font = 'bold 14px Arial';
+      ctx.fillStyle = 'red';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(minValue.toString(), minPoint.x, minPoint.y + 15);
+      ctx.restore();
+    }
   };
 
   const options = {
@@ -64,6 +98,17 @@ const FuleGasChart: React.FC = () => {
       },
       tooltip: {
         enabled: true,
+      },
+      annotation: {
+        annotations: {
+          line1: {
+            type: 'line',
+            yMin: 300,
+            yMax: 300,
+            borderColor: '#A64D79',
+            borderWidth: 2,
+          },
+        },
       },
     },
     scales: {
@@ -90,7 +135,7 @@ const FuleGasChart: React.FC = () => {
 
   return (
     <div>
-      <Line data={data} options={options} />
+      <Line data={data} options={options} plugins={[maxMinValuePlugin]} />
     </div>
   );
 };

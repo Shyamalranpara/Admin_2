@@ -1,39 +1,34 @@
-// PopupModel.tsx
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Modal, Input } from 'antd';
 
-interface PopupModelShiftCard {
+interface PopupModelShiftCardProps {
   open: boolean;
   title: string;
   label: string;
+  value: string; 
+  onChange: (value: string) => void;
   onClose: () => void;
   onSubmit: (value: string) => void;
 }
 
-const PopupModelShiftCard: React.FC<PopupModelShiftCard> = ({
+const PopupModelShiftCard: React.FC<PopupModelShiftCardProps> = ({
   open,
   title,
   label,
+  value,
+  onChange,
   onClose,
   onSubmit,
 }) => {
-  const [inputValue, setInputValue] = useState('');
-
   const handleOk = () => {
-    if (inputValue.trim()) {
-      onSubmit(inputValue);
+    if (value.trim()) {
+      onSubmit(value);
     }
-    setInputValue('');
   };
 
   const handleCancel = () => {
     onClose();
-    setInputValue('');
   };
-
-  useEffect(() => {
-    if (open) setInputValue('');
-  }, [open]);
 
   return (
     <Modal
@@ -41,19 +36,25 @@ const PopupModelShiftCard: React.FC<PopupModelShiftCard> = ({
       open={open}
       onCancel={handleCancel}
       onOk={handleOk}
-     okText={
-  <button style={{ backgroundColor: "#408634", color: "white", padding: "5px 12px", border: "none", borderRadius: "4px" }}>
-    Submit
-  </button>
-}
-
+      okText={
+        <button
+          style={{
+            color: 'white',
+            padding: '5px 12px',
+            border: 'none',
+            borderRadius: '4px',
+          }}
+        >
+          Submit
+        </button>
+      }
       cancelButtonProps={{ style: { display: 'none' } }}
     >
       <label>{label}</label>
       <Input
         placeholder="Enter value"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        value={value} 
+        onChange={(e) => onChange(e.target.value)}
       />
     </Modal>
   );

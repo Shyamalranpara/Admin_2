@@ -4,8 +4,6 @@ const { Content, Sider } = Layout;
 import { DatePicker, Layout, Menu, type MenuProps } from 'antd'
 import JBLOGO from './assets/LOGO.png'
 import { Link } from 'react-router-dom';
-import {Line} from 'react-chartjs-2'
-import firstChart from './data/firstChartdata.json'
 import OilOutlateChart from './OilOutlateChart';
 import OilIntelChart from './OilIntelChart';
 import BedTemperatureChart from './BedTemperatureChart';
@@ -14,6 +12,7 @@ import FuleGasChart from './FuleGasChart';
 import WphChart from './WphChart';
 import EspOutChart from './EspOutChart';
 import LoadCart from './LoadCart';
+import FirstCart from './FirstCart';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -32,7 +31,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem(<Link to="/Dashboard"><span className='text-[#408634]' >Dashboard</span></Link>, '1', <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  getItem(<Link to="/Admin"><span className='text-[#408634]' >Dashboard</span></Link>, '1', <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M5.39578 0H1.0208C0.4579 0 0 0.4579 0 1.0208V3.64579C0 4.20879 0.4579 4.66669 1.0208 4.66669H5.39578C5.95879 4.66669 6.41669 4.20879 6.41669 3.64579V1.0208C6.41669 0.4579 5.95879 0 5.39578 0Z" fill="#408634" />
     <path d="M5.39578 5.83332H1.0208C0.4579 5.83332 0 6.29122 0 6.85422V12.9792C0 13.5421 0.4579 14 1.0208 14H5.39578C5.95879 14 6.41669 13.5421 6.41669 12.9792V6.85422C6.41669 6.29122 5.95879 5.83332 5.39578 5.83332Z" fill="#408634" />
     <path d="M12.9792 9.33331H8.60421C8.04121 9.33331 7.58331 9.79121 7.58331 10.3542V12.9792C7.58331 13.5421 8.04121 14 8.60421 14H12.9792C13.5421 14 14 13.5421 14 12.9792V10.3542C14 9.79121 13.5421 9.33331 12.9792 9.33331Z" fill="#408634" />
@@ -44,39 +43,14 @@ const items: MenuItem[] = [
     <path d="M10.5625 5.06259C10.5625 5.2891 10.7461 5.47274 10.9727 5.47274H14.0078C14.0081 7.35863 14.0078 15.0724 14.0078 15.1798C14.0078 15.6321 13.6398 16 13.1875 16.0001H4.82031C4.368 16.0001 4 15.6321 4 15.1798V2.8204C4.00013 2.3682 4.36808 2.00009 4.82031 2.00009C8.44221 2.00009 9.94101 1.99989 10.5625 2.00009V5.06259ZM5.63672 14.4298C5.50093 14.4298 5.39064 14.5401 5.39062 14.6759C5.39062 14.8117 5.50092 14.922 5.63672 14.922H12.5215C12.6571 14.9217 12.7666 14.8115 12.7666 14.6759C12.7666 14.5402 12.6571 14.43 12.5215 14.4298H5.63672ZM5.63672 12.8751C5.50101 12.8751 5.39077 12.9845 5.39062 13.1202C5.39062 13.256 5.50092 13.3663 5.63672 13.3663H12.5215C12.6571 13.3661 12.7666 13.2559 12.7666 13.1202C12.7665 12.9847 12.657 12.8753 12.5215 12.8751H5.63672Z" fill="#408634" />
   </svg>
     , [
-      getItem(<span style={{ color: '#408634' }}>Thermopack Report</span>, '3'),
+      getItem(<Link to="/Login"><span className='text-[#408634]' >Thermopack Report</span></Link>, '3'),
       // getItem('Bill', '4'),
       // getItem('Alex', '5'),
     ]),
 
 ];
 
-const oilOutlateData = [
- { time: '08:00', Outlate: 340 },
-  { time: '09:00', Outlate: 340 },
-  { time: '10:00', Outlate: 340 },
-  { time: '11:00', Outlate: 340 },
-  { time: '12:00', Outlate: 340 },
-  { time: '13:00', Outlate: 340 },
-  { time: '14:00', Outlate: 340 },
-  { time: '15:00', Outlate: 340 },
-  { time: '16:00', Outlate: 340 },
-  { time: '17:00', Outlate: 340 },
-  { time: '18:00', Outlate: 340 },
-  { time: '19:00', Outlate: 340 },
-  { time: '20:00', Outlate: 340 },
-  { time: '21:00', Outlate: 340 },
-  { time: '22:00', Outlate: 340 },
-  { time: '23:00', Outlate: 340 },
-  { time: '00:00', Outlate: 340 },
-  { time: '01:00', Outlate: 340 },
-  { time: '02:00', Outlate: 340 },
-  { time: '03:00', Outlate: 340 },
-  { time: '04:00', Outlate: 340 },
-  { time: '05:00', Outlate: 340 },
-  { time: '06:00', Outlate: 340 },
-  { time: '07:00', Outlate: 340 },
-];
+
 const Dashboard = () => {
 
   return (
@@ -85,7 +59,7 @@ const Dashboard = () => {
       <Layout style={{ minHeight: '100vh' }}>
         <Sider
 
-          style={{ backgroundColor: "#E6F6FF", height: "265vh", }}
+          style={{ backgroundColor: "#E6F6FF", height: "310vh", }}
           width={280}
         >
           <div className="demo-logo-vertical" />
@@ -98,7 +72,7 @@ const Dashboard = () => {
         <Layout>
 
 
-          <HeaderLayout />
+          <HeaderLayout/>
 
 
           <Content
@@ -222,20 +196,7 @@ const Dashboard = () => {
             <div className='w-full h-[auto] grid grid-cols-2 mt-5 px-5  gap-10'>
             <div className='w-[730px] h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
             
-
-<Line
-  data={{
-    labels: firstChart.map((data) => data.time),
-    datasets: [
-      {
-        label:"Delta",
-        data: firstChart.map((data) => data.delta),
-        backgroundColor: "#405189",
-        borderColor: "#405189",
-      },
-    ],
-  }}
-/>
+<FirstCart/>
 
             </div>
             <div className='w-[730px] h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>

@@ -9,8 +9,9 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import annotationPlugin from 'chartjs-plugin-annotation';
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
 const BedTemperatureChart: React.FC = () => {
   const bedTempData = [
@@ -40,20 +41,41 @@ const BedTemperatureChart: React.FC = () => {
     { time: '07:00', Outlate: 650 },
   ];
 
+  const maxValue = Math.max(...bedTempData.map((item) => item.Outlate));
+  const maxIndex = bedTempData.findIndex(item => item.Outlate === maxValue);
+
   const data = {
     labels: bedTempData.map((item) => item.time),
     datasets: [
       {
-        label: 'Oil Outlet',
+        label: 'Bed Temperature',
         data: bedTempData.map((item) => item.Outlate),
-        backgroundColor: '#405189',
-        borderColor: '#405189',
+        backgroundColor: '#2B6CEF',
+        borderColor: '#2B6CEF',
         fill: false,
         tension: 0.4,
         pointRadius: 4,
         pointHoverRadius: 6,
       },
     ],
+  };
+
+  // Custom plugin to draw max value
+  const maxValuePlugin = {
+    id: 'maxValuePlugin',
+    afterDatasetsDraw(chart: any) {
+      const { ctx } = chart;
+      const meta = chart.getDatasetMeta(0);
+      const point = meta.data[maxIndex];
+
+      ctx.save();
+      ctx.font = 'bold 14px Arial';
+      ctx.fillStyle = 'green';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(maxValue.toString(), point.x, point.y - 10);
+      ctx.restore();
+    }
   };
 
   const options = {
@@ -64,6 +86,17 @@ const BedTemperatureChart: React.FC = () => {
       },
       tooltip: {
         enabled: true,
+      },
+      annotation: {
+        annotations: {
+          line1: {
+            type: 'line',
+            yMin: 600,
+            yMax: 600,
+            borderColor: '#A64D79',
+            borderWidth: 2,
+          },
+        },
       },
     },
     scales: {
@@ -90,7 +123,7 @@ const BedTemperatureChart: React.FC = () => {
 
   return (
     <div>
-      <Line data={data} options={options} />
+      <Line data={data} options={options} plugins={[maxValuePlugin]} />
     </div>
   );
 };

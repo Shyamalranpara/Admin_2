@@ -11,51 +11,49 @@ import {
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend,annotationPlugin);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
-const FdFanChart: React.FC = () => {
-  const FdFanChartData = [
-    { time: '08:00', Outlate: 180 },
-    { time: '09:00', Outlate: 170 },
-    { time: '10:00', Outlate: 160 },
-    { time: '11:00', Outlate: 170 },
-    { time: '12:00', Outlate: 160 },
-    { time: '13:00', Outlate: 170 },
-    { time: '14:00', Outlate: 160 },
-    { time: '15:00', Outlate: 165 },
-    { time: '16:00', Outlate: 175 },
-    { time: '17:00', Outlate: 165 },
-    { time: '18:00', Outlate: 160 },
-    { time: '19:00', Outlate: 170 },
-    { time: '20:00', Outlate: 165 },
-    { time: '21:00', Outlate: 155 },
-    { time: '22:00', Outlate: 165 },
-    { time: '23:00', Outlate: 170 },
-    { time: '00:00', Outlate: 175 },
-    { time: '01:00', Outlate: 165 },
-    { time: '02:00', Outlate: 160 },
-    { time: '03:00', Outlate: 170 },
-    { time: '04:00', Outlate: 155 },
-    { time: '05:00', Outlate: 165 },
-    { time: '06:00', Outlate: 170 },
-    { time: '07:00', Outlate: 175 },
+const FirstCart: React.FC = () => {
+  const FirstChartData = [
+    { time: '08:00', delta: 26},
+    { time: '09:00', delta: 24},
+    { time: '10:00', delta: 24},
+    { time: '11:00', delta: 24},
+    { time: '12:00', delta: 24},
+    { time: '13:00', delta: 18},
+    { time: '14:00', delta: 15},
+    { time: '15:00', delta: 16},
+    { time: '16:00', delta: 19},
+    { time: '17:00', delta: 13},
+    { time: '18:00', delta: 25},
+    { time: '19:00', delta: 25},
+    { time: '20:00', delta: 22},
+    { time: '21:00', delta: 8 },
+    { time: '22:00', delta: 20},
+    { time: '23:00', delta: 27},
+    { time: '00:00', delta: 26},
+    { time: '01:00', delta: 25},
+    { time: '02:00', delta: 26},
+    { time: '03:00', delta: 25},
+    { time: '04:00', delta: 24},
+    { time: '05:00', delta: 23},
+    { time: '06:00', delta: 26},
+    { time: '07:00', delta: 22},
   ];
 
-  
-  const maxValue = Math.max(...FdFanChartData.map((item) => item.Outlate));
-  const minValue = Math.min(...FdFanChartData.map((item) => item.Outlate));
-  const maxIndex = FdFanChartData.findIndex(item => item.Outlate === maxValue);
-  const minIndex = FdFanChartData.findIndex(item => item.Outlate === minValue);
-
+  const maxValue = Math.max(...FirstChartData.map((item) => item.delta));
+  const minValue = Math.min(...FirstChartData.map((item) => item.delta));
+  const maxIndex = FirstChartData.findIndex(item => item.delta === maxValue);
+  const minIndex = FirstChartData.findIndex(item => item.delta === minValue);
 
   const data = {
-    labels: FdFanChartData.map((item) => item.time),
+    labels: FirstChartData.map((item) => item.time),
     datasets: [
       {
-        label: 'FD Fan',
-        data: FdFanChartData.map((item) => item.Outlate),
-        backgroundColor: '#18C292',
-        borderColor: '#18C292',
+        label: 'Delta',
+        data: FirstChartData.map((item) => item.delta),
+        backgroundColor: '#405189',
+        borderColor: '#405189',
         fill: false,
         tension: 0.4,
         pointRadius: 4,
@@ -64,7 +62,8 @@ const FdFanChart: React.FC = () => {
     ],
   };
 
-     const maxMinValuePlugin = {
+  // Custom plugin to draw max and min values
+  const maxMinValuePlugin = {
     id: 'maxMinValuePlugin',
     afterDatasetsDraw(chart: any) {
       const { ctx } = chart;
@@ -105,8 +104,8 @@ const FdFanChart: React.FC = () => {
         annotations: {
           line1: {
             type: 'line',
-            yMin: 170,
-            yMax: 170,
+            yMin: 19,
+            yMax: 19,
             borderColor: '#A64D79',
             borderWidth: 2,
           },
@@ -116,13 +115,13 @@ const FdFanChart: React.FC = () => {
     scales: {
       y: {
         min: 0,
-        max: 200,
+        max: 40,
         ticks: {
-          stepSize: 50,
+          stepSize: 10,
         },
         title: {
           display: true,
-          text: 'FD Fan',
+          text: 'Delta',
         },
       },
       x: {
@@ -142,4 +141,4 @@ const FdFanChart: React.FC = () => {
   );
 };
 
-export default FdFanChart;
+export default FirstCart;

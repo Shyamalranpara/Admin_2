@@ -9,10 +9,10 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import annotationPlugin from 'chartjs-plugin-annotation';
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend,annotationPlugin);
 
-// ✅ Directly define the data inside the component
 const OilOutlateChart: React.FC = () => {
   const oilOutlateData = [
     { time: '08:00', Outlate: 340 },
@@ -41,24 +41,99 @@ const OilOutlateChart: React.FC = () => {
     { time: '07:00', Outlate: 340 },
   ];
 
-  // ✅ Create chart data
+  const maxValue = Math.max(...oilOutlateData.map((item) => item.Outlate));
+  const minValue = Math.min(...oilOutlateData.map((item) => item.Outlate));
+  const maxIndex = oilOutlateData.findIndex(item => item.Outlate === maxValue);
+  const minIndex = oilOutlateData.findIndex(item => item.Outlate === minValue);
+
   const data = {
     labels: oilOutlateData.map((item) => item.time),
     datasets: [
       {
         label: 'Outlate',
         data: oilOutlateData.map((item) => Number(item.Outlate)),
-        backgroundColor: '#405189',
-        borderColor: '#405189',
+        backgroundColor: '#00928B',
+        borderColor: '#00928B',
         fill: false,
         tension: 0.4,
+         pointRadius: 4,
+        pointHoverRadius: 6,
       },
     ],
+  };
+const maxMinValuePlugin = {
+    id: 'maxMinValuePlugin',
+    afterDatasetsDraw(chart: any) {
+      const { ctx } = chart;
+      const meta = chart.getDatasetMeta(0);
+
+      // Max value label
+      const maxPoint = meta.data[maxIndex];
+      ctx.save();
+      ctx.font = 'bold 14px Arial';
+      ctx.fillStyle = 'green';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(maxValue.toString(), maxPoint.x, maxPoint.y - 10);
+      ctx.restore();
+
+       const minPoint = meta.data[minIndex];
+      ctx.save();
+      ctx.font = 'bold 14px Arial';
+      ctx.fillStyle = 'red';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(minValue.toString(), minPoint.x, minPoint.y + 15);
+      ctx.restore();
+    }
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+      },
+      tooltip: {
+        enabled: true,
+      },
+      annotation: {
+        annotations: {
+          line1: {
+            type: 'line',
+            yMin: 340,
+            yMax: 340,
+            borderColor: '#A64D79',
+            borderWidth: 2,
+          },
+        },
+      },
+    },
+    scales: {
+      y: {
+        min: 0,
+        max: 400,
+        ticks: {
+          stepSize: 100,
+        },
+        title: {
+          display: true,
+          text: 'Outlate',
+        },
+      },
+      x: {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 45,
+          minRotation: 45,
+        },
+      },
+    },
   };
 
   return (
     <div>
-      <Line data={data} />
+      <Line data={data} options={options} plugins={[maxMinValuePlugin]}/>
     </div>
   );
 };
