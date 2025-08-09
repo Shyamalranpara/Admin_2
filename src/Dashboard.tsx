@@ -4,15 +4,15 @@ const { Content, Sider } = Layout;
 import { DatePicker, Layout, Menu, type MenuProps } from 'antd'
 import JBLOGO from './assets/LOGO.png'
 import { Link } from 'react-router-dom';
-import OilOutlateChart from './OilOutlateChart';
-import OilIntelChart from './OilIntelChart';
-import BedTemperatureChart from './BedTemperatureChart';
-import FdFanChart from './FdFanChart';
-import FuleGasChart from './FuleGasChart';
-import WphChart from './WphChart';
-import EspOutChart from './EspOutChart';
-import LoadCart from './LoadCart';
-import FirstCart from './FirstCart';
+import FirstCart from './Data/FirstCart';
+import OilOutlateChart from './Data/OilOutlateChart';
+import OilIntelChart from './Data/OilIntelChart';
+import BedTemperatureChart from './Data/BedTemperatureChart';
+import FdFanChart from './Data/FdFanChart';
+import FuleGasChart from './Data/FuleGasChart';
+import WphChart from './Data/WphChart';
+import EspOutChart from './Data/EspOutChart';
+import LoadCart from './Data/LoadCart';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
