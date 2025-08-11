@@ -11,10 +11,10 @@ import {
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend,annotationPlugin);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
-const FuleGasChart: React.FC = () => {
-  const FuleGasData = [
+const FuelGasChart: React.FC = () => {
+  const fuelGasData = [
     { time: '08:00', Outlate: 0 },
     { time: '09:00', Outlate: 0 },
     { time: '10:00', Outlate: 0 },
@@ -41,17 +41,17 @@ const FuleGasChart: React.FC = () => {
     { time: '07:00', Outlate: 0 },
   ];
 
-  const maxValue = Math.max(...FuleGasData.map((item) => item.Outlate));
-  const minValue = Math.min(...FuleGasData.map((item) => item.Outlate));
-  const maxIndex = FuleGasData.findIndex(item => item.Outlate === maxValue);
-  const minIndex = FuleGasData.findIndex(item => item.Outlate === minValue);
+  const maxValue = Math.max(...fuelGasData.map((item) => item.Outlate));
+  const minValue = Math.min(...fuelGasData.map((item) => item.Outlate));
+  const maxIndex = fuelGasData.findIndex(item => item.Outlate === maxValue);
+  const minIndex = fuelGasData.findIndex(item => item.Outlate === minValue);
 
   const data = {
-    labels: FuleGasData .map((item) => item.time),
+    labels: fuelGasData.map((item) => item.time),
     datasets: [
       {
-        label: 'Fule Gas',
-        data: FuleGasData .map((item) => item.Outlate),
+        label: 'Fuel Gas',
+        data: fuelGasData.map((item) => item.Outlate),
         backgroundColor: '#683AF3',
         borderColor: '#683AF3',
         fill: false,
@@ -62,49 +62,60 @@ const FuleGasChart: React.FC = () => {
     ],
   };
 
+  // Same custom plugin style as BedTemperatureChart
   const maxMinValuePlugin = {
     id: 'maxMinValuePlugin',
     afterDatasetsDraw(chart: any) {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
 
+      const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
+        ctx.save();
+        ctx.font = 'bold 14px Arial';
+        const textWidth = ctx.measureText(text).width;
+        const padding = 4;
+        const textHeight = 16;
+
+        // Background
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(
+          point.x - textWidth / 2 - padding,
+          point.y + offsetY - textHeight + 4,
+          textWidth + padding * 2,
+          textHeight
+        );
+
+        // Text
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, point.x, point.y + offsetY - textHeight / 2 + 4);
+        ctx.restore();
+      };
+
       // Max value label
       const maxPoint = meta.data[maxIndex];
-      ctx.save();
-      ctx.font = 'bold 14px Arial';
-      ctx.fillStyle = 'green';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(maxValue.toString(), maxPoint.x, maxPoint.y - 10);
-      ctx.restore();
+      drawLabel(maxValue.toString(), maxPoint, 'green', -14);
 
       // Min value label
       const minPoint = meta.data[minIndex];
-      ctx.save();
-      ctx.font = 'bold 14px Arial';
-      ctx.fillStyle = 'red';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.fillText(minValue.toString(), minPoint.x, minPoint.y + 15);
-      ctx.restore();
+      drawLabel(minValue.toString(), minPoint, 'red', 20);
     }
   };
 
   const options = {
     responsive: true,
     plugins: {
-       legend: {
-            Legend:{
-              display:false
-            },
-            labels: {
-              font: {
-                size: 20, 
-                weight: 'bold' 
-              },
-               textAlign: 'start', 
-            }
+      legend: {
+        display: true,
+        labels: {
+          font: {
+            size: 20,
+            weight: 'bold'
           },
+          textAlign: 'start',
+        }
+      },
       tooltip: {
         enabled: true,
       },
@@ -112,8 +123,8 @@ const FuleGasChart: React.FC = () => {
         annotations: {
           line1: {
             type: 'line',
-            yMin: 300,
-            yMax: 300,
+            yMin: 0.5,
+            yMax: 0.5,
             borderColor: '#A64D79',
             borderWidth: 2,
           },
@@ -126,23 +137,23 @@ const FuleGasChart: React.FC = () => {
         max: 1.0,
         ticks: {
           font: {
-          size: 15
-        },
+            size: 15
+          },
           stepSize: 0.5,
         },
         title: {
           font: {
-          size: 15
-        },
+            size: 15
+          },
           display: true,
-          text: 'Fule Gas',
+          text: 'Fuel Gas',
         },
       },
       x: {
         ticks: {
           font: {
-          size: 15
-        },
+            size: 15
+          },
           autoSkip: false,
           maxRotation: 45,
           minRotation: 45,
@@ -158,4 +169,4 @@ const FuleGasChart: React.FC = () => {
   );
 };
 
-export default FuleGasChart;
+export default FuelGasChart;

@@ -11,7 +11,7 @@ import {
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend,annotationPlugin);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
 const WphChart: React.FC = () => {
   const WphData = [
@@ -40,10 +40,11 @@ const WphChart: React.FC = () => {
     { time: '06:00', Outlate: 203 },
     { time: '07:00', Outlate: 199 },
   ];
- const maxValue = Math.max(...WphData.map((item) => item.Outlate));
+
+  const maxValue = Math.max(...WphData.map((item) => item.Outlate));
   const minValue = Math.min(...WphData.map((item) => item.Outlate));
-  const maxIndex = WphData.findIndex(item => item.Outlate === maxValue);
-  const minIndex = WphData.findIndex(item => item.Outlate === minValue);
+  const maxIndex = WphData.findIndex((item) => item.Outlate === maxValue);
+  const minIndex = WphData.findIndex((item) => item.Outlate === minValue);
 
   const data = {
     labels: WphData.map((item) => item.time),
@@ -61,49 +62,60 @@ const WphChart: React.FC = () => {
     ],
   };
 
+  // Updated plugin to match Fuel Gas chart style
   const maxMinValuePlugin = {
     id: 'maxMinValuePlugin',
     afterDatasetsDraw(chart: any) {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
 
+      const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
+        ctx.save();
+        ctx.font = 'bold 14px Arial';
+        const textWidth = ctx.measureText(text).width;
+        const padding = 4;
+        const textHeight = 16;
+
+        // Background
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(
+          point.x - textWidth / 2 - padding,
+          point.y + offsetY - textHeight + 4,
+          textWidth + padding * 2,
+          textHeight
+        );
+
+        // Text
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, point.x, point.y + offsetY - textHeight / 2 + 4);
+        ctx.restore();
+      };
+
       // Max value label
       const maxPoint = meta.data[maxIndex];
-      ctx.save();
-      ctx.font = 'bold 14px Arial';
-      ctx.fillStyle = 'green';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(maxValue.toString(), maxPoint.x, maxPoint.y - 10);
-      ctx.restore();
+      drawLabel(maxValue.toString(), maxPoint, 'green', -14);
 
       // Min value label
       const minPoint = meta.data[minIndex];
-      ctx.save();
-      ctx.font = 'bold 14px Arial';
-      ctx.fillStyle = 'red';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.fillText(minValue.toString(), minPoint.x, minPoint.y + 15);
-      ctx.restore();
-    }
+      drawLabel(minValue.toString(), minPoint, 'red', 20);
+    },
   };
 
   const options = {
     responsive: true,
     plugins: {
-       legend: {
-            Legend:{
-              display:false
-            },
-            labels: {
-              font: {
-                size: 20, 
-                weight: 'bold' 
-              },
-               textAlign: 'start', 
-            }
+      legend: {
+        display: true,
+        labels: {
+          font: {
+            size: 20,
+            weight: 'bold',
           },
+          textAlign: 'start',
+        },
+      },
       tooltip: {
         enabled: true,
       },
@@ -125,14 +137,14 @@ const WphChart: React.FC = () => {
         max: 250,
         ticks: {
           font: {
-          size: 15
-        },
+            size: 15,
+          },
           stepSize: 50,
         },
         title: {
           font: {
-          size: 15
-        },
+            size: 15,
+          },
           display: true,
           text: 'WPH',
         },
@@ -140,8 +152,8 @@ const WphChart: React.FC = () => {
       x: {
         ticks: {
           font: {
-          size: 15
-        },
+            size: 15,
+          },
           autoSkip: false,
           maxRotation: 45,
           minRotation: 45,
