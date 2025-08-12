@@ -69,27 +69,56 @@ const WphChart: React.FC = () => {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
 
+      const drawRoundedRect = (
+        ctx: CanvasRenderingContext2D,
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        radius: number
+      ) => {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+      };
+
+      // Draw label with rounded background
       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
         ctx.save();
-        ctx.font = 'bold 14px Arial';
+        ctx.font = '16px Arial';
         const textWidth = ctx.measureText(text).width;
-        const padding = 4;
-        const textHeight = 16;
+        const padding = 6;
+        const textHeight = 20;
+        const borderRadius = 10;
 
-        // Background
+        const rectX = point.x - textWidth / 2 - padding;
+        const rectY = point.y + offsetY - textHeight + 3;
+        const rectWidth = textWidth + padding * 2;
+        const rectHeight = textHeight;
+
+        // Background with border radius
         ctx.fillStyle = bgColor;
-        ctx.fillRect(
-          point.x - textWidth / 2 - padding,
-          point.y + offsetY - textHeight + 4,
-          textWidth + padding * 2,
-          textHeight
-        );
+        drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
+        ctx.fill();
+
+        // Optional border
+
+        ctx.stroke();
 
         // Text
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(text, point.x, point.y + offsetY - textHeight / 2 + 4);
+
         ctx.restore();
       };
 

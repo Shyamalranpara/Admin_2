@@ -32,35 +32,35 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className='w-[100%] h-[98vh] flex justify-center items-center gap-[100px] bg-[#e6f6ff]'>
-            <div>
-                <img className="w-[177px] h-[40px]" src={JBLOGO} alt="JB rPET logo" />
+        <div className='w-[100%] h-[98vh] flex flex-col lg:flex-row justify-center items-center gap-[50px] lg:gap-[100px] bg-[#e6f6ff] px-4 py-8'>
+            <div className="order-2 lg:order-1">
+                <img className="w-[140px] h-[32px] md:w-[177px] md:h-[40px]" src={JBLOGO} alt="JB rPET logo" />
             </div>
 
-            <div>
+            <div className="order-1 lg:order-2">
                 <Form
                     onFinish={handleSubmit}
-                    className='w-[382px] h-[376px]'
+                    className='w-full max-w-[382px] h-auto min-h-[376px]'
                     name="login"
                     initialValues={{ remember: true }}
                     style={{ maxWidth: 360 }}
                 // onFinish={onFinish}
                 >
 
-                    <div className='text-center mb-[60px] line-height-[32px] '>
-                        <h1 style={{ fontSize: "2.2rem", fontWeight: "600", lineHeight: "32px" }}>LOGIN</h1>
-                        <p className='mt-5' style={{ fontWeight: "500", fontSize: "1rem" }}>Welcome back! Login to your account.</p>
+                    <div className='text-center mb-[40px] md:mb-[60px] line-height-[32px] '>
+                        <h1 style={{ fontSize: "1.8rem", fontWeight: "600", lineHeight: "32px" }} className="md:text-[2.2rem]">LOGIN</h1>
+                        <p className='mt-3 md:mt-5' style={{ fontWeight: "500", fontSize: "0.9rem" }} className="md:text-[1rem]">Welcome back! Login to your account.</p>
                     </div>
 
                     <Form.Item
                         rules={[{ required: true, message: 'Email' }]}
                     >
-                        <label htmlFor="Email">Email</label>
+                        <label htmlFor="Email" className="block mb-2 text-sm md:text-base">Email</label>
                         <Input className='input-border' placeholder="Email" name='email' value={formData.email}
                             onChange={handleChange} />
                     </Form.Item>
 
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password" className="block mb-2 text-sm md:text-base">Password</label>
                     <Form.Item
                         name="password"
                         rules={[{ required: true, message: 'Password' }]}

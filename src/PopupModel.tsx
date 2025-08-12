@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DatePicker, Modal } from 'antd';
+import dayjs from 'dayjs';
 
 interface PopupModelProps {
   open: boolean;
@@ -46,7 +47,8 @@ const PopupModel: React.FC<PopupModelProps> = ({
     >
       <div className=" flex justify-end items-center">
         <h1>
-          <DatePicker />
+                                          <DatePicker defaultValue={dayjs()} format="DD-MM-YYYY"/>
+          
         </h1>
       </div>
 

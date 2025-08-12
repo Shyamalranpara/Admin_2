@@ -70,24 +70,66 @@ const LoadCart: React.FC = () => {
       const meta = chart.getDatasetMeta(0);
 
       // Max value label
-      const maxPoint = meta.data[maxIndex];
-      ctx.save();
-      ctx.font = 'bold 14px Arial';
-      ctx.fillStyle = 'green';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(maxValue.toString(), maxPoint.x, maxPoint.y - 10);
-      ctx.restore();
+      const drawRoundedRect = (
+        ctx: CanvasRenderingContext2D,
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        radius: number
+      ) => {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+      };
 
-      // Min value label
+      // Draw label with rounded background
+      const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
+        ctx.save();
+        ctx.font = '16px Arial';
+        const textWidth = ctx.measureText(text).width;
+        const padding = 6;
+        const textHeight = 20;
+        const borderRadius = 10;
+
+        const rectX = point.x - textWidth / 2 - padding;
+        const rectY = point.y + offsetY - textHeight + 3;
+        const rectWidth = textWidth + padding * 2;
+        const rectHeight = textHeight;
+
+        // Background with border radius
+        ctx.fillStyle = bgColor;
+        drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
+        ctx.fill();
+
+        // Optional border
+
+        ctx.stroke();
+
+        // Text
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, point.x, point.y + offsetY - textHeight / 2 + 4);
+
+        ctx.restore();
+      };
+
+      // Max label
+      const maxPoint = meta.data[maxIndex];
+      drawLabel(maxValue.toString(), maxPoint, 'green', -14);
+
+      // Min label
       const minPoint = meta.data[minIndex];
-      ctx.save();
-      ctx.font = 'bold 14px Arial';
-      ctx.fillStyle = 'red';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.fillText(minValue.toString(), minPoint.x, minPoint.y + 15);
-      ctx.restore();
+      drawLabel(minValue.toString(), minPoint, 'red', 20);
     }
   };
 

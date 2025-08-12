@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -10,82 +10,96 @@ import {
   Legend,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import axios from 'axios';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
 const FirstCart: React.FC = () => {
-  const FirstChartData = [
-    { time: '08:00', delta: 26 },
-    { time: '09:00', delta: 24 },
-    { time: '10:00', delta: 24 },
-    { time: '11:00', delta: 24 },
-    { time: '12:00', delta: 24 },
-    { time: '13:00', delta: 18 },
-    { time: '14:00', delta: 15 },
-    { time: '15:00', delta: 16 },
-    { time: '16:00', delta: 19 },
-    { time: '17:00', delta: 13 },
-    { time: '18:00', delta: 25 },
-    { time: '19:00', delta: 25 },
-    { time: '20:00', delta: 22 },
-    { time: '21:00', delta: 8 },
-    { time: '22:00', delta: 20 },
-    { time: '23:00', delta: 27 },
-    { time: '00:00', delta: 26 },
-    { time: '01:00', delta: 25 },
-    { time: '02:00', delta: 26 },
-    { time: '03:00', delta: 25 },
-    { time: '04:00', delta: 24 },
-    { time: '05:00', delta: 23 },
-    { time: '06:00', delta: 26 },
-    { time: '07:00', delta: 22 },
-  ];
+  const [chartData, setChartData] = useState<any[]>([]);
 
-  const maxValue = Math.max(...FirstChartData.map((item) => item.delta));
-  const minValue = Math.min(...FirstChartData.map((item) => item.delta));
-  const maxIndex = FirstChartData.findIndex((item) => item.delta === maxValue);
-  const minIndex = FirstChartData.findIndex((item) => item.delta === minValue);
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/breakdown')
+      .then((res) => {
+        console.log('api data', res.data);
+        setChartData(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  if (!chartData.length) {
+    return <div>Loading chart...</div>;
+  }
+
+  const maxValue = Math.max(...chartData.map((item) => item.delta));
+  const minValue = Math.min(...chartData.map((item) => item.delta));
+  const maxIndex = chartData.findIndex((item) => item.delta === maxValue);
+  const minIndex = chartData.findIndex((item) => item.delta === minValue);
 
   const data = {
-    labels: FirstChartData.map((item) => item.time),
-    datasets: [
-      {
-        label: 'Delta',
-        data: FirstChartData.map((item) => item.delta),
-        backgroundColor: '#405189',
-        borderColor: '#405189',
-        fill: false,
-        tension: 0.4,
-        pointRadius: 4,
-        pointHoverRadius: 6,
-      },
-    ],
-  };
+  labels: chartData.map((item) => item.time),
+  datasets: [
+    {
+      label: 'Delta',
+      data: chartData.map((item) => Number(item.delta)), 
+      backgroundColor: '#405189',
+      borderColor: '#405189',
+      fill: false,
+      tension: 0.4,
+      pointRadius: 4,
+      pointHoverRadius: 6,
+    },
+  ],
+};
 
-  // Updated plugin for WPH-style max/min labels
+
   const maxMinValuePlugin = {
     id: 'maxMinValuePlugin',
     afterDatasetsDraw(chart: any) {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
 
+      const drawRoundedRect = (
+        ctx: CanvasRenderingContext2D,
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        radius: number
+      ) => {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+      };
+
       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
+        if (!point) return; // safety check
+
         ctx.save();
-        ctx.font = 'bold 14px Arial';
+        ctx.font = '16px Arial';
         const textWidth = ctx.measureText(text).width;
-        const padding = 4;
-        const textHeight = 16;
+        const padding = 6;
+        const textHeight = 20;
+        const borderRadius = 10;
 
-        // Background box
+        const rectX = point.x - textWidth / 2 - padding;
+        const rectY = point.y + offsetY - textHeight + 3;
+        const rectWidth = textWidth + padding * 2;
+        const rectHeight = textHeight;
+
         ctx.fillStyle = bgColor;
-        ctx.fillRect(
-          point.x - textWidth / 2 - padding,
-          point.y + offsetY - textHeight + 4,
-          textWidth + padding * 2,
-          textHeight
-        );
+        drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
+        ctx.fill();
 
-        // Text
+        ctx.stroke();
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -93,13 +107,17 @@ const FirstCart: React.FC = () => {
         ctx.restore();
       };
 
-      // Max label
-      const maxPoint = meta.data[maxIndex];
-      drawLabel(maxValue.toString(), maxPoint, 'green', -14);
+      // Draw max label if valid
+      if (maxIndex >= 0 && maxIndex < meta.data.length) {
+        const maxPoint = meta.data[maxIndex];
+        drawLabel(maxValue.toString(), maxPoint, 'green', -14);
+      }
 
-      // Min label
-      const minPoint = meta.data[minIndex];
-      drawLabel(minValue.toString(), minPoint, 'red', 20);
+      // Draw min label if valid
+      if (minIndex >= 0 && minIndex < meta.data.length) {
+        const minPoint = meta.data[minIndex];
+        drawLabel(minValue.toString(), minPoint, 'red', 20);
+      }
     },
   };
 
@@ -139,6 +157,7 @@ const FirstCart: React.FC = () => {
           font: {
             size: 15,
           },
+         
         },
         title: {
           font: {

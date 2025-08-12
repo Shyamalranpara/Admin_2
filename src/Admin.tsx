@@ -11,6 +11,8 @@ import PopupModelShiftCard from './PopupModelShiftCard';
 import { Link } from 'react-router-dom';
 import HeaderLayout from './HeaderLayout';
 import RadioBtn from './RadioBtn';
+import DateDayJs from './DateDayJs';
+import dayjs from 'dayjs';
 
 const { Content, Sider } = Layout;
 
@@ -128,9 +130,11 @@ const Admin: React.FC = () => {
 
             <Layout style={{ minHeight: '100vh' }}>
                 <Sider
-
-                    style={{ backgroundColor: "#E6F6FF", height: "265vh", }}
+                    className="hidden md:block"
+                    style={{ backgroundColor: "#E6F6FF", height: "275vh", }}
                     width={280}
+                    breakpoint="md"
+                    collapsedWidth="0"
                 >
                     <div className="demo-logo-vertical" />
                     <div className='flex items-center justify-center'>
@@ -144,18 +148,15 @@ const Admin: React.FC = () => {
 
                     <HeaderLayout />
 
-                    <Content style={{ margin: '0 16px' }}>
-                        <div className='breadcrumb-container flex items-center justify-between m-0 p-0'>
+                    <Content style={{ margin: '0 16px' }} className="px-2 md:px-4 lg:px-6">
+                        <div className='breadcrumb-container flex flex-col md:flex-row md:items-center md:justify-between m-0 p-0 gap-4'>
                             <div>
                                 <Breadcrumb style={{ margin: '16px 0', fontSize: "20px" }} items={[{ title: 'Thermopack Report' }]} />
                             </div>
 
-                            <div className='date-picker-container'>
-                                <DatePicker/>
+                            <div className='date-picker-container flex flex-col sm:flex-row gap-4'>
+                                <DatePicker defaultValue={dayjs()} format="DD-MM-YYYY"/>
                                 <div>
-                                    {/* <button className='btn-tfh py-[5px] px-[16px] border border-2 border-[#408634] text-[#408634] text-[14px] rounded-[4px] cursor-pointer'>TFH 1</button>
-                                    <button className='btn-tfh-2 py-[5px] px-[16px] border border-2 border-[#d9d9d9e6] bg-transparent rounded-[4px] text-[14px] cursor-pointer'>TFH 2</button> */}
-
                                     <RadioBtn/>
                                 </div>
                             </div>
@@ -166,19 +167,18 @@ const Admin: React.FC = () => {
                             style={{
                                 padding: 10,
                                 minHeight: 360,
-                                //   background: colorBgContainer,
-                                //   borderRadius: borderRadiusLG,
                             }}
+                            className="px-2 md:px-4 lg:px-6"
                         >
 
-                            <div className=" flex gap-[24px] mb-[24px] flex-wrap">
+                            <div className="flex flex-col lg:flex-row gap-[24px] mb-[24px]">
                                 {/* Section 1 - Temperature */}
-                                <div className=" content-container-main flex-1 min-w-[300px] bg-white rounded-[12px] p-5 shadow-custom-soft border border-[#f0f0f0]">
-                                    <p className="text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK TEMPERATURE (IN °C)</p>
-                                    <div className="shift-cards-row flex gap-[16px] justify-between">
+                                <div className="content-container-main flex-1 min-w-[280px] lg:min-w-[300px] bg-white rounded-[12px] p-3 md:p-5 shadow-custom-soft border border-[#f0f0f0]">
+                                    <p className="text-base md:text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK TEMPERATURE (IN °C)</p>
+                                    <div className="shift-cards-row flex flex-col sm:flex-row gap-[16px] justify-between">
                                         <div className="flex-1">
                                             <ShiftCard
-                                                title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 1</span>}
+                                                title={<span className='font-normal linehigh text-sm md:text-base leading-[22px]'>SHIFT 1</span>}
                                                 value={shift1}
                                                 onAddClick={() =>
                                                     openModalTwo(
@@ -193,7 +193,7 @@ const Admin: React.FC = () => {
                                         </div>
                                         <div className="flex-1">
                                             <ShiftCard
-                                                title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
+                                                title={<span className='font-normal linehigh text-sm md:text-base leading-[22px]'>SHIFT 2</span>}
                                                 value={shift2}
                                                 onAddClick={() =>
                                                     openModalTwo(
@@ -209,13 +209,13 @@ const Admin: React.FC = () => {
                                 </div>
 
                                 {/* Section 2 - Level */}
-                                <div className=" content-container-main flex-1 min-w-[300px] bg-white rounded-[12px] p-5 shadow-custom-soft border border-[#f0f0f0]">
-                                    <p className="text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK LEVEL (IN MM)</p>
-                                    <div className="shift-cards-row flex gap-[16px] justify-between">
+                                <div className="content-container-main flex-1 min-w-[280px] lg:min-w-[300px] bg-white rounded-[12px] p-3 md:p-5 shadow-custom-soft border border-[#f0f0f0]">
+                                    <p className="text-base md:text-lg font-normal font-black mb-[16px] uppercase tracking-wide">EXPANSION TANK LEVEL (IN MM)</p>
+                                    <div className="shift-cards-row flex flex-col sm:flex-row gap-[16px] justify-between">
                                         <div className="flex-1">
 
                                             <ShiftCard
-                                                title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 1</span>}
+                                                title={<span className='font-normal linehigh text-sm md:text-base leading-[22px]'>SHIFT 1</span>}
                                                 value={levelShift1}
                                                 onAddClick={() =>
                                                     openModalTwo(
@@ -230,7 +230,7 @@ const Admin: React.FC = () => {
                                         </div>
                                         <div className="flex-1">
                                             <ShiftCard
-                                                title={<span className='font-normal linehigh text-base leading-[22px]'>SHIFT 2</span>}
+                                                title={<span className='font-normal linehigh text-sm md:text-base leading-[22px]'>SHIFT 2</span>}
                                                 value={levelShift2}
                                                 onAddClick={() =>
                                                     openModalTwo(
@@ -257,9 +257,7 @@ const Admin: React.FC = () => {
                                 />
                             </div>
 
-
-
-                            <div className='cards-container'>
+                            <div className='cards-container mb-4'>
 
                                 <Row gutter={[12, 12]} justify="start">
                                     <Col xs={24} sm={12} md={8} lg={4} xl={4}>
@@ -317,8 +315,6 @@ const Admin: React.FC = () => {
                                     defaultValue={modalValue}/>
                             </div>
                         </div>
-
-
 
                         <TableComponent />
                     </Content>

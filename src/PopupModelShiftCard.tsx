@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Input, DatePicker } from 'antd';
+import dayjs from 'dayjs';
 
 interface PopupModelShiftCardProps {
   open: boolean;
@@ -53,7 +54,8 @@ const PopupModelShiftCard: React.FC<PopupModelShiftCardProps> = ({
       <label>{label}</label>
 
       <div className='ml-80 p-2'>
-          <DatePicker />
+                                          <DatePicker defaultValue={dayjs()} format="DD-MM-YYYY"/>
+          
       </div>
 
       <Input
