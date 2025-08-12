@@ -10,7 +10,7 @@ import {
   Legend,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
-import { dataService } from '../services/dataService';
+import axios from 'axios';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
@@ -22,37 +22,47 @@ const FirstCart: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await dataService.getChartData('delta');
-        setChartData(data);
+        const response = await axios.get('http://localhost:5000/breakdown');
+        
+        if (response.data && response.data.length > 0) {
+          // Extract data from the nested structure
+          const breakdownData = response.data[0].data || [];
+          const formattedData = breakdownData.map((item: any) => ({
+            time: item.time,
+            value: parseFloat(item.delta) || 0
+          }));
+          setChartData(formattedData);
+        } else {
+          // Fallback to static data if no API data
+          setChartData([
+            { time: '08:00', value: 26 },
+            { time: '09:00', value: 20 },
+            { time: '10:00', value: 22 },
+            { time: '11:00', value: 23 },
+            { time: '12:00', value: 24 },
+            { time: '13:00', value: 15 },
+            { time: '14:00', value: 13 },
+            { time: '15:00', value: 13 },
+            { time: '16:00', value: 19 },
+            { time: '17:00', value: 19 },
+            { time: '18:00', value: 17 },
+            { time: '19:00', value: 16 },
+            { time: '20:00', value: 9 },
+            { time: '21:00', value: 8 },
+            { time: '22:00', value: 15 },
+            { time: '23:00', value: 27 },
+            { time: '00:00', value: 23 },
+            { time: '01:00', value: 24 },
+            { time: '02:00', value: 25 },
+            { time: '03:00', value: 27 },
+            { time: '04:00', value: 25 },
+            { time: '05:00', value: 26 },
+            { time: '06:00', value: 19 },
+            { time: '07:00', value: 22 },
+          ]);
+        }
       } catch (error) {
-        console.error('Error fetching delta data:', error);
-        // Fallback to static data if API fails
-        setChartData([
-          { time: '08:00', value: 26 },
-          { time: '09:00', value: 20 },
-          { time: '10:00', value: 22 },
-          { time: '11:00', value: 23 },
-          { time: '12:00', value: 24 },
-          { time: '13:00', value: 15 },
-          { time: '14:00', value: 13 },
-          { time: '15:00', value: 13 },
-          { time: '16:00', value: 19 },
-          { time: '17:00', value: 19 },
-          { time: '18:00', value: 17 },
-          { time: '19:00', value: 16 },
-          { time: '20:00', value: 9 },
-          { time: '21:00', value: 8 },
-          { time: '22:00', value: 15 },
-          { time: '23:00', value: 27 },
-          { time: '00:00', value: 23 },
-          { time: '01:00', value: 24 },
-          { time: '02:00', value: 25 },
-          { time: '03:00', value: 27 },
-          { time: '04:00', value: 25 },
-          { time: '05:00', value: 26 },
-          { time: '06:00', value: 19 },
-          { time: '07:00', value: 22 },
-        ]);
+        console.error('Error', error);
       } finally {
         setLoading(false);
       }
@@ -167,25 +177,24 @@ const FirstCart: React.FC = () => {
         labels: {
           font: {
             size: 20,
-            weight: 'bold',
+            weight: 'bold' as const,
           },
-          textAlign: 'start',
+          textAlign: 'left' as const,
         },
       },
       tooltip: {
         enabled: true,
       },
-      annotation: {
-        annotations: {
-          line1: {
-            type: 'line',
-            yMin: 19,
-            yMax: 19,
-            borderColor: '#A64D79',
-            borderWidth: 2,
+              annotation: {
+          annotations: {
+            line1: {
+              type: 'line' as const,
+              yMin: 19,
+              yMax: 19,
+             
+            },
           },
         },
-      },
     },
     scales: {
       y: {

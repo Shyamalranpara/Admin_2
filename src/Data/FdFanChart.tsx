@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -10,48 +10,83 @@ import {
   Legend,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import axios from 'axios'
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
 const FdFanChart: React.FC = () => {
-  const FdFanChartData = [
-    { time: '08:00', Outlate: 180 },
-    { time: '09:00', Outlate: 170 },
-    { time: '10:00', Outlate: 160 },
-    { time: '11:00', Outlate: 170 },
-    { time: '12:00', Outlate: 160 },
-    { time: '13:00', Outlate: 170 },
-    { time: '14:00', Outlate: 160 },
-    { time: '15:00', Outlate: 165 },
-    { time: '16:00', Outlate: 175 },
-    { time: '17:00', Outlate: 165 },
-    { time: '18:00', Outlate: 160 },
-    { time: '19:00', Outlate: 170 },
-    { time: '20:00', Outlate: 165 },
-    { time: '21:00', Outlate: 155 },
-    { time: '22:00', Outlate: 165 },
-    { time: '23:00', Outlate: 170 },
-    { time: '00:00', Outlate: 175 },
-    { time: '01:00', Outlate: 165 },
-    { time: '02:00', Outlate: 160 },
-    { time: '03:00', Outlate: 170 },
-    { time: '04:00', Outlate: 155 },
-    { time: '05:00', Outlate: 165 },
-    { time: '06:00', Outlate: 170 },
-    { time: '07:00', Outlate: 175 },
-  ];
+  const [fdChartData, setFdChartData] = useState<{ time: string; value: number }[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const maxValue = Math.max(...FdFanChartData.map((item) => item.Outlate));
-  const minValue = Math.min(...FdFanChartData.map((item) => item.Outlate));
-  const maxIndex = FdFanChartData.findIndex(item => item.Outlate === maxValue);
-  const minIndex = FdFanChartData.findIndex(item => item.Outlate === minValue);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('http://localhost:5000/breakdown');
+
+        if (response.data && response.data.length > 0) {
+          const breakdownData = response.data[0].data || [];
+          const formattedData = breakdownData.map((item: any) => ({
+            time: item.time,
+            value: parseFloat(item.fdFanTemp) || 0
+          }));
+          setFdChartData(formattedData);
+        } else {
+          setFdChartData([
+            { time: '08:00', value: 180 },
+            { time: '09:00', value: 170 },
+            { time: '10:00', value: 160 },
+            { time: '11:00', value: 170 },
+            { time: '12:00', value: 160 },
+            { time: '13:00', value: 170 },
+            { time: '14:00', value: 160 },
+            { time: '15:00', value: 165 },
+            { time: '16:00', value: 175 },
+            { time: '17:00', value: 165 },
+            { time: '18:00', value: 160 },
+            { time: '19:00', value: 170 },
+            { time: '20:00', value: 165 },
+            { time: '21:00', value: 155 },
+            { time: '22:00', value: 165 },
+            { time: '23:00', value: 170 },
+            { time: '00:00', value: 175 },
+            { time: '01:00', value: 165 },
+            { time: '02:00', value: 160 },
+            { time: '03:00', value: 170 },
+            { time: '04:00', value: 155 },
+            { time: '05:00', value: 165 },
+            { time: '06:00', value: 170 },
+            { time: '07:00', value: 175 },
+          ])
+        }
+      }catch(error){
+        console.error(error);
+      }finally{
+        setLoading(false);
+      }
+    }
+      fetchData();
+  }, [])
+
+  if(loading){
+    return <div className="flex items-center justify-center h-64">Loading chart...</div>;
+  }
+
+  if(!fdChartData.length){
+    return <div className="flex items-center justify-center h-64">No data available</div>;
+  }
+  
+  const maxValue = Math.max(...fdChartData.map((item) => item.value));
+  const minValue = Math.min(...fdChartData.map((item) => item.value));
+  const maxIndex = fdChartData.findIndex(item => item.value === maxValue);
+  const minIndex = fdChartData.findIndex(item => item.value === minValue);
 
   const data = {
-    labels: FdFanChartData.map((item) => item.time),
+    labels: fdChartData.map((item) => item.time),
     datasets: [
       {
         label: 'FD Fan',
-        data: FdFanChartData.map((item) => item.Outlate),
+        data: fdChartData.map((item) => item.value),
         backgroundColor: '#18C292',
         borderColor: '#18C292',
         fill: false,
@@ -69,7 +104,7 @@ const FdFanChart: React.FC = () => {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
 
-     const drawRoundedRect = (
+      const drawRoundedRect = (
         ctx: CanvasRenderingContext2D,
         x: number,
         y: number,
@@ -92,6 +127,7 @@ const FdFanChart: React.FC = () => {
 
       // Draw label with rounded background
       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
+        if(!point) return;
         ctx.save();
         ctx.font = '16px Arial';
         const textWidth = ctx.measureText(text).width;
@@ -122,11 +158,16 @@ const FdFanChart: React.FC = () => {
         ctx.restore();
       };
 
-      const maxPoint = meta.data[maxIndex];
-      drawLabel(maxValue.toString(), maxPoint, 'green', -14);
+ if (maxIndex >= 0 && maxIndex < meta.data.length) {
+        const maxPoint = meta.data[maxIndex];
+        drawLabel(maxValue.toString(), maxPoint, 'green', -14);
+      }
 
-      const minPoint = meta.data[minIndex];
-      drawLabel(minValue.toString(), minPoint, 'red', 20);
+      // Draw min label if valid
+      if (minIndex >= 0 && minIndex < meta.data.length) {
+        const minPoint = meta.data[minIndex];
+        drawLabel(minValue.toString(), minPoint, 'red', 20);
+      }
     }
   };
 
@@ -152,7 +193,7 @@ const FdFanChart: React.FC = () => {
             type: 'line',
             yMin: 170,
             yMax: 170,
-            
+
           },
         },
       },

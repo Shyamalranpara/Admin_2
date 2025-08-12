@@ -10,7 +10,7 @@ import {
   Legend,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
-import { dataService } from '../services/dataService';
+import axios from 'axios';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
@@ -22,37 +22,48 @@ const BedTemperatureChart: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await dataService.getChartData('bedTemp');
-        setChartData(data);
+        const response = await axios.get('http://localhost:5000/breakdown');
+        
+        if (response.data && response.data.length > 0) {
+          // Extract data from the nested structure
+          const breakdownData = response.data[0].data || [];
+          const formattedData = breakdownData.map((item: any) => ({
+            time: item.time,
+            value: parseFloat(item.bedTemp) || 0
+          }));
+          setChartData(formattedData);
+        } else {
+          // Fallback to static data if API fails
+          setChartData([
+            { time: '08:00', value: 770 },
+            { time: '09:00', value: 730 },
+            { time: '10:00', value: 750 },
+            { time: '11:00', value: 780 },
+            { time: '12:00', value: 650 },
+            { time: '13:00', value: 580 },
+            { time: '14:00', value: 420 },
+            { time: '15:00', value: 590 },
+            { time: '16:00', value: 620 },
+            { time: '17:00', value: 580 },
+            { time: '18:00', value: 590 },
+            { time: '19:00', value: 508 },
+            { time: '20:00', value: 550 },
+            { time: '21:00', value: 580 },
+            { time: '22:00', value: 550 },
+            { time: '23:00', value: 590 },
+            { time: '00:00', value: 620 },
+            { time: '01:00', value: 630 },
+            { time: '02:00', value: 640 },
+            { time: '03:00', value: 650 },
+            { time: '04:00', value: 630 },
+            { time: '05:00', value: 650 },
+            { time: '06:00', value: 630 },
+            { time: '07:00', value: 650 },
+          ]);
+        }
       } catch (error) {
-        console.error('Error fetching bed temperature data:', error);
-        // Fallback to static data if API fails
-        setChartData([
-          { time: '08:00', value: 770 },
-          { time: '09:00', value: 730 },
-          { time: '10:00', value: 750 },
-          { time: '11:00', value: 780 },
-          { time: '12:00', value: 650 },
-          { time: '13:00', value: 580 },
-          { time: '14:00', value: 420 },
-          { time: '15:00', value: 590 },
-          { time: '16:00', value: 620 },
-          { time: '17:00', value: 580 },
-          { time: '18:00', value: 590 },
-          { time: '19:00', value: 508 },
-          { time: '20:00', value: 550 },
-          { time: '21:00', value: 580 },
-          { time: '22:00', value: 550 },
-          { time: '23:00', value: 590 },
-          { time: '00:00', value: 620 },
-          { time: '01:00', value: 630 },
-          { time: '02:00', value: 640 },
-          { time: '03:00', value: 650 },
-          { time: '04:00', value: 630 },
-          { time: '05:00', value: 650 },
-          { time: '06:00', value: 630 },
-          { time: '07:00', value: 650 },
-        ]);
+        console.error('Error', error);
+        
       } finally {
         setLoading(false);
       }
@@ -65,6 +76,9 @@ const BedTemperatureChart: React.FC = () => {
     return <div className="flex items-center justify-center h-64">Loading...</div>;
   }
 
+  if (!chartData.length) {
+    return <div className="flex items-center justify-center h-64">No data available</div>;
+  }
   const maxValue = Math.max(...chartData.map((item) => item.value));
   const maxIndex = chartData.findIndex(item => item.value === maxValue);
   const minValue = Math.min(...chartData.map((item) => item.value));
@@ -117,6 +131,8 @@ const BedTemperatureChart: React.FC = () => {
 
       // Draw label with rounded background
       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
+          if (!point) return; // safety check
+
         ctx.save();
         ctx.font = '16px Arial';
         const textWidth = ctx.measureText(text).width;
@@ -148,12 +164,16 @@ const BedTemperatureChart: React.FC = () => {
       };
 
       // Max label
-      const maxPoint = meta.data[maxIndex];
-      drawLabel(maxValue.toString(), maxPoint, 'green', -14);
+       if (maxIndex >= 0 && maxIndex < meta.data.length) {
+        const maxPoint = meta.data[maxIndex];
+        drawLabel(maxValue.toString(), maxPoint, 'green', -14);
+      }
 
-      // Min label
-      const minPoint = meta.data[minIndex];
-      drawLabel(minValue.toString(), minPoint, 'red', 20);
+      // Draw min label if valid
+      if (minIndex >= 0 && minIndex < meta.data.length) {
+        const minPoint = meta.data[minIndex];
+        drawLabel(minValue.toString(), minPoint, 'red', 20);
+      }
     }
   };
 
@@ -165,9 +185,9 @@ const BedTemperatureChart: React.FC = () => {
         labels: {
           font: {
             size: 20,
-            weight: 'bold'
+            weight: 'bold' as const
           },
-          textAlign: 'start',
+          textAlign: 'left' as const,
         }
       },
       tooltip: {
@@ -176,7 +196,7 @@ const BedTemperatureChart: React.FC = () => {
       annotation: {
         annotations: {
           line1: {
-            type: 'line',
+            type: 'line' as const,
             yMin: 600,
             yMax: 600,
           },

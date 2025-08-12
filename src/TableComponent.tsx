@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Table, Input, Checkbox, Divider } from "antd";
-import { dataService } from "./services/dataService";
-import type { BreakdownData } from "./services/dataService";
+import axios from "axios";
+
+interface BreakdownData {
+  key: string;
+  time: string;
+  delta: string;
+  bedTemp: string;
+  tfOut: string;
+  ibhInlet: string;
+  furnaceDraft: string;
+  sandLevel: string;
+  fdFanTemp: string;
+  flueGasTemp: string;
+  heatOutput: string;
+}
 
 interface TableDataType {
   key: string;
@@ -44,11 +57,12 @@ const TableComponent: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const breakdownData = await dataService.getBreakdownData();
+        const response = await axios.get('http://localhost:5000/breakdown');
+        const breakdownData = response.data && response.data.length > 0 ? response.data[0].data || [] : [];
         
         if (breakdownData.length > 0) {
           // Convert API data to table format
-          const formattedData: TableDataType[] = breakdownData.map((item, index) => ({
+          const formattedData: TableDataType[] = breakdownData.map((item: BreakdownData, index: number) => ({
             key: String(index + 1),
             time: item.time,
             delta: item.delta,
@@ -123,7 +137,11 @@ const TableComponent: React.FC = () => {
         heatOutput: row.heatOutput || "0",
       }));
 
-      const success = await dataService.saveBreakdownData(breakdownData);
+             await axios.post('http://localhost:5000/breakdown', {
+         id: Date.now().toString(),
+         data: breakdownData
+       });
+       const success = true;
       if (success) {
         alert("Data saved successfully!");
       } else {

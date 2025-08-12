@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -10,48 +10,87 @@ import {
   Legend,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import axios from 'axios';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
 const EspOutChart: React.FC = () => {
-  const EspOutData = [
-    { time: '08:00', Outlate: 170 },
-    { time: '09:00', Outlate: 165 },
-    { time: '10:00', Outlate: 175 },
-    { time: '11:00', Outlate: 155 },
-    { time: '12:00', Outlate: 185 },
-    { time: '13:00', Outlate: 150 },
-    { time: '14:00', Outlate: 155 },
-    { time: '15:00', Outlate: 175 },
-    { time: '16:00', Outlate: 185 },
-    { time: '17:00', Outlate: 165 },
-    { time: '18:00', Outlate: 178 },
-    { time: '19:00', Outlate: 165 },
-    { time: '20:00', Outlate: 185 },
-    { time: '21:00', Outlate: 185 },
-    { time: '22:00', Outlate: 155 },
-    { time: '23:00', Outlate: 165 },
-    { time: '00:00', Outlate: 175 },
-    { time: '01:00', Outlate: 155 },
-    { time: '02:00', Outlate: 165 },
-    { time: '03:00', Outlate: 155 },
-    { time: '04:00', Outlate: 165 },
-    { time: '05:00', Outlate: 155 },
-    { time: '06:00', Outlate: 165 },
-    { time: '07:00', Outlate: 155 },
-  ];
+  const [chartData, setChartData] = useState<{ time: string; value: number }[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const maxValue = Math.max(...EspOutData.map((item) => item.Outlate));
-  const minValue = Math.min(...EspOutData.map((item) => item.Outlate));
-  const maxIndex = EspOutData.findIndex(item => item.Outlate === maxValue);
-  const minIndex = EspOutData.findIndex(item => item.Outlate === minValue);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('http://localhost:5000/breakdown');
+
+        if (response.data && response.data.length > 0) {
+          // Extract data from the nested structure
+          const breakdownData = response.data[0].data || [];
+          const formattedData = breakdownData.map((item: any) => ({
+            time: item.time,
+            value: parseFloat(item.EspOutlet) || 0
+          }));
+          setChartData(formattedData);
+        } else {
+          // Fallback to static data if no API data
+          setChartData([
+            { time: '08:00', value: 170 },
+            { time: '09:00', value: 165 },
+            { time: '10:00', value: 175 },
+            { time: '11:00', value: 155 },
+            { time: '12:00', value: 185 },
+            { time: '13:00', value: 150 },
+            { time: '14:00', value: 155 },
+            { time: '15:00', value: 175 },
+            { time: '16:00', value: 185 },
+            { time: '17:00', value: 165 },
+            { time: '18:00', value: 178 },
+            { time: '19:00', value: 165 },
+            { time: '20:00', value: 185 },
+            { time: '21:00', value: 185 },
+            { time: '22:00', value: 155 },
+            { time: '23:00', value: 165 },
+            { time: '00:00', value: 175 },
+            { time: '01:00', value: 155 },
+            { time: '02:00', value: 165 },
+            { time: '03:00', value: 155 },
+            { time: '04:00', value: 165 },
+            { time: '05:00', value: 155 },
+            { time: '06:00', value: 165 },
+            { time: '07:00', value: 155 },
+          ]);
+        }
+      } catch (error) {
+        console.error('Error', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+if (loading) {
+    return <div className="flex items-center justify-center h-64">Loading chart...</div>;
+  }
+
+  if (!chartData.length) {
+    return <div className="flex items-center justify-center h-64">No data available</div>;
+  }
+
+  const maxValue = Math.max(...chartData.map((item) => item.value));
+  const minValue = Math.min(...chartData.map((item) => item.value));
+  const maxIndex = chartData.findIndex(item => item.value === maxValue);
+  const minIndex = chartData.findIndex(item => item.value === minValue);
 
   const data = {
-    labels: EspOutData.map((item) => item.time),
+    labels: chartData.map((item) => item.time),
     datasets: [
       {
         label: 'ESP OUT',
-        data: EspOutData.map((item) => item.Outlate),
+        data: chartData.map((item) => item.value),
         backgroundColor: '#4784FE',
         borderColor: '#4784FE',
         fill: false,
@@ -69,7 +108,7 @@ const EspOutChart: React.FC = () => {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
 
-       const drawRoundedRect = (
+      const drawRoundedRect = (
         ctx: CanvasRenderingContext2D,
         x: number,
         y: number,
@@ -90,7 +129,9 @@ const EspOutChart: React.FC = () => {
         ctx.closePath();
       };
 
-       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
+      const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
+        if (!point) return; // safety check
+      
         ctx.save();
         ctx.font = '16px Arial';
         const textWidth = ctx.measureText(text).width;
@@ -121,11 +162,16 @@ const EspOutChart: React.FC = () => {
         ctx.restore();
       };
 
-      const maxPoint = meta.data[maxIndex];
-      drawLabel(maxValue.toString(), maxPoint, 'green', -14);
+       if (maxIndex >= 0 && maxIndex < meta.data.length) {
+        const maxPoint = meta.data[maxIndex];
+        drawLabel(maxValue.toString(), maxPoint, 'green', -14);
+      }
 
-      const minPoint = meta.data[minIndex];
-      drawLabel(minValue.toString(), minPoint, 'red', 20);
+      // Draw min label if valid
+      if (minIndex >= 0 && minIndex < meta.data.length) {
+        const minPoint = meta.data[minIndex];
+        drawLabel(minValue.toString(), minPoint, 'red', 20);
+      }
     }
   };
 
@@ -151,7 +197,7 @@ const EspOutChart: React.FC = () => {
             type: 'line',
             yMin: 170,
             yMax: 170,
-           
+
           },
         },
       },

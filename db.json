@@ -24,11 +24,13 @@
           "bedTemp": "770",
           "tfOut": "650",
           "ibhInlet": "580",
-          "furnaceDraft": "15",
-          "sandLevel": "25",
-          "fdFanTemp": "420",
+          "furnaceDraft": "-0.1",
+          "sandLevel": "404",
+          "fdFanTemp": "180",
           "flueGasTemp": "590",
-          "heatOutput": "620"
+          "heatOutput": "620",
+           "EspOutlet": "170",
+          "WphOutlet":"210"
         },
         {
           "key": "2",
@@ -37,11 +39,13 @@
           "bedTemp": "730",
           "tfOut": "620",
           "ibhInlet": "580",
-          "furnaceDraft": "16",
-          "sandLevel": "26",
-          "fdFanTemp": "430",
+          "furnaceDraft": "0.0",
+          "sandLevel": "405",
+          "fdFanTemp": "170",
           "flueGasTemp": "600",
-          "heatOutput": "630"
+          "heatOutput": "630",
+           "EspOutlet": "165",
+          "WphOutlet":"202"
         },
         {
           "key": "3",
@@ -50,11 +54,13 @@
           "bedTemp": "750",
           "tfOut": "640",
           "ibhInlet": "590",
-          "furnaceDraft": "17",
-          "sandLevel": "27",
-          "fdFanTemp": "440",
+          "furnaceDraft": "0.8",
+          "sandLevel": "400",
+          "fdFanTemp": "160",
           "flueGasTemp": "610",
-          "heatOutput": "640"
+          "heatOutput": "640",
+           "EspOutlet": "175",
+          "WphOutlet":"205"
         },
         {
           "key": "4",
@@ -63,11 +69,13 @@
           "bedTemp": "780",
           "tfOut": "660",
           "ibhInlet": "600",
-          "furnaceDraft": "18",
-          "sandLevel": "28",
-          "fdFanTemp": "450",
+          "furnaceDraft": "0.5",
+          "sandLevel": "404",
+          "fdFanTemp": "160",
           "flueGasTemp": "620",
-          "heatOutput": "650"
+          "heatOutput": "650",
+           "EspOutlet": "155",
+          "WphOutlet":"204"
         },
         {
           "key": "5",
@@ -76,11 +84,13 @@
           "bedTemp": "650",
           "tfOut": "680",
           "ibhInlet": "610",
-          "furnaceDraft": "19",
-          "sandLevel": "29",
-          "fdFanTemp": "460",
+          "furnaceDraft": "0.8",
+          "sandLevel": "409",
+          "fdFanTemp": "160",
           "flueGasTemp": "630",
-          "heatOutput": "660"
+          "heatOutput": "660",
+           "EspOutlet": "185",
+          "WphOutlet":"210"
         },
         {
           "key": "6",
@@ -89,11 +99,13 @@
           "bedTemp": "580",
           "tfOut": "700",
           "ibhInlet": "620",
-          "furnaceDraft": "20",
-          "sandLevel": "30",
-          "fdFanTemp": "470",
+          "furnaceDraft": "-0.1",
+          "sandLevel": "400",
+          "fdFanTemp": "170",
           "flueGasTemp": "640",
-          "heatOutput": "670"
+          "heatOutput": "670",
+           "EspOutlet": "150",
+          "WphOutlet":"201"
         },
         {
           "key": "7",
@@ -102,11 +114,13 @@
           "bedTemp": "420",
           "tfOut": "720",
           "ibhInlet": "630",
-          "furnaceDraft": "21",
-          "sandLevel": "31",
-          "fdFanTemp": "480",
+          "furnaceDraft": "-0.4",
+          "sandLevel": "401",
+          "fdFanTemp": "160",
           "flueGasTemp": "650",
-          "heatOutput": "680"
+          "heatOutput": "680",
+           "EspOutlet": "155",
+          "WphOutlet":"200"
         },
         {
           "key": "8",
@@ -115,11 +129,13 @@
           "bedTemp": "590",
           "tfOut": "740",
           "ibhInlet": "640",
-          "furnaceDraft": "22",
-          "sandLevel": "32",
-          "fdFanTemp": "490",
+          "furnaceDraft": "-0.6",
+          "sandLevel": "409",
+          "fdFanTemp": "165",
           "flueGasTemp": "660",
-          "heatOutput": "690"
+          "heatOutput": "690",
+           "EspOutlet": "175",
+          "WphOutlet":"205"
         },
         {
           "key": "9",
@@ -128,11 +144,13 @@
           "bedTemp": "620",
           "tfOut": "760",
           "ibhInlet": "650",
-          "furnaceDraft": "23",
-          "sandLevel": "33",
-          "fdFanTemp": "500",
+          "furnaceDraft": "-0.8",
+          "sandLevel": "400",
+          "fdFanTemp": "175",
           "flueGasTemp": "670",
-          "heatOutput": "700"
+          "heatOutput": "700",
+           "EspOutlet": "185",
+          "WphOutlet":"201"
         },
         {
           "key": "10",
@@ -141,11 +159,13 @@
           "bedTemp": "580",
           "tfOut": "780",
           "ibhInlet": "660",
-          "furnaceDraft": "24",
-          "sandLevel": "34",
-          "fdFanTemp": "510",
+          "furnaceDraft": "-0.5",
+          "sandLevel": "401",
+          "fdFanTemp": "165",
           "flueGasTemp": "680",
-          "heatOutput": "710"
+          "heatOutput": "710",
+           "EspOutlet": "165",
+          "WphOutlet":"201"
         },
         {
           "key": "11",
@@ -154,11 +174,13 @@
           "bedTemp": "590",
           "tfOut": "800",
           "ibhInlet": "670",
-          "furnaceDraft": "25",
-          "sandLevel": "35",
-          "fdFanTemp": "520",
+          "furnaceDraft": "0.4",
+          "sandLevel": "409",
+          "fdFanTemp": "175",
           "flueGasTemp": "690",
-          "heatOutput": "720"
+          "heatOutput": "720",
+           "EspOutlet": "178",
+          "WphOutlet":"205"
         },
         {
           "key": "12",
@@ -167,11 +189,13 @@
           "bedTemp": "508",
           "tfOut": "820",
           "ibhInlet": "680",
-          "furnaceDraft": "26",
-          "sandLevel": "36",
-          "fdFanTemp": "530",
+          "furnaceDraft": "-0.6",
+          "sandLevel": "400",
+          "fdFanTemp": "165",
           "flueGasTemp": "700",
-          "heatOutput": "730"
+          "heatOutput": "730",
+           "EspOutlet": "165",
+          "WphOutlet":"210"
         },
         {
           "key": "13",
@@ -180,11 +204,13 @@
           "bedTemp": "550",
           "tfOut": "840",
           "ibhInlet": "690",
-          "furnaceDraft": "27",
-          "sandLevel": "37",
-          "fdFanTemp": "540",
+          "furnaceDraft": "-0.3",
+          "sandLevel": "400",
+          "fdFanTemp": "160",
           "flueGasTemp": "710",
-          "heatOutput": "740"
+          "heatOutput": "740",
+           "EspOutlet": "185",
+          "WphOutlet":"205"
         },
         {
           "key": "14",
@@ -193,11 +219,13 @@
           "bedTemp": "580",
           "tfOut": "860",
           "ibhInlet": "700",
-          "furnaceDraft": "28",
-          "sandLevel": "38",
-          "fdFanTemp": "550",
+          "furnaceDraft": "-0.4",
+          "sandLevel": "400",
+          "fdFanTemp": "170",
           "flueGasTemp": "720",
-          "heatOutput": "750"
+          "heatOutput": "750",
+           "EspOutlet": "185",
+          "WphOutlet":"210"
         },
         {
           "key": "15",
@@ -206,11 +234,13 @@
           "bedTemp": "550",
           "tfOut": "880",
           "ibhInlet": "710",
-          "furnaceDraft": "29",
-          "sandLevel": "39",
-          "fdFanTemp": "560",
+          "furnaceDraft": "-0.3",
+          "sandLevel": "401",
+          "fdFanTemp": "155",
           "flueGasTemp": "730",
-          "heatOutput": "760"
+          "heatOutput": "760",
+           "EspOutlet": "155",
+          "WphOutlet":"201"
         },
         {
           "key": "16",
@@ -219,11 +249,13 @@
           "bedTemp": "590",
           "tfOut": "900",
           "ibhInlet": "720",
-          "furnaceDraft": "30",
-          "sandLevel": "40",
-          "fdFanTemp": "570",
+          "furnaceDraft": "1.4",
+          "sandLevel": "410",
+          "fdFanTemp": "165",
           "flueGasTemp": "740",
-          "heatOutput": "770"
+          "heatOutput": "770",
+           "EspOutlet": "165",
+          "WphOutlet":"205"
         },
         {
           "key": "17",
@@ -232,11 +264,13 @@
           "bedTemp": "620",
           "tfOut": "920",
           "ibhInlet": "730",
-          "furnaceDraft": "31",
-          "sandLevel": "41",
-          "fdFanTemp": "580",
+          "furnaceDraft": "1.7",
+          "sandLevel": "405",
+          "fdFanTemp": "170",
           "flueGasTemp": "750",
-          "heatOutput": "780"
+          "heatOutput": "780",
+           "EspOutlet": "175",
+          "WphOutlet":"220"
         },
         {
           "key": "18",
@@ -245,11 +279,13 @@
           "bedTemp": "630",
           "tfOut": "940",
           "ibhInlet": "740",
-          "furnaceDraft": "32",
-          "sandLevel": "42",
-          "fdFanTemp": "590",
+          "furnaceDraft": "2.4",
+          "sandLevel": "400",
+          "fdFanTemp": "175",
           "flueGasTemp": "760",
-          "heatOutput": "790"
+          "heatOutput": "790",
+           "EspOutlet": "155",
+          "WphOutlet":"210"
         },
         {
           "key": "19",
@@ -258,11 +294,13 @@
           "bedTemp": "640",
           "tfOut": "960",
           "ibhInlet": "750",
-          "furnaceDraft": "33",
-          "sandLevel": "43",
-          "fdFanTemp": "600",
+          "furnaceDraft": "3.5",
+          "sandLevel": "405",
+          "fdFanTemp": "165",
           "flueGasTemp": "770",
-          "heatOutput": "800"
+          "heatOutput": "800",
+           "EspOutlet": "165",
+          "WphOutlet":"205"
         },
         {
           "key": "20",
@@ -271,11 +309,13 @@
           "bedTemp": "650",
           "tfOut": "980",
           "ibhInlet": "760",
-          "furnaceDraft": "34",
-          "sandLevel": "44",
-          "fdFanTemp": "610",
+          "furnaceDraft": "1.5",
+          "sandLevel": "401",
+          "fdFanTemp": "160",
           "flueGasTemp": "780",
-          "heatOutput": "810"
+          "heatOutput": "810",
+           "EspOutlet": "155",
+          "WphOutlet":"205"
         },
         {
           "key": "21",
@@ -284,11 +324,13 @@
           "bedTemp": "630",
           "tfOut": "1000",
           "ibhInlet": "770",
-          "furnaceDraft": "35",
-          "sandLevel": "45",
-          "fdFanTemp": "620",
+          "furnaceDraft": "2.5",
+          "sandLevel": "400",
+          "fdFanTemp": "170",
           "flueGasTemp": "790",
-          "heatOutput": "820"
+          "heatOutput": "820",
+           "EspOutlet": "165",
+          "WphOutlet":"201"
         },
         {
           "key": "22",
@@ -297,11 +339,13 @@
           "bedTemp": "650",
           "tfOut": "1020",
           "ibhInlet": "780",
-          "furnaceDraft": "36",
-          "sandLevel": "46",
-          "fdFanTemp": "630",
+          "furnaceDraft": "2.0",
+          "sandLevel": "405",
+          "fdFanTemp": "155",
           "flueGasTemp": "800",
-          "heatOutput": "830"
+          "heatOutput": "830",
+           "EspOutlet": "155",
+          "WphOutlet":"203"
         },
         {
           "key": "23",
@@ -310,11 +354,13 @@
           "bedTemp": "630",
           "tfOut": "1040",
           "ibhInlet": "790",
-          "furnaceDraft": "37",
-          "sandLevel": "47",
-          "fdFanTemp": "640",
+          "furnaceDraft": "-0.5",
+          "sandLevel": "410",
+          "fdFanTemp": "165",
           "flueGasTemp": "810",
-          "heatOutput": "840"
+          "heatOutput": "840",
+           "EspOutlet": "165",
+          "WphOutlet":"203"
         },
         {
           "key": "24",
@@ -323,13 +369,17 @@
           "bedTemp": "650",
           "tfOut": "1060",
           "ibhInlet": "800",
-          "furnaceDraft": "38",
-          "sandLevel": "48",
-          "fdFanTemp": "650",
+          "furnaceDraft": "0.1",
+          "sandLevel": "400",
+          "fdFanTemp": "170",
           "flueGasTemp": "820",
-          "heatOutput": "850"
+          "heatOutput": "850",
+          "EspOutlet": "155",
+          "WphOutlet":"199"
         }
       ]
     }
+   
+     
   ]
 }
