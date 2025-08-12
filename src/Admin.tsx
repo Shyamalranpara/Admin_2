@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './Admin.css'
 import JBLOGO from './assets/LOGO.png'
-import { DatePicker } from 'antd';
 import Cards from './Cards'
 import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme, Row, Col } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Row, Col, DatePicker } from 'antd';
 import TableComponent from './TableComponent';
 import ShiftCard from './ShiftCard';
 import PopupModel from './PopupModel';
@@ -12,6 +11,7 @@ import PopupModelShiftCard from './PopupModelShiftCard';
 import { Link } from 'react-router-dom';
 import HeaderLayout from './HeaderLayout';
 import RadioBtn from './RadioBtn';
+
 const { Content, Sider } = Layout;
 
 
@@ -151,7 +151,7 @@ const Admin: React.FC = () => {
                             </div>
 
                             <div className='date-picker-container'>
-                                <DatePicker />
+                                <DatePicker/>
                                 <div>
                                     {/* <button className='btn-tfh py-[5px] px-[16px] border border-2 border-[#408634] text-[#408634] text-[14px] rounded-[4px] cursor-pointer'>TFH 1</button>
                                     <button className='btn-tfh-2 py-[5px] px-[16px] border border-2 border-[#d9d9d9e6] bg-transparent rounded-[4px] text-[14px] cursor-pointer'>TFH 2</button> */}

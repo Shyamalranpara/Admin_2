@@ -14,7 +14,6 @@ import WphChart from './Data/WphChart';
 import EspOutChart from './Data/EspOutChart';
 import LoadCart from './Data/LoadCart';
 import Timeline from './Timeline';
-
 type MenuItem = Required<MenuProps>['items'][number];
 
 function getItem(
@@ -193,7 +192,7 @@ const Dashboard = () => {
                 <h1 className='text-[20px] leading-[28px] font-medium'>Thermopack Report</h1>
               </div>
               <div className='pr-5'>
-                <DatePicker />
+                <DatePicker /> 
               </div>
             </div>
 

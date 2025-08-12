@@ -68,7 +68,7 @@ export default function App() {
         className="mx-6 font-normal text-[20px] leading-[28px] underline text-black cursor-pointer"
         onClick={() => setIsTimelineOpen(true)}
       >
-        Timeline
+       <span className='text-black underline'>Timeline</span> 
       </a>
 
       <TimelineModal 
