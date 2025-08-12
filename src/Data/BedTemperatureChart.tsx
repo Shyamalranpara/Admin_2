@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -10,48 +10,72 @@ import {
   Legend,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import { dataService } from '../services/dataService';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
 const BedTemperatureChart: React.FC = () => {
-  const bedTempData = [
-    { time: '08:00', Outlate: 770 },
-    { time: '09:00', Outlate: 730 },
-    { time: '10:00', Outlate: 750 },
-    { time: '11:00', Outlate: 780 },
-    { time: '12:00', Outlate: 650 },
-    { time: '13:00', Outlate: 580 },
-    { time: '14:00', Outlate: 420 },
-    { time: '15:00', Outlate: 590 },
-    { time: '16:00', Outlate: 620 },
-    { time: '17:00', Outlate: 580 },
-    { time: '18:00', Outlate: 590 },
-    { time: '19:00', Outlate: 508 },
-    { time: '20:00', Outlate: 550 },
-    { time: '21:00', Outlate: 580 },
-    { time: '22:00', Outlate: 550 },
-    { time: '23:00', Outlate: 590 },
-    { time: '00:00', Outlate: 620 },
-    { time: '01:00', Outlate: 630 },
-    { time: '02:00', Outlate: 640 },
-    { time: '03:00', Outlate: 650 },
-    { time: '04:00', Outlate: 630 },
-    { time: '05:00', Outlate: 650 },
-    { time: '06:00', Outlate: 630 },
-    { time: '07:00', Outlate: 650 },
-  ];
+  const [chartData, setChartData] = useState<{ time: string; value: number }[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const maxValue = Math.max(...bedTempData.map((item) => item.Outlate));
-  const maxIndex = bedTempData.findIndex(item => item.Outlate === maxValue);
-  const minValue = Math.min(...bedTempData.map((item) => item.Outlate));
-  const minIndex = bedTempData.findIndex(item => item.Outlate === minValue);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = await dataService.getChartData('bedTemp');
+        setChartData(data);
+      } catch (error) {
+        console.error('Error fetching bed temperature data:', error);
+        // Fallback to static data if API fails
+        setChartData([
+          { time: '08:00', value: 770 },
+          { time: '09:00', value: 730 },
+          { time: '10:00', value: 750 },
+          { time: '11:00', value: 780 },
+          { time: '12:00', value: 650 },
+          { time: '13:00', value: 580 },
+          { time: '14:00', value: 420 },
+          { time: '15:00', value: 590 },
+          { time: '16:00', value: 620 },
+          { time: '17:00', value: 580 },
+          { time: '18:00', value: 590 },
+          { time: '19:00', value: 508 },
+          { time: '20:00', value: 550 },
+          { time: '21:00', value: 580 },
+          { time: '22:00', value: 550 },
+          { time: '23:00', value: 590 },
+          { time: '00:00', value: 620 },
+          { time: '01:00', value: 630 },
+          { time: '02:00', value: 640 },
+          { time: '03:00', value: 650 },
+          { time: '04:00', value: 630 },
+          { time: '05:00', value: 650 },
+          { time: '06:00', value: 630 },
+          { time: '07:00', value: 650 },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div className="flex items-center justify-center h-64">Loading...</div>;
+  }
+
+  const maxValue = Math.max(...chartData.map((item) => item.value));
+  const maxIndex = chartData.findIndex(item => item.value === maxValue);
+  const minValue = Math.min(...chartData.map((item) => item.value));
+  const minIndex = chartData.findIndex(item => item.value === minValue);
 
   const data = {
-    labels: bedTempData.map((item) => item.time),
+    labels: chartData.map((item) => item.time),
     datasets: [
       {
         label: 'Bed Temperature',
-        data: bedTempData.map((item) => item.Outlate),
+        data: chartData.map((item) => item.value),
         backgroundColor: '#2B6CEF',
         borderColor: '#2B6CEF',
         fill: false,

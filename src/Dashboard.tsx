@@ -13,6 +13,7 @@ import FuleGasChart from './Data/FuleGasChart';
 import WphChart from './Data/WphChart';
 import EspOutChart from './Data/EspOutChart';
 import LoadCart from './Data/LoadCart';
+
 import Timeline from './Timeline';
 import dayjs from 'dayjs';
 type MenuItem = Required<MenuProps>['items'][number];
@@ -231,6 +232,7 @@ const Dashboard = () => {
             <div className='w-full h-auto min-h-[360px] rounded-[8px] shadow-md bg-[#FFFFFF]'>
               <LoadCart/>
             </div>
+
             </div>
           </Content>
 

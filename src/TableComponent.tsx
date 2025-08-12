@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Input, Checkbox, Divider } from "antd";
-import axios from "axios";
+import { dataService } from "./services/dataService";
+import type { BreakdownData } from "./services/dataService";
 
 interface TableDataType {
   key: string;
@@ -25,15 +26,10 @@ const timeSlots = [
   "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"
 ];
 
-// Initial table data
-const initialData: TableDataType[] = timeSlots.map((time, index) => ({
-  key: String(index + 1),
-  time,
-}));
-
 const TableComponent: React.FC = () => {
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-  const [tableData, setTableData] = useState<TableDataType[]>(initialData);
+  const [tableData, setTableData] = useState<TableDataType[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Load saved selected columns
   useEffect(() => {
@@ -41,6 +37,53 @@ const TableComponent: React.FC = () => {
     if (savedKeys) {
       setSelectedKeys(JSON.parse(savedKeys));
     }
+  }, []);
+
+  // Load data from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const breakdownData = await dataService.getBreakdownData();
+        
+        if (breakdownData.length > 0) {
+          // Convert API data to table format
+          const formattedData: TableDataType[] = breakdownData.map((item, index) => ({
+            key: String(index + 1),
+            time: item.time,
+            delta: item.delta,
+            bedTemp: item.bedTemp,
+            tfOut: item.tfOut,
+            ibhInlet: item.ibhInlet,
+            furnaceDraft: item.furnaceDraft,
+            sandLevel: item.sandLevel,
+            fdFanTemp: item.fdFanTemp,
+            flueGasTemp: item.flueGasTemp,
+            heatOutput: item.heatOutput,
+          }));
+          setTableData(formattedData);
+        } else {
+          // Fallback to initial data if no API data
+          const initialData: TableDataType[] = timeSlots.map((time, index) => ({
+            key: String(index + 1),
+            time,
+          }));
+          setTableData(initialData);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Fallback to initial data if API fails
+        const initialData: TableDataType[] = timeSlots.map((time, index) => ({
+          key: String(index + 1),
+          time,
+        }));
+        setTableData(initialData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   // Handle checkbox changes
@@ -64,8 +107,32 @@ const TableComponent: React.FC = () => {
   };
 
   const saveData = async () => {
-    await axios.post("http://localhost:5000/breakdown", tableData);
-    alert("Data saved!");
+    try {
+      // Convert table data back to API format
+      const breakdownData: BreakdownData[] = tableData.map((row) => ({
+        key: row.key,
+        time: row.time,
+        delta: row.delta || "0",
+        bedTemp: row.bedTemp || "0",
+        tfOut: row.tfOut || "0",
+        ibhInlet: row.ibhInlet || "0",
+        furnaceDraft: row.furnaceDraft || "0",
+        sandLevel: row.sandLevel || "0",
+        fdFanTemp: row.fdFanTemp || "0",
+        flueGasTemp: row.flueGasTemp || "0",
+        heatOutput: row.heatOutput || "0",
+      }));
+
+      const success = await dataService.saveBreakdownData(breakdownData);
+      if (success) {
+        alert("Data saved successfully!");
+      } else {
+        alert("Failed to save data. Please try again.");
+      }
+    } catch (error) {
+      console.error('Error saving data:', error);
+      alert("Error saving data. Please check the console for details.");
+    }
   };
 
   // Fixed columns
@@ -189,6 +256,7 @@ const TableComponent: React.FC = () => {
           pagination={false}
           scroll={{ x: 'max-content' }}
           className="text-xs md:text-sm"
+          loading={loading}
         />
       </div>
 

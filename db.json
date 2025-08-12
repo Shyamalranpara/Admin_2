@@ -15,127 +15,321 @@
   ],
   "breakdown": [
     {
-      "0": {
-        "key": "1",
-        "time": "08:00",
-        "delta": "27"
-      },
-      "1": {
-        "key": "2",
-        "time": "09:00",
-        "delta": "20"
-      },
-      "2": {
-        "key": "3",
-        "time": "10:00",
-        "delta": "22"
-      },
-      "3": {
-        "key": "4",
-        "time": "11:00",
-        "delta": "23"
-      },
-      "4": {
-        "key": "5",
-        "time": "12:00",
-        "delta": "24"
-      },
-      "5": {
-        "key": "6",
-        "time": "13:00",
-        "delta": "15"
-      },
-      "6": {
-        "key": "7",
-        "time": "14:00",
-        "delta": "13"
-      },
-      "7": {
-        "key": "8",
-        "time": "15:00",
-        "delta": "13"
-      },
-      "8": {
-        "key": "9",
-        "time": "16:00",
-        "delta": "19"
-      },
-      "9": {
-        "key": "10",
-        "time": "17:00",
-        "delta": "19"
-      },
-      "10": {
-        "key": "11",
-        "time": "18:00",
-        "delta": "17"
-      },
-      "11": {
-        "key": "12",
-        "time": "19:00",
-        "delta": "16"
-      },
-      "12": {
-        "key": "13",
-        "time": "20:00",
-        "delta": "9"
-      },
-      "13": {
-        "key": "14",
-        "time": "21:00",
-        "delta": "8"
-      },
-      "14": {
-        "key": "15",
-        "time": "22:00",
-        "delta": "15"
-      },
-      "15": {
-        "key": "16",
-        "time": "23:00",
-        "delta": "28"
-      },
-      "16": {
-        "key": "17",
-        "time": "00:00",
-        "delta": "23"
-      },
-      "17": {
-        "key": "18",
-        "time": "01:00",
-        "delta": "24"
-      },
-      "18": {
-        "key": "19",
-        "time": "02:00",
-        "delta": "25"
-      },
-      "19": {
-        "key": "20",
-        "time": "03:00",
-        "delta": "27"
-      },
-      "20": {
-        "key": "21",
-        "time": "04:00",
-        "delta": "25"
-      },
-      "21": {
-        "key": "22",
-        "time": "05:00",
-        "delta": "26"
-      },
-      "22": {
-        "key": "23",
-        "time": "06:00",
-        "delta": "19"
-      },
-      "23": {
-        "key": "24",
-        "time": "07:00",
-        "delta": "22"
-      },
-      "id": "1483"
+      "id": "1483",
+      "data": [
+        {
+          "key": "1",
+          "time": "08:00",
+          "delta": "26",
+          "bedTemp": "770",
+          "tfOut": "650",
+          "ibhInlet": "580",
+          "furnaceDraft": "15",
+          "sandLevel": "25",
+          "fdFanTemp": "420",
+          "flueGasTemp": "590",
+          "heatOutput": "620"
+        },
+        {
+          "key": "2",
+          "time": "09:00",
+          "delta": "20",
+          "bedTemp": "730",
+          "tfOut": "620",
+          "ibhInlet": "580",
+          "furnaceDraft": "16",
+          "sandLevel": "26",
+          "fdFanTemp": "430",
+          "flueGasTemp": "600",
+          "heatOutput": "630"
+        },
+        {
+          "key": "3",
+          "time": "10:00",
+          "delta": "22",
+          "bedTemp": "750",
+          "tfOut": "640",
+          "ibhInlet": "590",
+          "furnaceDraft": "17",
+          "sandLevel": "27",
+          "fdFanTemp": "440",
+          "flueGasTemp": "610",
+          "heatOutput": "640"
+        },
+        {
+          "key": "4",
+          "time": "11:00",
+          "delta": "23",
+          "bedTemp": "780",
+          "tfOut": "660",
+          "ibhInlet": "600",
+          "furnaceDraft": "18",
+          "sandLevel": "28",
+          "fdFanTemp": "450",
+          "flueGasTemp": "620",
+          "heatOutput": "650"
+        },
+        {
+          "key": "5",
+          "time": "12:00",
+          "delta": "24",
+          "bedTemp": "650",
+          "tfOut": "680",
+          "ibhInlet": "610",
+          "furnaceDraft": "19",
+          "sandLevel": "29",
+          "fdFanTemp": "460",
+          "flueGasTemp": "630",
+          "heatOutput": "660"
+        },
+        {
+          "key": "6",
+          "time": "13:00",
+          "delta": "15",
+          "bedTemp": "580",
+          "tfOut": "700",
+          "ibhInlet": "620",
+          "furnaceDraft": "20",
+          "sandLevel": "30",
+          "fdFanTemp": "470",
+          "flueGasTemp": "640",
+          "heatOutput": "670"
+        },
+        {
+          "key": "7",
+          "time": "14:00",
+          "delta": "13",
+          "bedTemp": "420",
+          "tfOut": "720",
+          "ibhInlet": "630",
+          "furnaceDraft": "21",
+          "sandLevel": "31",
+          "fdFanTemp": "480",
+          "flueGasTemp": "650",
+          "heatOutput": "680"
+        },
+        {
+          "key": "8",
+          "time": "15:00",
+          "delta": "13",
+          "bedTemp": "590",
+          "tfOut": "740",
+          "ibhInlet": "640",
+          "furnaceDraft": "22",
+          "sandLevel": "32",
+          "fdFanTemp": "490",
+          "flueGasTemp": "660",
+          "heatOutput": "690"
+        },
+        {
+          "key": "9",
+          "time": "16:00",
+          "delta": "19",
+          "bedTemp": "620",
+          "tfOut": "760",
+          "ibhInlet": "650",
+          "furnaceDraft": "23",
+          "sandLevel": "33",
+          "fdFanTemp": "500",
+          "flueGasTemp": "670",
+          "heatOutput": "700"
+        },
+        {
+          "key": "10",
+          "time": "17:00",
+          "delta": "19",
+          "bedTemp": "580",
+          "tfOut": "780",
+          "ibhInlet": "660",
+          "furnaceDraft": "24",
+          "sandLevel": "34",
+          "fdFanTemp": "510",
+          "flueGasTemp": "680",
+          "heatOutput": "710"
+        },
+        {
+          "key": "11",
+          "time": "18:00",
+          "delta": "17",
+          "bedTemp": "590",
+          "tfOut": "800",
+          "ibhInlet": "670",
+          "furnaceDraft": "25",
+          "sandLevel": "35",
+          "fdFanTemp": "520",
+          "flueGasTemp": "690",
+          "heatOutput": "720"
+        },
+        {
+          "key": "12",
+          "time": "19:00",
+          "delta": "16",
+          "bedTemp": "508",
+          "tfOut": "820",
+          "ibhInlet": "680",
+          "furnaceDraft": "26",
+          "sandLevel": "36",
+          "fdFanTemp": "530",
+          "flueGasTemp": "700",
+          "heatOutput": "730"
+        },
+        {
+          "key": "13",
+          "time": "20:00",
+          "delta": "9",
+          "bedTemp": "550",
+          "tfOut": "840",
+          "ibhInlet": "690",
+          "furnaceDraft": "27",
+          "sandLevel": "37",
+          "fdFanTemp": "540",
+          "flueGasTemp": "710",
+          "heatOutput": "740"
+        },
+        {
+          "key": "14",
+          "time": "21:00",
+          "delta": "8",
+          "bedTemp": "580",
+          "tfOut": "860",
+          "ibhInlet": "700",
+          "furnaceDraft": "28",
+          "sandLevel": "38",
+          "fdFanTemp": "550",
+          "flueGasTemp": "720",
+          "heatOutput": "750"
+        },
+        {
+          "key": "15",
+          "time": "22:00",
+          "delta": "15",
+          "bedTemp": "550",
+          "tfOut": "880",
+          "ibhInlet": "710",
+          "furnaceDraft": "29",
+          "sandLevel": "39",
+          "fdFanTemp": "560",
+          "flueGasTemp": "730",
+          "heatOutput": "760"
+        },
+        {
+          "key": "16",
+          "time": "23:00",
+          "delta": "27",
+          "bedTemp": "590",
+          "tfOut": "900",
+          "ibhInlet": "720",
+          "furnaceDraft": "30",
+          "sandLevel": "40",
+          "fdFanTemp": "570",
+          "flueGasTemp": "740",
+          "heatOutput": "770"
+        },
+        {
+          "key": "17",
+          "time": "00:00",
+          "delta": "23",
+          "bedTemp": "620",
+          "tfOut": "920",
+          "ibhInlet": "730",
+          "furnaceDraft": "31",
+          "sandLevel": "41",
+          "fdFanTemp": "580",
+          "flueGasTemp": "750",
+          "heatOutput": "780"
+        },
+        {
+          "key": "18",
+          "time": "01:00",
+          "delta": "24",
+          "bedTemp": "630",
+          "tfOut": "940",
+          "ibhInlet": "740",
+          "furnaceDraft": "32",
+          "sandLevel": "42",
+          "fdFanTemp": "590",
+          "flueGasTemp": "760",
+          "heatOutput": "790"
+        },
+        {
+          "key": "19",
+          "time": "02:00",
+          "delta": "25",
+          "bedTemp": "640",
+          "tfOut": "960",
+          "ibhInlet": "750",
+          "furnaceDraft": "33",
+          "sandLevel": "43",
+          "fdFanTemp": "600",
+          "flueGasTemp": "770",
+          "heatOutput": "800"
+        },
+        {
+          "key": "20",
+          "time": "03:00",
+          "delta": "27",
+          "bedTemp": "650",
+          "tfOut": "980",
+          "ibhInlet": "760",
+          "furnaceDraft": "34",
+          "sandLevel": "44",
+          "fdFanTemp": "610",
+          "flueGasTemp": "780",
+          "heatOutput": "810"
+        },
+        {
+          "key": "21",
+          "time": "04:00",
+          "delta": "25",
+          "bedTemp": "630",
+          "tfOut": "1000",
+          "ibhInlet": "770",
+          "furnaceDraft": "35",
+          "sandLevel": "45",
+          "fdFanTemp": "620",
+          "flueGasTemp": "790",
+          "heatOutput": "820"
+        },
+        {
+          "key": "22",
+          "time": "05:00",
+          "delta": "26",
+          "bedTemp": "650",
+          "tfOut": "1020",
+          "ibhInlet": "780",
+          "furnaceDraft": "36",
+          "sandLevel": "46",
+          "fdFanTemp": "630",
+          "flueGasTemp": "800",
+          "heatOutput": "830"
+        },
+        {
+          "key": "23",
+          "time": "06:00",
+          "delta": "19",
+          "bedTemp": "630",
+          "tfOut": "1040",
+          "ibhInlet": "790",
+          "furnaceDraft": "37",
+          "sandLevel": "47",
+          "fdFanTemp": "640",
+          "flueGasTemp": "810",
+          "heatOutput": "840"
+        },
+        {
+          "key": "24",
+          "time": "07:00",
+          "delta": "22",
+          "bedTemp": "650",
+          "tfOut": "1060",
+          "ibhInlet": "800",
+          "furnaceDraft": "38",
+          "sandLevel": "48",
+          "fdFanTemp": "650",
+          "flueGasTemp": "820",
+          "heatOutput": "850"
+        }
+      ]
     }
   ]
 }

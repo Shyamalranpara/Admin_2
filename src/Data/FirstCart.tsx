@@ -10,47 +10,85 @@ import {
   Legend,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
-import axios from 'axios';
+import { dataService } from '../services/dataService';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
 const FirstCart: React.FC = () => {
-  const [chartData, setChartData] = useState<any[]>([]);
+  const [chartData, setChartData] = useState<{ time: string; value: number }[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5000/breakdown')
-      .then((res) => {
-        console.log('api data', res.data);
-        setChartData(res.data);
-      })
-      .catch((err) => console.error(err));
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = await dataService.getChartData('delta');
+        setChartData(data);
+      } catch (error) {
+        console.error('Error fetching delta data:', error);
+        // Fallback to static data if API fails
+        setChartData([
+          { time: '08:00', value: 26 },
+          { time: '09:00', value: 20 },
+          { time: '10:00', value: 22 },
+          { time: '11:00', value: 23 },
+          { time: '12:00', value: 24 },
+          { time: '13:00', value: 15 },
+          { time: '14:00', value: 13 },
+          { time: '15:00', value: 13 },
+          { time: '16:00', value: 19 },
+          { time: '17:00', value: 19 },
+          { time: '18:00', value: 17 },
+          { time: '19:00', value: 16 },
+          { time: '20:00', value: 9 },
+          { time: '21:00', value: 8 },
+          { time: '22:00', value: 15 },
+          { time: '23:00', value: 27 },
+          { time: '00:00', value: 23 },
+          { time: '01:00', value: 24 },
+          { time: '02:00', value: 25 },
+          { time: '03:00', value: 27 },
+          { time: '04:00', value: 25 },
+          { time: '05:00', value: 26 },
+          { time: '06:00', value: 19 },
+          { time: '07:00', value: 22 },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  if (!chartData.length) {
-    return <div>Loading chart...</div>;
+  if (loading) {
+    return <div className="flex items-center justify-center h-64">Loading chart...</div>;
   }
 
-  const maxValue = Math.max(...chartData.map((item) => item.delta));
-  const minValue = Math.min(...chartData.map((item) => item.delta));
-  const maxIndex = chartData.findIndex((item) => item.delta === maxValue);
-  const minIndex = chartData.findIndex((item) => item.delta === minValue);
+  if (!chartData.length) {
+    return <div className="flex items-center justify-center h-64">No data available</div>;
+  }
+
+  const maxValue = Math.max(...chartData.map((item) => item.value));
+  const minValue = Math.min(...chartData.map((item) => item.value));
+  const maxIndex = chartData.findIndex((item) => item.value === maxValue);
+  const minIndex = chartData.findIndex((item) => item.value === minValue);
 
   const data = {
-  labels: chartData.map((item) => item.time),
-  datasets: [
-    {
-      label: 'Delta',
-      data: chartData.map((item) => Number(item.delta)), 
-      backgroundColor: '#405189',
-      borderColor: '#405189',
-      fill: false,
-      tension: 0.4,
-      pointRadius: 4,
-      pointHoverRadius: 6,
-    },
-  ],
-};
+    labels: chartData.map((item) => item.time),
+    datasets: [
+      {
+        label: 'Delta',
+        data: chartData.map((item) => item.value), 
+        backgroundColor: '#405189',
+        borderColor: '#405189',
+        fill: false,
+        tension: 0.4,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      },
+    ],
+  };
 
 
   const maxMinValuePlugin = {
@@ -181,8 +219,11 @@ const FirstCart: React.FC = () => {
   };
 
   return (
-    <div>
-      <Line data={data} options={options} plugins={[maxMinValuePlugin]} />
+    <div className="w-full h-full">
+      {/* <h3 className="text-lg font-semibold mb-4 text-center">Delta</h3> */}
+      <div className="w-full h-full">
+        <Line data={data} options={options} plugins={[maxMinValuePlugin]} />
+      </div>
     </div>
   );
 };
