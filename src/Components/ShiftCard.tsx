@@ -1,4 +1,3 @@
-// ShiftCard.tsx
 import React from 'react';
 
 interface ShiftCardProps {

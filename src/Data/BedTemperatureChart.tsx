@@ -23,9 +23,8 @@ const BedTemperatureChart: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.get('http://localhost:5000/breakdown');
-        
+
         if (response.data && response.data.length > 0) {
-          // Extract data from the nested structure
           const breakdownData = response.data[0].data || [];
           const formattedData = breakdownData.map((item: any) => ({
             time: item.time,
@@ -33,37 +32,11 @@ const BedTemperatureChart: React.FC = () => {
           }));
           setChartData(formattedData);
         } else {
-          // Fallback to static data if API fails
-          setChartData([
-            { time: '08:00', value: 770 },
-            { time: '09:00', value: 730 },
-            { time: '10:00', value: 750 },
-            { time: '11:00', value: 780 },
-            { time: '12:00', value: 650 },
-            { time: '13:00', value: 580 },
-            { time: '14:00', value: 420 },
-            { time: '15:00', value: 590 },
-            { time: '16:00', value: 620 },
-            { time: '17:00', value: 580 },
-            { time: '18:00', value: 590 },
-            { time: '19:00', value: 508 },
-            { time: '20:00', value: 550 },
-            { time: '21:00', value: 580 },
-            { time: '22:00', value: 550 },
-            { time: '23:00', value: 590 },
-            { time: '00:00', value: 620 },
-            { time: '01:00', value: 630 },
-            { time: '02:00', value: 640 },
-            { time: '03:00', value: 650 },
-            { time: '04:00', value: 630 },
-            { time: '05:00', value: 650 },
-            { time: '06:00', value: 630 },
-            { time: '07:00', value: 650 },
-          ]);
+         console.log("err",Error)
         }
       } catch (error) {
         console.error('Error', error);
-        
+
       } finally {
         setLoading(false);
       }
@@ -100,14 +73,12 @@ const BedTemperatureChart: React.FC = () => {
     ],
   };
 
-  // Custom plugin to draw max/min with rounded rectangle background
   const maxValuePlugin = {
     id: 'maxValuePlugin',
     afterDatasetsDraw(chart: any) {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
 
-      // Draw rounded rectangle
       const drawRoundedRect = (
         ctx: CanvasRenderingContext2D,
         x: number,
@@ -129,9 +100,8 @@ const BedTemperatureChart: React.FC = () => {
         ctx.closePath();
       };
 
-      // Draw label with rounded background
       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
-          if (!point) return; // safety check
+        if (!point) return;
 
         ctx.save();
         ctx.font = '16px Arial';
@@ -145,16 +115,13 @@ const BedTemperatureChart: React.FC = () => {
         const rectWidth = textWidth + padding * 2;
         const rectHeight = textHeight;
 
-        // Background with border radius
         ctx.fillStyle = bgColor;
         drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
         ctx.fill();
 
-        // Optional border
 
         ctx.stroke();
 
-        // Text
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -163,13 +130,11 @@ const BedTemperatureChart: React.FC = () => {
         ctx.restore();
       };
 
-      // Max label
-       if (maxIndex >= 0 && maxIndex < meta.data.length) {
+      if (maxIndex >= 0 && maxIndex < meta.data.length) {
         const maxPoint = meta.data[maxIndex];
         drawLabel(maxValue.toString(), maxPoint, 'green', -14);
       }
 
-      // Draw min label if valid
       if (minIndex >= 0 && minIndex < meta.data.length) {
         const minPoint = meta.data[minIndex];
         drawLabel(minValue.toString(), minPoint, 'red', 20);

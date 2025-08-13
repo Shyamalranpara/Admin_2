@@ -6,7 +6,7 @@ interface PopupModelShiftCardProps {
   open: boolean;
   title: string;
   label: string;
-  value: string; 
+  value: string;
   onChange: (value: string) => void;
   onClose: () => void;
   onSubmit: (value: string) => void;
@@ -54,13 +54,13 @@ const PopupModelShiftCard: React.FC<PopupModelShiftCardProps> = ({
       <label>{label}</label>
 
       <div className='ml-80 p-2'>
-                                          <DatePicker defaultValue={dayjs()} format="DD-MM-YYYY"/>
-          
+        <DatePicker defaultValue={dayjs()} format="DD-MM-YYYY" />
+
       </div>
 
       <Input
         placeholder="Enter value"
-        value={value} 
+        value={value}
         onChange={(e) => onChange(e.target.value)}
       />
     </Modal>

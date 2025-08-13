@@ -5,7 +5,7 @@ import dayjs, { Dayjs } from "dayjs";
 const DateDayJs: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
 
-  const onDateChange = (date: Dayjs | null, dateString: string) => {
+  const onDateChange = (date: Dayjs | null, dateString: string | string[]) => {
     console.log("Dayjs object:", date);
     console.log("Formatted date:", dateString);
 
@@ -13,15 +13,14 @@ const DateDayJs: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <div className="p-[20px]">
       <DatePicker
         onChange={onDateChange}
         value={selectedDate}
         format="DD-MM-YYYY"
-        defaultValue={dayjs()} // aaj ki date
+        defaultValue={dayjs()}
       />
-      
-      {/* Dusra DatePicker example */}
+
       <DatePicker defaultValue={dayjs()} format="DD-MM-YYYY" />
 
       {selectedDate && (

@@ -5,20 +5,20 @@ import dayjs from 'dayjs';
 const Datesave: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<any>(null);
 
-  
+
   useEffect(() => {
     const savedDate = localStorage.getItem("selectedDate");
     if (savedDate) {
-      setSelectedDate(dayjs(savedDate)); 
+      setSelectedDate(dayjs(savedDate));
     }
   }, []);
 
   const handleChange = (date: any) => {
     setSelectedDate(date);
     if (date) {
-      localStorage.setItem("selectedDate", date.format("YYYY-MM-DD")); 
+      localStorage.setItem("selectedDate", date.format("YYYY-MM-DD"));
     } else {
-      localStorage.removeItem("selectedDate"); 
+      localStorage.removeItem("selectedDate");
     }
   };
 

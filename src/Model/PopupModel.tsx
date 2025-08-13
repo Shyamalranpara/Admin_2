@@ -8,12 +8,12 @@ interface PopupModelProps {
   onSubmit: (value: string) => void;
   title?: string;
   label?: string;
-placeholder?: string;
- defaultValue?: string;
+  placeholder?: string;
+  defaultValue?: string;
 }
 
 const PopupModel: React.FC<PopupModelProps> = ({
-   open,
+  open,
   onClose,
   onSubmit,
   title,
@@ -22,7 +22,7 @@ const PopupModel: React.FC<PopupModelProps> = ({
   defaultValue = ''
 }) => {
   const [inputValue, setInputValue] = useState(defaultValue);
-   React.useEffect(() => {
+  React.useEffect(() => {
     setInputValue(defaultValue);
   }, [defaultValue, open]);
 
@@ -47,8 +47,8 @@ const PopupModel: React.FC<PopupModelProps> = ({
     >
       <div className=" flex justify-end items-center">
         <h1>
-                                          <DatePicker defaultValue={dayjs()} format="DD-MM-YYYY"/>
-          
+          <DatePicker defaultValue={dayjs()} format="DD-MM-YYYY" />
+
         </h1>
       </div>
 
@@ -59,7 +59,7 @@ const PopupModel: React.FC<PopupModelProps> = ({
           </span>
           <br />
           <input
-          className="w-full border border-[#D9D9D9] px-[5px] py-[2px] rounded-[6px]"
+            className="w-full border border-[#D9D9D9] px-[5px] py-[2px] rounded-[6px]"
             type="text"
             placeholder={placeholder}
             value={inputValue}

@@ -1,4 +1,3 @@
-// Cards.tsx
 import React from 'react';
 import { Card } from 'antd';
 
@@ -20,7 +19,7 @@ const Cards: React.FC<CardsProps> = ({
   onClick,
 }) => {
   return (
-    <Card className='rounded-[12px] w-full shadow-[0_2px_8px_rgba(0,0,0,0.05)] min-h-[160px] md:min-h-[180px] p-3 md:p-4' >
+    <Card className=' w-[245px] shadow-[0_2px_8px_rgba(0,0,0,0.05)] min-h-[160px] md:min-h-[180px] p-3 md:p-4' style={{borderRadius:"0.8rem"}} >
       <p className='text-[10px] md:text-[12px] text-[#555]'>{title}</p>
       <p className='text-[24px] md:text-[30px] font-medium m-[4px_0] md:m-[6px_0] leading-[32px] md:leading-[40px]' >
         {value}

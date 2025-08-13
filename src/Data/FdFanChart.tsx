@@ -32,50 +32,25 @@ const FdFanChart: React.FC = () => {
           }));
           setFdChartData(formattedData);
         } else {
-          setFdChartData([
-            { time: '08:00', value: 180 },
-            { time: '09:00', value: 170 },
-            { time: '10:00', value: 160 },
-            { time: '11:00', value: 170 },
-            { time: '12:00', value: 160 },
-            { time: '13:00', value: 170 },
-            { time: '14:00', value: 160 },
-            { time: '15:00', value: 165 },
-            { time: '16:00', value: 175 },
-            { time: '17:00', value: 165 },
-            { time: '18:00', value: 160 },
-            { time: '19:00', value: 170 },
-            { time: '20:00', value: 165 },
-            { time: '21:00', value: 155 },
-            { time: '22:00', value: 165 },
-            { time: '23:00', value: 170 },
-            { time: '00:00', value: 175 },
-            { time: '01:00', value: 165 },
-            { time: '02:00', value: 160 },
-            { time: '03:00', value: 170 },
-            { time: '04:00', value: 155 },
-            { time: '05:00', value: 165 },
-            { time: '06:00', value: 170 },
-            { time: '07:00', value: 175 },
-          ])
+         console.log("err",Error)
         }
-      }catch(error){
+      } catch (error) {
         console.error(error);
-      }finally{
+      } finally {
         setLoading(false);
       }
     }
-      fetchData();
+    fetchData();
   }, [])
 
-  if(loading){
+  if (loading) {
     return <div className="flex items-center justify-center h-64">Loading chart...</div>;
   }
 
-  if(!fdChartData.length){
+  if (!fdChartData.length) {
     return <div className="flex items-center justify-center h-64">No data available</div>;
   }
-  
+
   const maxValue = Math.max(...fdChartData.map((item) => item.value));
   const minValue = Math.min(...fdChartData.map((item) => item.value));
   const maxIndex = fdChartData.findIndex(item => item.value === maxValue);
@@ -97,7 +72,6 @@ const FdFanChart: React.FC = () => {
     ],
   };
 
-  // EspOutChart jaisa max/min value plugin
   const maxValuePlugin = {
     id: 'maxValuePlugin',
     afterDatasetsDraw(chart: any) {
@@ -125,9 +99,8 @@ const FdFanChart: React.FC = () => {
         ctx.closePath();
       };
 
-      // Draw label with rounded background
       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
-        if(!point) return;
+        if (!point) return;
         ctx.save();
         ctx.font = '16px Arial';
         const textWidth = ctx.measureText(text).width;
@@ -140,16 +113,13 @@ const FdFanChart: React.FC = () => {
         const rectWidth = textWidth + padding * 2;
         const rectHeight = textHeight;
 
-        // Background with border radius
         ctx.fillStyle = bgColor;
         drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
         ctx.fill();
 
-        // Optional border
 
         ctx.stroke();
 
-        // Text
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -158,12 +128,11 @@ const FdFanChart: React.FC = () => {
         ctx.restore();
       };
 
- if (maxIndex >= 0 && maxIndex < meta.data.length) {
+      if (maxIndex >= 0 && maxIndex < meta.data.length) {
         const maxPoint = meta.data[maxIndex];
         drawLabel(maxValue.toString(), maxPoint, 'green', -14);
       }
 
-      // Draw min label if valid
       if (minIndex >= 0 && minIndex < meta.data.length) {
         const minPoint = meta.data[minIndex];
         drawLabel(minValue.toString(), minPoint, 'red', 20);

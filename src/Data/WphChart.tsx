@@ -25,41 +25,14 @@ const WphChart: React.FC = () => {
         const response = await axios.get('http://localhost:5000/breakdown');
 
         if (response.data && response.data.length > 0) {
-          // Extract data from the nested structure
           const breakdownData = response.data[0].data || [];
           const formattedData = breakdownData.map((item: any) => ({
             time: item.time,
-            value: parseFloat(item.WphOutlet) || 0
+            value: parseFloat(item.wph) || 0
           }));
           setChartData(formattedData);
         } else {
-          // Fallback to static data if no API data
-          setChartData([
-            { time: '08:00', value: 210 },
-            { time: '09:00', value: 202 },
-            { time: '10:00', value: 205 },
-            { time: '11:00', value: 204 },
-            { time: '12:00', value: 210 },
-            { time: '13:00', value: 201 },
-            { time: '14:00', value: 200 },
-            { time: '15:00', value: 205 },
-            { time: '16:00', value: 201 },
-            { time: '17:00', value: 201 },
-            { time: '18:00', value: 205 },
-            { time: '19:00', value: 210 },
-            { time: '20:00', value: 205 },
-            { time: '21:00', value: 210 },
-            { time: '22:00', value: 201 },
-            { time: '23:00', value: 205 },
-            { time: '00:00', value: 220 },
-            { time: '01:00', value: 210 },
-            { time: '02:00', value: 205 },
-            { time: '03:00', value: 205 },
-            { time: '04:00', value: 201 },
-            { time: '05:00', value: 203 },
-            { time: '06:00', value: 203 },
-            { time: '07:00', value: 199 },
-          ]);
+          console.log("err",Error)
         }
       } catch (error) {
         console.error('Error', error);
@@ -70,8 +43,8 @@ const WphChart: React.FC = () => {
 
     fetchData();
   }, []);
-  
-   if (loading) {
+
+  if (loading) {
     return <div className="flex items-center justify-center h-64">Loading chart...</div>;
   }
 
@@ -100,7 +73,6 @@ const WphChart: React.FC = () => {
     ],
   };
 
-  // Updated plugin to match Fuel Gas chart style
   const maxMinValuePlugin = {
     id: 'maxMinValuePlugin',
     afterDatasetsDraw(chart: any) {
@@ -128,7 +100,6 @@ const WphChart: React.FC = () => {
         ctx.closePath();
       };
 
-      // Draw label with rounded background
       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
         ctx.save();
         ctx.font = '16px Arial';
@@ -142,16 +113,13 @@ const WphChart: React.FC = () => {
         const rectWidth = textWidth + padding * 2;
         const rectHeight = textHeight;
 
-        // Background with border radius
         ctx.fillStyle = bgColor;
         drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
         ctx.fill();
 
-        // Optional border
 
         ctx.stroke();
 
-        // Text
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -160,12 +128,11 @@ const WphChart: React.FC = () => {
         ctx.restore();
       };
 
-     if (maxIndex >= 0 && maxIndex < meta.data.length) {
+      if (maxIndex >= 0 && maxIndex < meta.data.length) {
         const maxPoint = meta.data[maxIndex];
         drawLabel(maxValue.toString(), maxPoint, 'green', -14);
       }
 
-      // Draw min label if valid
       if (minIndex >= 0 && minIndex < meta.data.length) {
         const minPoint = meta.data[minIndex];
         drawLabel(minValue.toString(), minPoint, 'red', 20);
@@ -181,7 +148,7 @@ const WphChart: React.FC = () => {
         labels: {
           font: {
             size: 20,
-            weight: 'bold',
+            weight: 'bold' as const,
           },
           textAlign: 'start',
         },

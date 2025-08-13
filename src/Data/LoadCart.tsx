@@ -62,14 +62,12 @@ const LoadCart: React.FC = () => {
     ],
   };
 
-  // Plugin to draw max and min labels
   const maxMinValuePlugin = {
     id: 'maxMinValuePlugin',
     afterDatasetsDraw(chart: any) {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
 
-      // Max value label
       const drawRoundedRect = (
         ctx: CanvasRenderingContext2D,
         x: number,
@@ -91,7 +89,6 @@ const LoadCart: React.FC = () => {
         ctx.closePath();
       };
 
-      // Draw label with rounded background
       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
         ctx.save();
         ctx.font = '16px Arial';
@@ -105,16 +102,13 @@ const LoadCart: React.FC = () => {
         const rectWidth = textWidth + padding * 2;
         const rectHeight = textHeight;
 
-        // Background with border radius
         ctx.fillStyle = bgColor;
         drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
         ctx.fill();
 
-        // Optional border
 
         ctx.stroke();
 
-        // Text
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -123,11 +117,9 @@ const LoadCart: React.FC = () => {
         ctx.restore();
       };
 
-      // Max label
       const maxPoint = meta.data[maxIndex];
       drawLabel(maxValue.toString(), maxPoint, 'green', -14);
 
-      // Min label
       const minPoint = meta.data[minIndex];
       drawLabel(minValue.toString(), minPoint, 'red', 20);
     }
@@ -137,17 +129,17 @@ const LoadCart: React.FC = () => {
     responsive: true,
     plugins: {
       legend: {
-           Legend:{
-             display:false
-           },
-           labels: {
-             font: {
-               size: 20, 
-               weight: 'bold' 
-             },
-              textAlign: 'start', 
-           }
-         },
+        Legend: {
+          display: false
+        },
+        labels: {
+          font: {
+            size: 20,
+            weight: 'bold'
+          },
+          textAlign: 'start',
+        }
+      },
       tooltip: {
         enabled: true,
       },
@@ -169,14 +161,14 @@ const LoadCart: React.FC = () => {
         max: 2.5E+7,
         ticks: {
           font: {
-          size: 15
-        },
+            size: 15
+          },
           stepSize: 100,
         },
         title: {
           font: {
-          size: 15
-        },
+            size: 15
+          },
           display: true,
           text: 'Load',
         },
@@ -184,8 +176,8 @@ const LoadCart: React.FC = () => {
       x: {
         ticks: {
           font: {
-          size: 15
-        },
+            size: 15
+          },
           autoSkip: false,
           maxRotation: 45,
           minRotation: 45,

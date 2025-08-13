@@ -1,0 +1,47 @@
+body *{
+  font-family: 'Roboto', sans-serif;
+}
+.ant-layout-header {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.ant-layout-header .ant-divider {
+  margin: 0 24px !important;
+}
+
+.ant-layout-header p {
+  margin: 0 24px 16px 24px !important;
+  padding: 0 !important;
+}
+
+
+
+.date-picker-container{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.expansion-tank-container {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .expansion-tank-container {
+    flex-direction: column;
+  }
+  
+  .content-container-main,
+  .content-container-main-1 {
+    min-width: 100%;
+  }
+  
+  .shift-cards-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

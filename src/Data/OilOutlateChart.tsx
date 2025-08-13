@@ -62,14 +62,13 @@ const OilOutlateChart: React.FC = () => {
     ],
   };
 
-  // Styled Max/Min plugin
   const maxMinValuePlugin = {
     id: 'maxMinValuePlugin',
     afterDatasetsDraw(chart: any) {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
 
-     const drawRoundedRect = (
+      const drawRoundedRect = (
         ctx: CanvasRenderingContext2D,
         x: number,
         y: number,
@@ -90,7 +89,6 @@ const OilOutlateChart: React.FC = () => {
         ctx.closePath();
       };
 
-      // Draw label with rounded background
       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
         ctx.save();
         ctx.font = '16px Arial';
@@ -104,16 +102,13 @@ const OilOutlateChart: React.FC = () => {
         const rectWidth = textWidth + padding * 2;
         const rectHeight = textHeight;
 
-        // Background with border radius
         ctx.fillStyle = bgColor;
         drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
         ctx.fill();
 
-        // Optional border
 
         ctx.stroke();
 
-        // Text
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -123,11 +118,9 @@ const OilOutlateChart: React.FC = () => {
       };
 
 
-      // Max label
       const maxPoint = meta.data[maxIndex];
       drawLabel(maxValue.toString(), maxPoint, 'green', -14);
 
-      // Min label
       const minPoint = meta.data[minIndex];
       drawLabel(minValue.toString(), minPoint, 'red', 20);
     },

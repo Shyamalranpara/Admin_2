@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { MenuProps } from 'antd';
-import { Dropdown, Avatar} from 'antd';
+import { Dropdown, Avatar } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
 const items: MenuProps['items'] = [
@@ -38,8 +38,8 @@ const ProfileDropdown: React.FC = () => {
           <div className="text-[12px] text-[#888]">Employee</div>
         </div>
         <DownOutlined
-  className={`ml-5 transition-transform duration-300 ease-in-out ${open ? 'rotate-180' : ''}`}
-/>
+          className={`ml-5 transition-transform duration-300 ease-in-out ${open ? 'rotate-180' : ''}`}
+        />
 
       </div>
     </Dropdown>

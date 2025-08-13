@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import JBLOGO from './assets/LOGO.png'
+import JBLOGO from '../assets/LOGO.png'
 import './Login.css'
 
 import { Button, Form, Input, Flex } from 'antd';
-// const { Title, Text } = Typography;
 const Login: React.FC = () => {
 
     const [allFormData, setAllFormData] = useState<
@@ -44,12 +43,11 @@ const Login: React.FC = () => {
                     name="login"
                     initialValues={{ remember: true }}
                     style={{ maxWidth: 360 }}
-                // onFinish={onFinish}
                 >
 
                     <div className='text-center mb-[40px] md:mb-[60px] line-height-[32px] '>
                         <h1 style={{ fontSize: "1.8rem", fontWeight: "600", lineHeight: "32px" }} className="md:text-[2.2rem]">LOGIN</h1>
-                        <p className='mt-3 md:mt-5' style={{ fontWeight: "500", fontSize: "0.9rem" }} className="md:text-[1rem]">Welcome back! Login to your account.</p>
+                        <p className='mt-3 md:mt-5 md:text-[1rem]' style={{ fontWeight: "500", fontSize: "0.9rem" }}>Welcome back! Login to your account.</p>
                     </div>
 
                     <Form.Item
@@ -72,13 +70,13 @@ const Login: React.FC = () => {
                     <Form.Item>
                         <Flex justify="end" align="center" style={{ marginBottom: '2rem' }}>
 
-                            <a className='text-[#00000073] absolute'  href="">Forgot password?</a>
+                            <a className='text-[#00000073] absolute' href="">Forgot password?</a>
                         </Flex>
                     </Form.Item>
 
                     <Form.Item>
                         <Button
-                        className='input-border '
+                            className='input-border '
                             block
                             htmlType="submit"
                             style={{ backgroundColor: '#408634', color: 'white', border: 'none' }}

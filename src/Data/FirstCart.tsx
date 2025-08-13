@@ -23,7 +23,7 @@ const FirstCart: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.get('http://localhost:5000/breakdown');
-        
+
         if (response.data && response.data.length > 0) {
           // Extract data from the nested structure
           const breakdownData = response.data[0].data || [];
@@ -33,33 +33,7 @@ const FirstCart: React.FC = () => {
           }));
           setChartData(formattedData);
         } else {
-          // Fallback to static data if no API data
-          setChartData([
-            { time: '08:00', value: 26 },
-            { time: '09:00', value: 20 },
-            { time: '10:00', value: 22 },
-            { time: '11:00', value: 23 },
-            { time: '12:00', value: 24 },
-            { time: '13:00', value: 15 },
-            { time: '14:00', value: 13 },
-            { time: '15:00', value: 13 },
-            { time: '16:00', value: 19 },
-            { time: '17:00', value: 19 },
-            { time: '18:00', value: 17 },
-            { time: '19:00', value: 16 },
-            { time: '20:00', value: 9 },
-            { time: '21:00', value: 8 },
-            { time: '22:00', value: 15 },
-            { time: '23:00', value: 27 },
-            { time: '00:00', value: 23 },
-            { time: '01:00', value: 24 },
-            { time: '02:00', value: 25 },
-            { time: '03:00', value: 27 },
-            { time: '04:00', value: 25 },
-            { time: '05:00', value: 26 },
-            { time: '06:00', value: 19 },
-            { time: '07:00', value: 22 },
-          ]);
+          console.log('Error', Error);
         }
       } catch (error) {
         console.error('Error', error);
@@ -89,7 +63,7 @@ const FirstCart: React.FC = () => {
     datasets: [
       {
         label: 'Delta',
-        data: chartData.map((item) => item.value), 
+        data: chartData.map((item) => item.value),
         backgroundColor: '#405189',
         borderColor: '#405189',
         fill: false,
@@ -129,7 +103,7 @@ const FirstCart: React.FC = () => {
       };
 
       const drawLabel = (text: string, point: any, bgColor: string, offsetY: number) => {
-        if (!point) return; // safety check
+        if (!point) return;
 
         ctx.save();
         ctx.font = '16px Arial';
@@ -155,13 +129,11 @@ const FirstCart: React.FC = () => {
         ctx.restore();
       };
 
-      // Draw max label if valid
       if (maxIndex >= 0 && maxIndex < meta.data.length) {
         const maxPoint = meta.data[maxIndex];
         drawLabel(maxValue.toString(), maxPoint, 'green', -14);
       }
 
-      // Draw min label if valid
       if (minIndex >= 0 && minIndex < meta.data.length) {
         const minPoint = meta.data[minIndex];
         drawLabel(minValue.toString(), minPoint, 'red', 20);
@@ -185,16 +157,16 @@ const FirstCart: React.FC = () => {
       tooltip: {
         enabled: true,
       },
-              annotation: {
-          annotations: {
-            line1: {
-              type: 'line' as const,
-              yMin: 19,
-              yMax: 19,
-             
-            },
+      annotation: {
+        annotations: {
+          line1: {
+            type: 'line' as const,
+            yMin: 19,
+            yMax: 19,
+
           },
         },
+      },
     },
     scales: {
       y: {
@@ -204,7 +176,7 @@ const FirstCart: React.FC = () => {
           font: {
             size: 15,
           },
-         
+
         },
         title: {
           font: {

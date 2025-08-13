@@ -7,7 +7,7 @@ const options: CheckboxGroupProps<string>['options'] = [
     label: (
       <span
         className='btn-tfh py-[5px] px-[16px] text-[14px] w-full rounded-0 cursor-pointer'
-        
+
       >
         TFH 1
       </span>
