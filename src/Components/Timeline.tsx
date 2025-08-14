@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal, Timeline as AntTimeline } from 'antd';
 
 interface TimelineModalProps {

@@ -8,6 +8,8 @@ import {
   PointElement,
   Tooltip,
   Legend,
+   type ChartOptions,
+  type FontSpec,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
@@ -126,7 +128,7 @@ const OilIntelChart: React.FC = () => {
     },
   };
 
-  const options = {
+  const options: ChartOptions<'line'>= {
     responsive: true,
     plugins: {
       legend: {
@@ -135,8 +137,7 @@ const OilIntelChart: React.FC = () => {
           font: {
             size: 20,
             weight: 'bold'
-          },
-          textAlign: 'start',
+          }as Partial<FontSpec>,
         },
       },
       tooltip: {

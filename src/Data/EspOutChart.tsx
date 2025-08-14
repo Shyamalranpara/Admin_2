@@ -8,6 +8,8 @@ import {
   PointElement,
   Tooltip,
   Legend,
+  type FontSpec,
+  type ChartOptions
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import axios from 'axios';
@@ -17,7 +19,6 @@ ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip,
 const EspOutChart: React.FC = () => {
   const [chartData, setChartData] = useState<{ time: string; value: number }[]>([]);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +34,7 @@ const EspOutChart: React.FC = () => {
           }));
           setChartData(formattedData);
         } else {
-         console.log("err",Error)
+          console.log('err', Error);
         }
       } catch (error) {
         console.error('Error', error);
@@ -55,8 +56,8 @@ const EspOutChart: React.FC = () => {
 
   const maxValue = Math.max(...chartData.map((item) => item.value));
   const minValue = Math.min(...chartData.map((item) => item.value));
-  const maxIndex = chartData.findIndex(item => item.value === maxValue);
-  const minIndex = chartData.findIndex(item => item.value === minValue);
+  const maxIndex = chartData.findIndex((item) => item.value === maxValue);
+  const minIndex = chartData.findIndex((item) => item.value === minValue);
 
   const data = {
     labels: chartData.map((item) => item.time),
@@ -69,9 +70,9 @@ const EspOutChart: React.FC = () => {
         fill: false,
         tension: 0.4,
         pointRadius: 4,
-        pointHoverRadius: 6,
-      },
-    ],
+        pointHoverRadius: 6
+      }
+    ]
   };
 
   const maxValuePlugin = {
@@ -119,8 +120,6 @@ const EspOutChart: React.FC = () => {
         ctx.fillStyle = bgColor;
         drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
         ctx.fill();
-
-
         ctx.stroke();
 
         ctx.fillStyle = 'white';
@@ -143,7 +142,7 @@ const EspOutChart: React.FC = () => {
     }
   };
 
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -152,23 +151,21 @@ const EspOutChart: React.FC = () => {
           font: {
             size: 20,
             weight: 'bold'
-          },
-          textAlign: 'start',
+          } as Partial<FontSpec>,
         }
       },
       tooltip: {
-        enabled: true,
+        enabled: true
       },
       annotation: {
         annotations: {
           line1: {
             type: 'line',
             yMin: 170,
-            yMax: 170,
-
-          },
-        },
-      },
+            yMax: 170
+          }
+        }
+      }
     },
     scales: {
       y: {
@@ -178,15 +175,15 @@ const EspOutChart: React.FC = () => {
           font: {
             size: 15
           },
-          stepSize: 50,
+          stepSize: 50
         },
         title: {
           font: {
             size: 15
           },
           display: true,
-          text: 'ESP Out',
-        },
+          text: 'ESP Out'
+        }
       },
       x: {
         ticks: {
@@ -195,10 +192,10 @@ const EspOutChart: React.FC = () => {
           },
           autoSkip: false,
           maxRotation: 45,
-          minRotation: 45,
-        },
-      },
-    },
+          minRotation: 45
+        }
+      }
+    }
   };
 
   return (

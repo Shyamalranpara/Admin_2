@@ -8,6 +8,7 @@ import {
   PointElement,
   Tooltip,
   Legend,
+  type ChartOptions
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
@@ -105,11 +106,8 @@ const FuelGasChart: React.FC = () => {
         ctx.fillStyle = bgColor;
         drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
         ctx.fill();
-
-
         ctx.stroke();
 
-        // Text
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -126,7 +124,7 @@ const FuelGasChart: React.FC = () => {
     }
   };
 
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -136,7 +134,7 @@ const FuelGasChart: React.FC = () => {
             size: 20,
             weight: 'bold'
           },
-          textAlign: 'start',
+          textAlign: 'left', // ✅ must be 'left' | 'center' | 'right'
         }
       },
       tooltip: {

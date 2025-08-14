@@ -8,9 +8,11 @@ import {
   PointElement,
   Tooltip,
   Legend,
+  type ChartOptions,
+  type FontSpec
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
-import axios from 'axios'
+import axios from 'axios';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, annotationPlugin);
 
@@ -32,16 +34,16 @@ const FdFanChart: React.FC = () => {
           }));
           setFdChartData(formattedData);
         } else {
-         console.log("err",Error)
+          console.log('err', Error);
         }
       } catch (error) {
         console.error(error);
       } finally {
         setLoading(false);
       }
-    }
+    };
     fetchData();
-  }, [])
+  }, []);
 
   if (loading) {
     return <div className="flex items-center justify-center h-64">Loading chart...</div>;
@@ -53,8 +55,8 @@ const FdFanChart: React.FC = () => {
 
   const maxValue = Math.max(...fdChartData.map((item) => item.value));
   const minValue = Math.min(...fdChartData.map((item) => item.value));
-  const maxIndex = fdChartData.findIndex(item => item.value === maxValue);
-  const minIndex = fdChartData.findIndex(item => item.value === minValue);
+  const maxIndex = fdChartData.findIndex((item) => item.value === maxValue);
+  const minIndex = fdChartData.findIndex((item) => item.value === minValue);
 
   const data = {
     labels: fdChartData.map((item) => item.time),
@@ -67,9 +69,9 @@ const FdFanChart: React.FC = () => {
         fill: false,
         tension: 0.4,
         pointRadius: 4,
-        pointHoverRadius: 6,
-      },
-    ],
+        pointHoverRadius: 6
+      }
+    ]
   };
 
   const maxValuePlugin = {
@@ -116,8 +118,6 @@ const FdFanChart: React.FC = () => {
         ctx.fillStyle = bgColor;
         drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
         ctx.fill();
-
-
         ctx.stroke();
 
         ctx.fillStyle = 'white';
@@ -140,7 +140,7 @@ const FdFanChart: React.FC = () => {
     }
   };
 
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -149,23 +149,22 @@ const FdFanChart: React.FC = () => {
           font: {
             size: 20,
             weight: 'bold'
-          },
-          textAlign: 'start',
+          } as Partial<FontSpec>,
+          textAlign: 'left' // ✅ now matches allowed type
         }
       },
       tooltip: {
-        enabled: true,
+        enabled: true
       },
       annotation: {
         annotations: {
           line1: {
             type: 'line',
             yMin: 170,
-            yMax: 170,
-
-          },
-        },
-      },
+            yMax: 170
+          }
+        }
+      }
     },
     scales: {
       y: {
@@ -175,15 +174,15 @@ const FdFanChart: React.FC = () => {
           font: {
             size: 15
           },
-          stepSize: 50,
+          stepSize: 50
         },
         title: {
           font: {
             size: 15
           },
           display: true,
-          text: 'FD Fan',
-        },
+          text: 'FD Fan'
+        }
       },
       x: {
         ticks: {
@@ -192,10 +191,10 @@ const FdFanChart: React.FC = () => {
           },
           autoSkip: false,
           maxRotation: 45,
-          minRotation: 45,
-        },
-      },
-    },
+          minRotation: 45
+        }
+      }
+    }
   };
 
   return (

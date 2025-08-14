@@ -8,6 +8,8 @@ import {
   PointElement,
   Tooltip,
   Legend,
+   type ChartOptions,
+  type FontSpec,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import axios from 'axios';
@@ -140,7 +142,7 @@ const WphChart: React.FC = () => {
     },
   };
 
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -149,8 +151,7 @@ const WphChart: React.FC = () => {
           font: {
             size: 20,
             weight: 'bold' as const,
-          },
-          textAlign: 'start',
+          }as Partial<FontSpec>,
         },
       },
       tooltip: {

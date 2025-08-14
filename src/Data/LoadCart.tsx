@@ -8,6 +8,8 @@ import {
   PointElement,
   Tooltip,
   Legend,
+ type ChartOptions,
+  type FontSpec,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
@@ -106,7 +108,6 @@ const LoadCart: React.FC = () => {
         drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, borderRadius);
         ctx.fill();
 
-
         ctx.stroke();
 
         ctx.fillStyle = 'white';
@@ -125,19 +126,17 @@ const LoadCart: React.FC = () => {
     }
   };
 
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
       legend: {
-        Legend: {
-          display: false
-        },
+        display: false,
         labels: {
           font: {
             size: 20,
             weight: 'bold'
-          },
-          textAlign: 'start',
+          } as Partial<FontSpec>,
+          textAlign: 'left',
         }
       },
       tooltip: {

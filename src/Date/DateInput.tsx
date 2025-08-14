@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
 
-const Datesave: React.FC = () => {
+const DateInput: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<any>(null);
 
 
@@ -31,4 +31,4 @@ const Datesave: React.FC = () => {
   );
 };
 
-export default Datesave;
+export default DateInput;
